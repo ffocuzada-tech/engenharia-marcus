@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 const sizes = {
   sm: "h-[60px] w-[60px]",
   md: "h-[84px] w-[84px]",
@@ -25,9 +27,12 @@ export function Callout({
 }) {
   return (
     <div
-      className={`flex flex-shrink-0 flex-col items-center justify-center rounded-full border-2 ${sizes[size]} ${
-        onDark ? "border-amber text-on-ink" : "border-ink bg-white"
-      } ${className}`}
+      className={twMerge(
+        "flex flex-shrink-0 flex-col items-center justify-center rounded-full border-2",
+        sizes[size],
+        onDark ? "border-amber text-on-ink" : "border-ink bg-white",
+        className
+      )}
     >
       <span className={`font-bold leading-none ${letterSizes[size]}`}>{letter}</span>
       <span

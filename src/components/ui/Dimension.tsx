@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 /** Cota de desenho técnico. Só aparece no computador — o consumidor deve
  * envolver em "hidden md:flex" quando o celular não deve exibi-la. */
 export function Dimension({
@@ -13,7 +15,7 @@ export function Dimension({
     return (
       <div
         aria-hidden="true"
-        className={`flex w-3.5 flex-col items-center justify-center border-y border-ink ${className}`}
+        className={twMerge("flex w-3.5 flex-col items-center justify-center border-y border-ink", className)}
       >
         <div className="w-px flex-1 bg-ink" />
       </div>
@@ -23,7 +25,7 @@ export function Dimension({
   return (
     <div
       aria-hidden="true"
-      className={`relative flex h-3.5 items-center border-x border-ink ${className}`}
+      className={twMerge("relative flex h-3.5 items-center border-x border-ink", className)}
     >
       <div className="h-px flex-1 bg-ink" />
       <span className="absolute left-1/2 -translate-x-1/2 bg-paper px-2 font-mono text-[11px]">

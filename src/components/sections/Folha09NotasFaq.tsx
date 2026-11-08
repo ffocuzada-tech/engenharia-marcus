@@ -66,7 +66,7 @@ export function Folha09NotasFaq() {
     <section>
       <SheetBar numero="09" titulo="NOTAS DE CAMPO E DÚVIDAS" nota="REVISADO COM CLIENTES" />
 
-      <div className="wrap grid items-start gap-16 py-20 md:grid-cols-[repeat(auto-fit,minmax(min(460px,100%),1fr))] md:py-24">
+      <div className="wrap grid grid-cols-1 items-start gap-16 py-20 md:grid-cols-[repeat(auto-fit,minmax(min(460px,100%),1fr))] md:py-24">
         <div className="flex flex-col gap-5">
           <h2 className="text-h2 font-bold text-ink">Quem já contratou</h2>
 

@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 export function Tag({
   children,
   className = "",
@@ -7,7 +9,10 @@ export function Tag({
 }) {
   return (
     <span
-      className={`inline-block bg-ink px-2 py-1 font-mono text-[13px] font-semibold text-on-ink ${className}`}
+      className={twMerge(
+        "inline-block bg-ink px-2 py-1 font-mono text-[13px] font-semibold text-on-ink",
+        className
+      )}
     >
       {children}
     </span>

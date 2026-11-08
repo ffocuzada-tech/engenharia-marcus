@@ -56,7 +56,7 @@ export function Folha01Hero() {
             label={"[FOTO REAL]\nEngenheiro em obra, diante de um quadro"}
             className="h-[500px]"
           />
-          <TitleBlock className="absolute -right-6 -bottom-8 w-[330px]">
+          <TitleBlock className="absolute right-0 -bottom-8 w-[330px] lg:-right-6">
             <TitleBlockCell wide borderBottom>
               <span className="text-text-3">RESPONSÁVEL TÉCNICO</span>
               <span className="font-sans text-base font-bold text-ink">

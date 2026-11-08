@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 type Variant = "primary" | "outline" | "dark";
 
@@ -31,7 +32,7 @@ type ButtonAsButton = CommonProps &
 
 export function Button(props: ButtonAsLink | ButtonAsButton) {
   const { variant = "primary", arrow = true, className = "", children, ...domProps } = props;
-  const classes = `${base} ${variants[variant]} ${className}`;
+  const classes = twMerge(base, variants[variant], className);
 
   if (domProps.href !== undefined) {
     return (
