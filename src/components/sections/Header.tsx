@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { SheetIndicatorMobile } from "@/components/ui/SheetIndicator";
 
 const NAV_LINKS = [
   { href: "#servicos", label: "Serviços" },
@@ -54,7 +53,6 @@ export function Header() {
         </Button>
 
         <div className="flex items-center gap-3 md:hidden">
-          <SheetIndicatorMobile />
           <button
             type="button"
             aria-label={open ? "Fechar menu" : "Abrir menu"}

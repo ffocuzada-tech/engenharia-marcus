@@ -1,6 +1,6 @@
 import { Header } from "@/components/sections/Header";
 import { SheetProvider } from "@/components/providers/SheetProvider";
-import { SheetIndicatorBar } from "@/components/ui/SheetIndicator";
+import { SheetStamp } from "@/components/ui/SheetStamp";
 import { Folha01Hero } from "@/components/sections/Folha01Hero";
 import { Folha02Servicos } from "@/components/sections/Folha02Servicos";
 import { Folha03Alerta } from "@/components/sections/Folha03Alerta";
@@ -17,7 +17,6 @@ export default function Home() {
   return (
     <SheetProvider>
       <Header />
-      <SheetIndicatorBar />
       <main className="bg-grid-paper flex flex-1 flex-col">
         <Folha01Hero />
         <Folha02Servicos />
@@ -31,6 +30,7 @@ export default function Home() {
         <Folha10Orcamento />
       </main>
       <Folha11Rodape />
+      <SheetStamp />
     </SheetProvider>
   );
 }

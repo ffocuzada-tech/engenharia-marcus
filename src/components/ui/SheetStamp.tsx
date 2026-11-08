@@ -6,6 +6,8 @@ import { gsap } from "@/lib/gsap";
 import { SHEETS } from "@/lib/sheets";
 import { useActiveSheetIndex } from "@/components/providers/SheetProvider";
 
+const ORCAMENTO_ID = "orcamento";
+
 function useDismiss(open: boolean, onClose: () => void, ref: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
     if (!open) return;
@@ -26,6 +28,7 @@ function useDismiss(open: boolean, onClose: () => void, ref: React.RefObject<HTM
   }, [open, onClose, ref]);
 }
 
+// Giro curto: o valor antigo sobe e some, o novo entra de baixo (250ms).
 function FlipNumber({ value }: { value: string }) {
   const wrapRef = useRef<HTMLSpanElement>(null);
   const ref = useRef<HTMLSpanElement>(null);
@@ -80,6 +83,52 @@ function FlipNumber({ value }: { value: string }) {
   );
 }
 
+// Nome da folha troca em fade (sem deslocamento).
+function FadeLabel({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [shown, setShown] = useState(value);
+  const prev = useRef(value);
+
+  useGSAP(() => {
+    if (prev.current === value) return;
+    prev.current = value;
+
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        always: "(min-width: 0px)",
+        reduceMotion: "(prefers-reduced-motion: reduce)",
+      },
+      (context) => {
+        const { reduceMotion } = context.conditions as { reduceMotion: boolean };
+        const el = ref.current;
+        if (!el) return;
+
+        if (reduceMotion) {
+          setShown(value);
+          return;
+        }
+
+        const tl = gsap.timeline();
+        tl.to(el, { opacity: 0, duration: 0.1, ease: "power1.in" })
+          .call(() => setShown(value))
+          .to(el, { opacity: 1, duration: 0.12, ease: "power1.out" });
+
+        return () => tl.kill();
+      }
+    );
+
+    return () => mm.revert();
+  }, [value]);
+
+  return (
+    <span ref={ref} className="inline-block">
+      {shown}
+    </span>
+  );
+}
+
 function SheetList({ onSelect }: { onSelect: () => void }) {
   return (
     <ul
@@ -103,70 +152,74 @@ function SheetList({ onSelect }: { onSelect: () => void }) {
   );
 }
 
-export function SheetIndicatorBar() {
+/**
+ * Mini-carimbo fixo (canto inferior direito) que acompanha a leitura.
+ * Fica escondido enquanto o carimbo grande do hero está visível e "bate"
+ * no canto quando o hero sai da tela. Some na folha de orçamento, porque
+ * o formulário já é um carimbo.
+ */
+export function SheetStamp() {
   const activeIndex = useActiveSheetIndex();
   const active = SHEETS[activeIndex];
   const [open, setOpen] = useState(false);
+  const [heroPassed, setHeroPassed] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useDismiss(open, () => setOpen(false), rootRef);
 
-  return (
-    <div ref={rootRef} className="sticky top-0 z-30 hidden border-b border-ink/25 bg-paper md:block">
-      <div className="wrap relative">
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-haspopup="listbox"
-          aria-label="Ver lista de folhas"
-          className="flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent py-2.5 font-mono text-[11px] tracking-[.08em] text-text-3 uppercase"
-        >
-          <span>
-            FOLHA <FlipNumber value={active.numero} /> / 11 · {active.nome}
-          </span>
-          <span aria-hidden="true" className="transition-[translate] duration-150">
-            {open ? "▴" : "▾"}
-          </span>
-        </button>
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero) return;
 
-        {open && (
-          <div className="absolute top-full right-0 z-40 mt-1">
-            <SheetList onSelect={() => setOpen(false)} />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHeroPassed(false);
+        } else if (entry.boundingClientRect.bottom < 0) {
+          setHeroPassed(true);
+        } else if (entry.boundingClientRect.top > 0) {
+          setHeroPassed(false);
+        }
+      },
+      { threshold: 0 }
+    );
 
-export function SheetIndicatorMobile() {
-  const activeIndex = useActiveSheetIndex();
-  const active = SHEETS[activeIndex];
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
 
-  useDismiss(open, () => setOpen(false), rootRef);
+  const isOrcamento = active.id === ORCAMENTO_ID;
+  if (!heroPassed || isOrcamento) return null;
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className="fixed right-4 bottom-4 z-40 md:right-6 md:bottom-6">
+      {open && (
+        <div className="absolute right-0 bottom-full z-10 mb-2">
+          <SheetList onSelect={() => setOpen(false)} />
+        </div>
+      )}
+
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label="Ver lista de folhas"
-        className="flex h-11 cursor-pointer items-center border-0 bg-transparent px-1 font-mono text-[12px] text-text-3"
+        className="sheet-stamp-enter flex cursor-pointer border-[1.5px] border-ink bg-white shadow-[var(--shadow-sheet)]"
       >
-        <FlipNumber value={active.numero} />
-        /11
-      </button>
+        <span className="hidden items-center border-r border-ink px-3 py-2.5 font-mono text-[11px] tracking-[.08em] text-text-3 uppercase md:flex">
+          <FadeLabel value={active.nome} />
+        </span>
 
-      {open && (
-        <div className="absolute top-full right-0 z-40 mt-1">
-          <SheetList onSelect={() => setOpen(false)} />
-        </div>
-      )}
+        <span className="flex flex-col items-center justify-center gap-0.5 bg-amber px-2.5 py-1.5 text-ink md:px-3.5 md:py-2.5">
+          <span className="hidden text-micro uppercase md:block">Folha</span>
+          <span className="font-mono text-[11px] font-semibold md:text-[13px]">
+            <FlipNumber value={active.numero} />
+            <span className="hidden md:inline"> / 11</span>
+            <span className="md:hidden">/11</span>
+          </span>
+        </span>
+      </button>
     </div>
   );
 }
