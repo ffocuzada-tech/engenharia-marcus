@@ -95,6 +95,9 @@
   --t-base: 250ms;
   --t-draw: 600ms;
   --stagger: 120ms;
+
+  --container: 1200px;
+  --gutter: clamp(20px, 2.5vw, 32px);
 }
 
 @media (max-width: 640px) {
@@ -115,6 +118,21 @@ body {
   background-image: linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Malha de papel milimetrado sobre fundo escuro (equivalente a .d1-blueprint) */
+.bg-grid-night {
+  background-color: var(--color-night);
+  background-image: linear-gradient(var(--grid-on-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-on-ink) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Contêiner central de toda folha */
+.wrap {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
 @media (prefers-reduced-motion: reduce) {
