@@ -40,7 +40,7 @@ export function Folha05Engenheiro() {
           </span>
         </h2>
 
-        <div className="grid items-start gap-16 md:grid-cols-[repeat(auto-fit,minmax(480px,100%))]">
+        <div className="grid items-start gap-16 md:grid-cols-[repeat(auto-fit,minmax(min(480px,100%),1fr))]">
           <div className="flex flex-col gap-4">
             <div className="relative flex h-[260px] items-center justify-center border-[1.5px] border-dashed border-[#6D28D9] bg-white bg-[repeating-linear-gradient(135deg,rgba(109,40,217,.05)_0_2px,transparent_2px_16px)] md:h-[460px]">
               <svg

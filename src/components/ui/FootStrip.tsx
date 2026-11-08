@@ -4,7 +4,7 @@ export function FootStrip({
   items: { label: string; accent?: boolean }[];
 }) {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] border border-on-ink-2/30 font-mono text-[11px] text-on-ink-2">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(min(180px,100%),1fr))] border border-on-ink-2/30 font-mono text-[11px] text-on-ink-2">
       {items.map((item, i) => (
         <span
           key={i}

@@ -65,7 +65,7 @@ export function Folha10Orcamento() {
       <SheetBar numero="10" titulo="PEDIDO DE ORÇAMENTO" nota="PREENCHA O CARIMBO" dark />
 
       {/* Computador */}
-      <div className="wrap hidden items-start gap-16 py-24 md:grid md:grid-cols-[repeat(auto-fit,minmax(340px,100%))] md:py-28">
+      <div className="wrap hidden items-start gap-16 py-24 md:grid md:grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] md:py-28">
         <div className="flex flex-col gap-7">
           <h2 className="text-display font-bold text-on-ink">
             Sua obra começa <span className="text-amber">nesta folha.</span>

@@ -15,7 +15,7 @@ export function Folha07Trajetoria() {
       <SheetBar numero="07" titulo="TRAJETÓRIA" nota="COTAS EM ANOS" />
 
       <div className="wrap flex flex-col gap-14 py-16 md:gap-18 md:py-22">
-        <div className="grid items-center gap-16 md:grid-cols-[repeat(auto-fit,minmax(420px,100%))]">
+        <div className="grid items-center gap-16 md:grid-cols-[repeat(auto-fit,minmax(min(420px,100%),1fr))]">
           <Photo
             label="[RETRATO REAL do engenheiro]"
             className="order-1 h-[300px] md:order-none md:h-[420px]"

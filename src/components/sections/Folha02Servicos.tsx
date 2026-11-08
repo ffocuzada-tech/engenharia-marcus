@@ -108,7 +108,7 @@ export function Folha02Servicos() {
         </div>
 
         {/* Computador: grade de cards */}
-        <div className="hidden border-t-[1.5px] border-l-[1.5px] border-ink bg-white md:grid md:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
+        <div className="hidden border-t-[1.5px] border-l-[1.5px] border-ink bg-white md:grid md:grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))]">
           {SERVICES.map((s) => (
             <a
               key={s.code}

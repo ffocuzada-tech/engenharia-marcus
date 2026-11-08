@@ -153,7 +153,7 @@ export function Folha04Detalhes() {
 
       <div className="wrap flex flex-col gap-9 py-14 md:gap-0 md:py-18">
         {/* Detalhe A — Instalação elétrica */}
-        <article id="det-a" className="grid gap-12 pb-0 md:grid-cols-[repeat(auto-fit,minmax(340px,100%))] md:pb-16">
+        <article id="det-a" className="grid gap-12 pb-0 md:grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] md:pb-16">
           <div className="flex flex-col gap-5">
             <DetailHeader letter="A" code="E-01" title="Instalação elétrica" />
             <Photo
@@ -161,7 +161,7 @@ export function Folha04Detalhes() {
               className="hidden h-[260px] md:flex"
             />
           </div>
-          <div className="grid self-start border-[1.5px] border-ink bg-white md:grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
+          <div className="grid self-start border-[1.5px] border-ink bg-white md:grid-cols-[repeat(auto-fit,minmax(min(220px,100%),1fr))]">
             <SpecCol
               k="01 · O PROBLEMA"
               v={
@@ -203,8 +203,8 @@ export function Folha04Detalhes() {
         <Dimension label="DETALHE B" className="hidden md:flex" />
 
         {/* Detalhe B — Projetos elétricos */}
-        <article id="det-b" className="grid gap-12 py-0 md:grid-cols-[repeat(auto-fit,minmax(340px,100%))] md:py-16">
-          <div className="grid self-start border-[1.5px] border-ink bg-white md:order-1 md:grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
+        <article id="det-b" className="grid gap-12 py-0 md:grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] md:py-16">
+          <div className="grid self-start border-[1.5px] border-ink bg-white md:order-1 md:grid-cols-[repeat(auto-fit,minmax(min(220px,100%),1fr))]">
             <SpecCol
               k="01 · O PROBLEMA"
               v={
@@ -272,7 +272,7 @@ export function Folha04Detalhes() {
         <Dimension label="DETALHES C · D" className="hidden md:flex" />
 
         {/* Detalhes C e D — Inspeções e Manutenção */}
-        <div className="grid gap-9 pt-0 md:grid-cols-[repeat(auto-fit,minmax(480px,100%))] md:gap-10 md:pt-16">
+        <div className="grid gap-9 pt-0 md:grid-cols-[repeat(auto-fit,minmax(min(480px,100%),1fr))] md:gap-10 md:pt-16">
           <DetailCard
             variant="dark"
             letter="C"
