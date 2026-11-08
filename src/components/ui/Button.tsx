@@ -30,23 +30,20 @@ type ButtonAsButton = CommonProps &
   };
 
 export function Button(props: ButtonAsLink | ButtonAsButton) {
-  const { variant = "primary", arrow = true, className = "", children } = props;
+  const { variant = "primary", arrow = true, className = "", children, ...domProps } = props;
   const classes = `${base} ${variants[variant]} ${className}`;
 
-  if (props.href !== undefined) {
-    const { href, ...rest } = props as ButtonAsLink;
+  if (domProps.href !== undefined) {
     return (
-      <a href={href} className={classes} {...rest}>
+      <a className={classes} {...(domProps as AnchorHTMLAttributes<HTMLAnchorElement>)}>
         {children}
         {arrow && <span aria-hidden="true">→</span>}
       </a>
     );
   }
 
-  const { variant: _v, arrow: _a, className: _c, children: _ch, href: _h, ...rest } =
-    props as ButtonAsButton;
   return (
-    <button type="button" className={classes} {...rest}>
+    <button type="button" className={classes} {...(domProps as ButtonHTMLAttributes<HTMLButtonElement>)}>
       {children}
       {arrow && <span aria-hidden="true">→</span>}
     </button>
