@@ -3,6 +3,7 @@ import { Folha01Hero } from "@/components/sections/Folha01Hero";
 import { Folha02Servicos } from "@/components/sections/Folha02Servicos";
 import { Folha03Alerta } from "@/components/sections/Folha03Alerta";
 import { Folha04Detalhes } from "@/components/sections/Folha04Detalhes";
+import { Folha05Engenheiro } from "@/components/sections/Folha05Engenheiro";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <Folha02Servicos />
         <Folha03Alerta />
         <Folha04Detalhes />
+        <Folha05Engenheiro />
       </main>
     </>
   );
