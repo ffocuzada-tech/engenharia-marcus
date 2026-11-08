@@ -5,6 +5,7 @@ import { Folha03Alerta } from "@/components/sections/Folha03Alerta";
 import { Folha04Detalhes } from "@/components/sections/Folha04Detalhes";
 import { Folha05Engenheiro } from "@/components/sections/Folha05Engenheiro";
 import { Folha06AntesDepois } from "@/components/sections/Folha06AntesDepois";
+import { Folha07Trajetoria } from "@/components/sections/Folha07Trajetoria";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Folha04Detalhes />
         <Folha05Engenheiro />
         <Folha06AntesDepois />
+        <Folha07Trajetoria />
       </main>
     </>
   );
