@@ -113,16 +113,24 @@ export function Folha02Servicos() {
             <a
               key={s.code}
               href={s.href}
-              className="flex flex-col gap-4 border-r-[1.5px] border-b-[1.5px] border-ink px-[26px] py-7 no-underline hover:bg-paper-warm"
+              className="group flex flex-col gap-4 border-r-[1.5px] border-b-[1.5px] border-ink px-[26px] py-7 no-underline outline-none transition-[background-color,box-shadow] duration-150 hover:bg-paper-warm hover:shadow-[inset_0_0_0_3px_var(--color-ink)] focus-visible:bg-paper-warm focus-visible:shadow-[inset_0_0_0_3px_var(--color-ink)]"
             >
               <div className="flex items-center justify-between">
-                <Tag>{s.code}</Tag>
+                <Tag className="border-[1.5px] border-ink bg-transparent text-ink transition-colors duration-150 group-hover:bg-ink group-hover:text-on-ink group-focus-visible:bg-ink group-focus-visible:text-on-ink">
+                  {s.code}
+                </Tag>
                 {s.icon}
               </div>
               <h3 className="text-h4 font-bold text-ink">{s.title}</h3>
               <p className="flex-1 text-[15px] leading-relaxed text-text-2">{s.text}</p>
               <span className="flex justify-between border-t border-dashed border-ink/35 pt-3.5 font-mono text-[13px] font-semibold text-ink">
-                VER DETALHE {s.letter} <span aria-hidden="true">↓</span>
+                VER DETALHE {s.letter}{" "}
+                <span
+                  aria-hidden="true"
+                  className="inline-block transition-[translate] duration-150 group-hover:translate-y-1 group-focus-visible:translate-y-1"
+                >
+                  ↓
+                </span>
               </span>
             </a>
           ))}

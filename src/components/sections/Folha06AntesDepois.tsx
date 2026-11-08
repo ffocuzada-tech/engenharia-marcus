@@ -36,7 +36,7 @@ export function Folha06AntesDepois() {
   }
 
   return (
-    <section className="bg-grid-night text-on-ink">
+    <section id="antes-depois" className="bg-grid-night text-on-ink">
       <SheetBar numero="06" titulo="ANTES × DEPOIS" nota="REV. 0 → REV. 1" dark />
 
       <div className="wrap flex flex-col gap-10 py-20 md:py-24">
@@ -102,7 +102,12 @@ export function Folha06AntesDepois() {
           <p className="text-[16px] leading-relaxed text-on-ink-2">
             [Cliente / bairro / tipo de imóvel]. Toque para comparar.
           </p>
-          <div role="tablist" aria-label="Comparar" className="grid grid-cols-2 border-[1.5px] border-on-ink">
+          <div
+            role="tablist"
+            aria-label="Comparar"
+            data-stamp-avoid
+            className="grid grid-cols-2 border-[1.5px] border-on-ink"
+          >
             <button
               type="button"
               role="tab"

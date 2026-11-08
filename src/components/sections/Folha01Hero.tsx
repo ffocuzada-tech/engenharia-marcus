@@ -6,7 +6,7 @@ import { TitleBlock, TitleBlockCell } from "@/components/ui/TitleBlock";
 
 export function Folha01Hero() {
   return (
-    <section>
+    <section id="hero">
       <SheetBar numero="01" titulo="APRESENTAÇÃO" nota="ESC. 1:1 · REV. 2026" />
 
       <div className="wrap grid items-center gap-16 py-16 md:py-26 lg:grid-cols-2">

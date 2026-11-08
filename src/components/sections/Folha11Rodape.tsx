@@ -21,7 +21,7 @@ function Logo() {
 
 export function Folha11Rodape() {
   return (
-    <footer className="bg-night text-on-ink-2">
+    <footer id="rodape" className="bg-night text-on-ink-2">
       {/* Computador */}
       <div className="wrap hidden flex-col gap-10 py-14 pb-8 md:flex">
         <div className="flex flex-wrap justify-between gap-10">

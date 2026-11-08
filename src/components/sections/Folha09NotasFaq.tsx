@@ -63,7 +63,7 @@ const FAQ_MOBILE = [
 
 export function Folha09NotasFaq() {
   return (
-    <section>
+    <section id="notas-faq">
       <SheetBar numero="09" titulo="NOTAS DE CAMPO E DÚVIDAS" nota="REVISADO COM CLIENTES" />
 
       <div className="wrap grid grid-cols-1 items-start gap-16 py-20 md:grid-cols-[repeat(auto-fit,minmax(min(460px,100%),1fr))] md:py-24">
