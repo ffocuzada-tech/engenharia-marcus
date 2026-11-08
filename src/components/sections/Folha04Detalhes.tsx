@@ -148,7 +148,7 @@ function DetailCard({
 
 export function Folha04Detalhes() {
   return (
-    <section className="border-b-[1.5px] border-ink">
+    <section id="detalhes" className="border-b-[1.5px] border-ink">
       <SheetBar numero="04" titulo="DETALHES A–D" nota="ESC. 1:10" />
 
       <div className="wrap flex flex-col gap-9 py-14 md:gap-0 md:py-18">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { SheetIndicatorMobile } from "@/components/ui/SheetIndicator";
 
 const NAV_LINKS = [
   { href: "#servicos", label: "Serviços" },
@@ -52,23 +53,26 @@ export function Header() {
           Pedir orçamento
         </Button>
 
-        <button
-          type="button"
-          aria-label={open ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center border-[1.5px] border-ink bg-transparent md:hidden"
-        >
-          {open ? (
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M1 1 L15 15 M15 1 L1 15" stroke="#0F1E33" strokeWidth="2" />
-            </svg>
-          ) : (
-            <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true">
-              <path d="M0 1h20M0 7h20M0 13h12" stroke="#0F1E33" strokeWidth="2" />
-            </svg>
-          )}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <SheetIndicatorMobile />
+          <button
+            type="button"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-11 w-11 items-center justify-center border-[1.5px] border-ink bg-transparent"
+          >
+            {open ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M1 1 L15 15 M15 1 L1 15" stroke="#0F1E33" strokeWidth="2" />
+              </svg>
+            ) : (
+              <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true">
+                <path d="M0 1h20M0 7h20M0 13h12" stroke="#0F1E33" strokeWidth="2" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {open && (

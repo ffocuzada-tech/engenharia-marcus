@@ -36,7 +36,7 @@ export function Folha06AntesDepois() {
   }
 
   return (
-    <section className="bg-grid-night text-on-ink">
+    <section id="antes-depois" className="bg-grid-night text-on-ink">
       <SheetBar numero="06" titulo="ANTES × DEPOIS" nota="REV. 0 → REV. 1" dark />
 
       <div className="wrap flex flex-col gap-10 py-20 md:py-24">

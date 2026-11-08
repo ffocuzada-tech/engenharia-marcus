@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 type Variant = "primary" | "outline" | "dark";
 
 const base =
-  "inline-flex min-h-12 items-center gap-2 border-[1.5px] border-ink px-6 font-sans text-base no-underline transition-transform duration-150 cursor-pointer";
+  "inline-flex min-h-12 items-center gap-2 border-[1.5px] border-ink px-6 font-sans text-base no-underline transition-[translate,box-shadow] duration-150 cursor-pointer";
 
 const variants: Record<Variant, string> = {
   primary:
