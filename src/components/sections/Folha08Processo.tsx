@@ -181,7 +181,7 @@ export function Folha08Processo() {
               Duração varia por obra
             </span>
           </div>
-          <Button href="#orcamento" variant="primary">
+          <Button href="#orcamento" variant="primary" data-stamp-avoid>
             Começar pelo D0
           </Button>
         </div>
@@ -270,7 +270,12 @@ export function Folha08Processo() {
             ┆ VOCÊ ESTÁ AQUI: D0
           </span>
 
-          <Button href="#orcamento" variant="primary" className="w-full justify-between">
+          <Button
+            href="#orcamento"
+            variant="primary"
+            className="w-full justify-between"
+            data-stamp-avoid
+          >
             Começar pelo D0
           </Button>
         </div>

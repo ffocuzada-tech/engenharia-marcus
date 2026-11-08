@@ -163,7 +163,9 @@ export function SheetStamp() {
   const active = SHEETS[activeIndex];
   const [open, setOpen] = useState(false);
   const [heroPassed, setHeroPassed] = useState(false);
+  const [avoiding, setAvoiding] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLButtonElement>(null);
 
   useDismiss(open, () => setOpen(false), rootRef);
 
@@ -189,10 +191,59 @@ export function SheetStamp() {
   }, []);
 
   const isOrcamento = active.id === ORCAMENTO_ID;
+
+  // Desvia de elementos marcados com data-stamp-avoid (faixa de emergência,
+  // CTAs, abas): quando o retângulo do carimbo cruza o deles, ele some.
+  // rAF-throttled no scroll/resize para não pesar a rolagem.
+  useEffect(() => {
+    if (!heroPassed || isOrcamento) return;
+
+    const card = cardRef.current;
+    if (!card) return;
+
+    const avoidEls = Array.from(document.querySelectorAll<HTMLElement>("[data-stamp-avoid]"));
+    let raf = 0;
+
+    function check() {
+      raf = 0;
+      const stampRect = card!.getBoundingClientRect();
+      const hit = avoidEls.some((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) return false;
+        return !(
+          stampRect.right < r.left ||
+          stampRect.left > r.right ||
+          stampRect.bottom < r.top ||
+          stampRect.top > r.bottom
+        );
+      });
+      setAvoiding(hit);
+    }
+
+    function onScrollOrResize() {
+      if (raf) return;
+      raf = requestAnimationFrame(check);
+    }
+
+    check();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    return () => {
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [heroPassed, isOrcamento]);
+
   if (!heroPassed || isOrcamento) return null;
 
   return (
-    <div ref={rootRef} className="fixed right-4 bottom-4 z-40 md:right-6 md:bottom-6">
+    <div
+      ref={rootRef}
+      className={`fixed right-4 bottom-4 z-40 transition-opacity duration-150 md:right-6 md:bottom-6 ${
+        avoiding ? "pointer-events-none opacity-0" : "opacity-100"
+      }`}
+    >
       {open && (
         <div className="absolute right-0 bottom-full z-10 mb-2">
           <SheetList onSelect={() => setOpen(false)} />
@@ -200,6 +251,7 @@ export function SheetStamp() {
       )}
 
       <button
+        ref={cardRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}

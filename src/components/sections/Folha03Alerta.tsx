@@ -73,7 +73,10 @@ export function Folha03Alerta() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3.5 bg-amber p-5 text-ink md:flex-row md:items-center md:justify-between md:gap-6 md:px-[30px] md:py-[26px]">
+        <div
+          data-stamp-avoid
+          className="flex flex-col gap-3.5 bg-amber p-5 text-ink md:flex-row md:items-center md:justify-between md:gap-6 md:px-[30px] md:py-[26px]"
+        >
           <p className="max-w-[640px] text-[16px] leading-snug md:text-[18px]">
             <strong>Fumaça ou faísca?</strong> Desligue o disjuntor geral e afaste-se do quadro.
             <span className="hidden md:inline"> Depois, fale comigo.</span>

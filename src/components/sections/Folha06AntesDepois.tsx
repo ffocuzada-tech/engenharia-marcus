@@ -102,7 +102,12 @@ export function Folha06AntesDepois() {
           <p className="text-[16px] leading-relaxed text-on-ink-2">
             [Cliente / bairro / tipo de imóvel]. Toque para comparar.
           </p>
-          <div role="tablist" aria-label="Comparar" className="grid grid-cols-2 border-[1.5px] border-on-ink">
+          <div
+            role="tablist"
+            aria-label="Comparar"
+            data-stamp-avoid
+            className="grid grid-cols-2 border-[1.5px] border-on-ink"
+          >
             <button
               type="button"
               role="tab"
