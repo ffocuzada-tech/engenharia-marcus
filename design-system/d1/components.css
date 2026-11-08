@@ -1,0 +1,187 @@
+/* ==========================================================================
+   D1 · Prancha técnica — COMPONENTES
+   Depende de d1/tokens.css. Prefixo d1- em tudo. Sem cantos arredondados.
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+.d1 { font-family: var(--font-sans); color: var(--text); background: var(--paper); }
+.d1 *, .d1 *::before, .d1 *::after { box-sizing: border-box; }
+:where(.d1) :where(h1, h2, h3, h4) { margin: 0; font-weight: 700; text-wrap: balance; }
+:where(.d1) p { margin: 0; }
+:where(.d1) a { color: inherit; }  /* especificidade zero: não sobrescreve a cor dos botões */
+.d1 :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+.d1-container { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.d1-mono  { font-family: var(--font-mono); }
+.d1-label { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-3); }
+.d1-eyebrow { display: flex; align-items: center; gap: var(--s-3); }
+.d1-eyebrow::before { content: ""; width: 32px; height: 2px; background: var(--amber); }
+
+/* Malha de papel milimetrado */
+.d1-paper   { background-color: var(--paper); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: var(--grid-size) var(--grid-size); }
+.d1-blueprint { background-color: var(--ink); color: var(--text-on-ink); background-image: linear-gradient(var(--grid-on-ink) 1px, transparent 1px), linear-gradient(90deg, var(--grid-on-ink) 1px, transparent 1px); background-size: var(--grid-size) var(--grid-size); }
+
+/* ---------- Faixa de folha (abre TODA seção) ---------- */
+.d1-sheet { display: flex; justify-content: space-between; gap: var(--s-4); padding: var(--s-5) 0 var(--s-2); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-3); }
+.d1-blueprint .d1-sheet { color: var(--text-on-ink-3); border-color: rgba(243, 241, 234, .25); }
+
+/* ---------- Botões ---------- */
+.d1-btn { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--s-3); min-height: 48px; padding: 0 var(--s-6); font: 600 16px/1 var(--font-sans); text-decoration: none; border: 1.5px solid var(--ink); cursor: pointer; transition: transform var(--t-fast), box-shadow var(--t-fast); }
+.d1-btn--primary { background: var(--amber); color: var(--ink); font-weight: 700; box-shadow: var(--shadow-offset); }
+.d1-btn--primary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.d1-btn--primary:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.d1-btn--outline { background: transparent; color: var(--ink); }
+.d1-btn--outline:hover { background: var(--white); }
+.d1-btn--dark { background: var(--ink); color: var(--text-on-ink); }
+.d1-btn--dark:hover { background: #1C3150; }
+.d1-blueprint .d1-btn--primary { border-color: var(--ink); }
+.d1-link-mono { font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; display: inline-flex; gap: var(--s-2); }
+
+/* ---------- Etiqueta de código (E-01) ---------- */
+.d1-tag { display: inline-block; font-family: var(--font-mono); font-size: 13px; font-weight: 600; background: var(--ink); color: var(--text-on-ink); padding: 4px 8px; }
+
+/* ---------- Carimbo (title block) ---------- */
+.d1-titleblock { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--white); border: var(--border); font-family: var(--font-mono); font-size: var(--fs-micro); box-shadow: var(--shadow-sheet); }
+.d1-titleblock > * { padding: 10px 12px; display: flex; flex-direction: column; gap: 3px; border-bottom: 1px solid var(--ink); }
+/* O primeiro item é sempre o largo (nome); depois, pares: a célula da esquerda é a de índice par. */
+.d1-titleblock > :nth-child(even):not(.d1-titleblock__wide) { border-right: 1px solid var(--ink); }
+.d1-titleblock > :nth-last-child(-n+2) { border-bottom: 0; }
+.d1-titleblock__wide { grid-column: span 2; }
+.d1-titleblock__k { color: var(--text-3); letter-spacing: .06em; }
+.d1-titleblock__v { font-size: 13px; font-weight: 600; color: var(--text); }
+.d1-titleblock__name { font-family: var(--font-sans); font-size: 16px; font-weight: 700; }
+.d1-titleblock__accent { background: var(--amber); }
+
+/* ---------- Cota (linha de dimensão) ---------- */
+.d1-dimension { position: relative; height: 14px; border-inline: 1px solid var(--ink); display: flex; align-items: center; }
+.d1-dimension::before { content: ""; flex: 1; height: 1px; background: var(--ink); }
+.d1-dimension > span { position: absolute; left: 50%; transform: translateX(-50%); background: var(--paper); padding: 0 10px; font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .06em; }
+
+/* ---------- Card de serviço (índice) ---------- */
+.d1-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); border-top: var(--border); border-left: var(--border); background: var(--white); }
+.d1-service { border-right: var(--border); border-bottom: var(--border); padding: var(--s-7) 26px; display: flex; flex-direction: column; gap: var(--s-4); text-decoration: none; color: var(--text); transition: background var(--t-base); }
+.d1-service:hover { background: var(--paper-warm); }
+.d1-service__head { display: flex; justify-content: space-between; align-items: center; }
+.d1-service__title { font-size: var(--fs-h4); font-weight: 700; }
+.d1-service__text { font-size: var(--fs-small); line-height: var(--lh-body); color: var(--text-2); flex: 1; }
+.d1-service__more { padding-top: 14px; border-top: 1px dashed var(--line-2); display: flex; justify-content: space-between; }
+
+/* ---------- Chamada de detalhe (círculo A / E-01) ---------- */
+.d1-callout { width: 84px; height: 84px; border-radius: 50%; border: 2px solid var(--ink); background: var(--white); display: inline-flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+.d1-callout__letter { font-size: 30px; font-weight: 700; line-height: 1; }
+.d1-callout__ref { font-family: var(--font-mono); font-size: 10px; border-top: 1px solid var(--ink); padding-top: 2px; margin-top: 4px; }
+.d1-callout--sm { width: 60px; height: 60px; } .d1-callout--sm .d1-callout__letter { font-size: 22px; }
+.d1-callout--on-ink { background: transparent; border-color: var(--amber); color: var(--text-on-ink); }
+/* Radius 50% é a ÚNICA exceção à regra de cantos retos: é o símbolo de chamada de detalhe. */
+
+/* ---------- Tabela de detalhe (problema → faço → recebe) ---------- */
+.d1-spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); border: var(--border); background: var(--white); }
+.d1-spec__col { padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-3); border-right: 1px solid var(--line); }
+.d1-spec__col:last-child { border-right: 0; background: var(--paper-warm); }
+.d1-spec__k { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: var(--tracking-label); color: var(--amber-text); text-transform: uppercase; }
+.d1-spec__v { font-size: var(--fs-body); line-height: var(--lh-body); }
+.d1-checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); font-size: var(--fs-small); }
+.d1-checklist li::before { content: "☐ "; }
+.d1-checklist li.is-done::before { content: "☑ "; color: var(--amber-text); }
+
+/* ---------- Nota de atenção (sinal de alerta) ---------- */
+.d1-alert { display: grid; grid-template-columns: 72px 1fr; gap: var(--s-6); border-top: 1px solid rgba(243, 241, 234, .3); padding-top: var(--s-6); }
+.d1-alert__title { font-size: 30px; font-weight: 700; letter-spacing: -0.015em; }
+.d1-alert__text { font-size: 17px; line-height: var(--lh-body); color: var(--text-on-ink-2); margin-top: var(--s-2); }
+.d1-emergency { display: flex; justify-content: space-between; align-items: center; gap: var(--s-6); flex-wrap: wrap; background: var(--amber); color: var(--ink); padding: 26px 30px; }
+
+/* ---------- Lista de especificações (ART, NBR, CREA, CÁLCULO) ---------- */
+.d1-specs { list-style: none; margin: 0; padding: 0; }
+.d1-specs li { display: grid; grid-template-columns: 150px 1fr; gap: var(--s-6); padding: 26px 0; border-top: 1px solid var(--line-2); }
+.d1-specs li:first-child { border-top: var(--border); }
+.d1-specs li:last-child { border-bottom: var(--border); }
+.d1-specs__term { font-family: var(--font-mono); font-size: 26px; font-weight: 600; }
+.d1-specs__def { font-size: var(--fs-body); line-height: 1.6; color: var(--text-2); }
+.d1-specs__def strong { color: var(--text); }
+.d1-highlight { background: linear-gradient(transparent 62%, var(--amber) 62%); }
+
+/* ---------- Marcador numerado (antes/depois) ---------- */
+.d1-pin { display: inline-flex; align-items: center; gap: var(--s-2); font-size: 13px; }
+.d1-pin__n { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; background: var(--paper); color: var(--ink); }
+.d1-pin__t { background: rgba(15, 30, 51, .85); color: var(--text-on-ink); padding: 4px 8px; }
+.d1-pin--after .d1-pin__n { background: var(--amber); }
+.d1-pin--after .d1-pin__t { background: var(--ink); }
+
+/* ---------- Régua (trajetória) ---------- */
+.d1-ruler { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 2px solid var(--ink); }
+.d1-ruler__mark { border-left: 2px solid var(--ink); padding: 0 var(--s-3) var(--s-4) 14px; display: flex; flex-direction: column; gap: 6px; }
+.d1-ruler__year { font-family: var(--font-mono); font-size: 22px; font-weight: 600; }
+.d1-ruler__mark--now { background: var(--amber); padding-top: 10px; }
+
+/* ---------- Cronograma (Gantt) ---------- */
+.d1-gantt { border: var(--border); background: var(--white); position: relative; }
+.d1-gantt__row { display: grid; grid-template-columns: 300px repeat(12, minmax(0, 1fr)); align-items: center; min-height: 92px; border-bottom: 1px solid var(--line); }
+.d1-gantt__head { background: var(--ink); color: var(--text-on-ink); min-height: 0; font-family: var(--font-mono); font-size: var(--fs-micro); }
+.d1-gantt__head > * { padding: 12px 10px; border-left: 1px solid rgba(243, 241, 234, .3); }
+.d1-gantt__step { padding: var(--s-4) 18px; border-right: var(--border); align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+.d1-gantt__bar { height: 28px; margin: 0 6px; background: var(--ink); color: var(--text-on-ink); font-family: var(--font-mono); font-size: var(--fs-micro); display: flex; align-items: center; padding-left: 10px; }
+.d1-gantt__bar--variable { background: repeating-linear-gradient(135deg, var(--ink) 0 10px, #24395A 10px 20px); }
+.d1-gantt__bar--done { background: var(--amber); color: var(--ink); border: 1.5px solid var(--ink); font-weight: 600; }
+.d1-gantt__milestone { width: 22px; height: 22px; background: var(--amber); border: 2px solid var(--ink); transform: rotate(45deg); margin-left: 8px; }
+.d1-gantt__now { position: absolute; top: 40px; bottom: 0; border-left: 2px dashed var(--amber-text); }
+
+/* ---------- Nota de campo (depoimento) ---------- */
+.d1-fieldnote { margin: 0; background: var(--white); border: var(--border); padding: var(--s-6); display: flex; flex-direction: column; gap: 14px; box-shadow: 6px 6px 0 rgba(15, 30, 51, .1); }
+.d1-fieldnote blockquote { margin: 0; font-size: 18px; line-height: 1.5; }
+.d1-fieldnote figcaption { font-family: var(--font-mono); font-size: 12px; color: var(--text-3); }
+
+/* ---------- FAQ ---------- */
+.d1-faq details { border-top: 1px solid var(--line-2); padding: var(--s-5) 0; }
+.d1-faq details:first-child { border-top: var(--border); }
+.d1-faq details:last-child { border-bottom: var(--border); }
+.d1-faq summary { display: flex; justify-content: space-between; gap: var(--s-4); font-size: 18px; font-weight: 600; cursor: pointer; list-style: none; }
+.d1-faq summary::-webkit-details-marker { display: none; }
+.d1-faq summary::after { content: "+"; } .d1-faq details[open] summary::after { content: "−"; }
+.d1-faq__q { font-family: var(--font-mono); font-size: 13px; color: var(--amber-text); margin-right: 10px; }
+.d1-faq p { margin: 14px 0 0 42px; font-size: var(--fs-body); line-height: 1.6; color: var(--text-2); }
+
+/* ---------- Formulário-carimbo ---------- */
+.d1-formblock { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--white); color: var(--ink); border: 2px solid var(--paper); box-shadow: var(--shadow-form); }
+.d1-formblock__bar { grid-column: 1 / -1; padding: 12px 16px; background: var(--ink); color: var(--text-on-ink); font-family: var(--font-mono); font-size: 12px; display: flex; justify-content: space-between; }
+.d1-field { grid-column: span 2; padding: 12px 16px; border-bottom: 1px solid var(--ink); display: flex; flex-direction: column; gap: 4px; }
+.d1-field:nth-of-type(odd) { border-right: 1px solid var(--ink); }
+.d1-field--full { grid-column: 1 / -1; border-right: 0 !important; }
+.d1-field__k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; color: var(--text-3); text-transform: uppercase; }
+.d1-input { width: 100%; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--ink); padding: 4px 0; outline: none; }
+.d1-input::placeholder { color: #6B7789; }
+.d1-chip { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; padding: 0 14px; border: 1.5px solid var(--ink); font-size: 15px; cursor: pointer; }
+.d1-chip:has(input:checked) { background: var(--amber); font-weight: 600; }
+.d1-chip input { accent-color: var(--ink); margin: 0; }
+.d1-submit { grid-column: span 2; border: 0; background: var(--amber); color: var(--ink); font: 700 17px var(--font-sans); min-height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; cursor: pointer; }
+
+/* ---------- Faixa de rodapé ---------- */
+.d1-footstrip { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); border: 1px solid rgba(243, 241, 234, .3); font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-on-ink-2); }
+.d1-footstrip > * { padding: 10px 12px; border-right: 1px solid rgba(243, 241, 234, .3); }
+.d1-footstrip > :last-child { background: var(--amber); color: var(--ink); font-weight: 600; border-right: 0; }
+
+/* ---------- Foto (moldura + placeholder) ---------- */
+.d1-photo { border: 1px solid var(--ink); background-color: var(--placeholder); background-image: repeating-linear-gradient(135deg, rgba(15, 30, 51, .07) 0 2px, transparent 2px 14px); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 12px; color: var(--text-3); object-fit: cover; }
+
+/* ---------- Anotação de momento (só protótipo) ---------- */
+.d1-moment { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--note-fg); background: var(--note-bg); border: 1.5px dashed var(--note-line); padding: 10px 12px; }
+
+/* ---------- Movimento ---------- */
+@keyframes d1-draw  { from { stroke-dashoffset: var(--len, 400); } to { stroke-dashoffset: 0; } }
+@keyframes d1-stamp { 0% { transform: scale(1.04); box-shadow: 0 0 0 rgba(15,30,51,0); } 100% { transform: scale(1); box-shadow: var(--shadow-sheet); } }
+@keyframes d1-grow  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.d1-anim-stamp { animation: d1-stamp 420ms var(--ease-stamp) both; }
+.d1-anim-grow  { transform-origin: left; animation: d1-grow var(--t-draw) var(--ease-draw) both; }
+@media (prefers-reduced-motion: reduce) { .d1 * { animation: none !important; transition: none !important; } }
+
+/* ---------- Celular ---------- */
+@media (max-width: 640px) {
+  .d1 { --grid-size: 20px; }
+  .d1-alert { grid-template-columns: 48px 1fr; gap: var(--s-4); }
+  .d1-alert__title { font-size: 22px; }
+  .d1-specs li { grid-template-columns: 1fr; gap: 6px; }
+  .d1-formblock { grid-template-columns: 1fr; }
+  .d1-field, .d1-submit { grid-column: 1 / -1; border-right: 0 !important; }
+  .d1-gantt__row { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .d1-gantt__step { grid-column: 1 / -1; border-right: 0; }
+  .d1-ruler { grid-template-columns: 1fr; border-bottom: 0; border-left: 2px solid var(--ink); }
+}

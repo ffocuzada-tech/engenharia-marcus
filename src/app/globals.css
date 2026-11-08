@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/*
+ * Tokens da direção D1 · Prancha técnica.
+ * Fonte: design-system/d1/tokens.css — qualquer mudança de cor, tipografia
+ * ou espaçamento deve ser decidida lá primeiro e só então replicada aqui.
+ */
+@theme {
+  /* ---- Cor: superfícies ---- */
+  --color-paper: #f3f1ea;
+  --color-paper-warm: #fbf6e4;
+  --color-white: #ffffff;
+  --color-ink: #0f1e33;
+  --color-night: #0b1626;
+  --color-placeholder: #dcd8cc;
+
+  /* ---- Cor: texto ---- */
+  --color-text-2: #33415a;
+  --color-text-3: #4b5a6e;
+  --color-on-ink: #f3f1ea;
+  --color-on-ink-2: #c9d0da;
+  --color-on-ink-3: #b9c2cf;
+
+  /* ---- Cor: acento (sinalização) ----
+   * --color-amber é SEMPRE preenchimento (bg-amber). Nunca usar text-amber
+   * sobre papel: para texto em âmbar, use text-amber-text (contraste 5,2:1).
+   */
+  --color-amber: #f2b417;
+  --color-amber-text: #8a5a00;
+  --color-amber-icon: #b07a00;
+
+  /* ---- Tipografia ---- */
+  --font-sans: var(--font-plex-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --text-display-xl: clamp(50px, 6.4vw, 92px);
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.04em;
+  --text-display: clamp(38px, 5vw, 72px);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+  --text-h1: clamp(36px, 4.2vw, 60px);
+  --text-h1--line-height: 1.03;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(28px, 3.1vw, 44px);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(24px, 2.4vw, 34px);
+  --text-h3--line-height: 1.05;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(20px, 1.6vw, 23px);
+  --text-h4--line-height: 1.2;
+  --text-body-lg: clamp(17px, 1.35vw, 19px);
+  --text-body-lg--line-height: 1.55;
+  --text-body: 16px;
+  --text-body--line-height: 1.55;
+  --text-small: 15px;
+  --text-label: 13px;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+  --text-micro: 11px;
+  --text-micro--line-height: 1.4;
+  --text-micro--letter-spacing: 0.08em;
+
+  /* ---- Forma: cantos sempre retos na D1 ---- */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-full: 0px;
+}
+
+/*
+ * Tokens que não geram utilitários Tailwind (linhas, sombras sólidas,
+ * malha de fundo, movimento). Usados via var(--nome) ou arbitrary values,
+ * ex.: shadow-[var(--shadow-offset)].
+ */
+:root {
+  --line: rgba(15, 30, 51, 0.18);
+  --line-2: rgba(15, 30, 51, 0.35);
+  --line-strong: #0f1e33;
+  --grid: rgba(15, 30, 51, 0.06);
+  --grid-on-ink: rgba(243, 241, 234, 0.06);
+  --grid-size: 24px;
+
+  --shadow-offset: 4px 4px 0 var(--color-ink);
+  --shadow-sheet: 8px 8px 0 rgba(15, 30, 51, 0.12);
+  --shadow-form: 12px 12px 0 var(--color-amber);
+
+  --ease-draw: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-stamp: cubic-bezier(0.2, 1.4, 0.4, 1);
+  --t-fast: 150ms;
+  --t-base: 250ms;
+  --t-draw: 600ms;
+  --stagger: 120ms;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --grid-size: 20px;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Malha de papel milimetrado (equivalente a .d1-paper do design system) */
+.bg-grid-paper {
+  background-color: var(--color-paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

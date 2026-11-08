@@ -1,0 +1,457 @@
+<title>Sistema de design [NOME]</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&amp;family=DM+Mono:wght@400;500&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../d1/tokens.css">
+<link rel="stylesheet" href="../d1/components.css">
+<link rel="stylesheet" href="../d3/tokens.css">
+<link rel="stylesheet" href="../d3/components.css">
+<style>
+/* Página de referência: chrome neutro, para não competir com as duas direções. */
+:root { --bg: #F5F5F2; --fg: #16181B; --muted: #555B63; --rule: #D9DAD5; --card: #FFFFFF; --hl: #0F1E33;
+  --font: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif; --mono: 'IBM Plex Mono', ui-monospace, monospace; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #131517; --fg: #ECECE8; --muted: #A4A9B0; --rule: #2C3034; --card: #1B1E21; --hl: #F2B417; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #131517; --fg: #ECECE8; --muted: #A4A9B0; --rule: #2C3034; --card: #1B1E21; --hl: #F2B417; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--rule); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 14px; }
+.top b { font-size: 16px; }
+.top nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.top nav a { font-family: var(--mono); font-size: 13px; color: var(--fg); text-decoration: none; padding: 8px 12px; border: 1px solid var(--rule); }
+.top nav a:hover { border-color: var(--fg); }
+.intro { padding-block: 56px 32px; display: grid; gap: 18px; }
+.intro h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.03em; text-wrap: balance; }
+.intro p { margin: 0; max-width: 68ch; font-size: 17px; line-height: 1.6; color: var(--muted); }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 8px; }
+.files div { background: var(--card); padding: 14px 16px; display: grid; gap: 4px; min-width: 0; }
+.files code { font-family: var(--mono); font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.files span { font-size: 14px; color: var(--muted); line-height: 1.45; }
+.dir { padding-block: 48px 24px; border-top: 2px solid var(--fg); margin-top: 40px; }
+.dir__head { display: grid; gap: 10px; margin-bottom: 32px; }
+.dir__head h2 { margin: 0; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.02em; }
+.dir__head p { margin: 0; max-width: 72ch; font-size: 16px; line-height: 1.6; color: var(--muted); }
+.grp { margin-top: 48px; }
+.grp > h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.01em; }
+.grp > p { margin: 0 0 18px; max-width: 72ch; color: var(--muted); line-height: 1.55; font-size: 15px; }
+.spec { margin: 0 0 28px; border: 1px solid var(--rule); background: var(--card); min-width: 0; }
+.spec__stage { padding: 32px; overflow-x: auto; }
+.spec figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 16px; border-top: 1px solid var(--rule); font-size: 14px; }
+.spec figcaption code { font-family: var(--mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.row2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); gap: 28px; }
+.row2 > .spec { margin-bottom: 0; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.sw { display: grid; gap: 6px; font-family: var(--mono); font-size: 12px; color: inherit; }
+.sw i { display: block; height: 72px; border: 1px solid rgba(0,0,0,.12); }
+.sw b { font-family: var(--font); font-size: 14px; }
+.sw span { opacity: .8; line-height: 1.4; }
+.typerow { display: grid; grid-template-columns: 170px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid currentColor; border-color: rgba(0,0,0,.1); }
+.typerow code { font-family: var(--mono); font-size: 12px; opacity: .75; line-height: 1.5; }
+.map { display: grid; grid-template-columns: 1fr 1fr; gap: 0; font-family: var(--mono); font-size: 11px; max-width: 760px; }
+.map > div { display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-bottom: 1px solid rgba(255,255,255,.18); min-height: 14px; }
+.map__label { grid-column: 1; } .map__note { grid-column: 2; background: transparent !important; color: var(--fg) !important; border-bottom: 1px solid var(--rule) !important; justify-content: flex-start !important; gap: 8px; }
+.pill { display: inline-block; padding: 1px 6px; border: 1px solid currentColor; font-size: 10px; }
+.shots { display: grid; grid-template-columns: 3fr 1fr; gap: 16px; align-items: start; }
+.shots a { display: block; border: 1px solid var(--rule); max-height: 520px; overflow: hidden; }
+.shots img { display: block; width: 100%; height: auto; }
+@media (max-width: 720px) { .typerow { grid-template-columns: 1fr; gap: 6px; } .spec__stage { padding: 18px; } .map { grid-template-columns: 1fr; } .map__note { grid-column: 1; } .shots { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <b>[NOME] Engenharia Elétrica · Sistema de design</b>
+    <nav aria-label="Seções"><a href="#d1">D1 · Prancha técnica</a><a href="#d3">D3 · Unifilar</a><a href="#arquivos">Arquivos</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro" id="arquivos">
+    <h1>Duas direções, um sistema de arquivos para levar ao código.</h1>
+    <p>Esta página mostra os tokens e componentes reais das direções D1 (Prancha técnica) e D3 (Unifilar). Tudo o que aparece aqui sai dos mesmos arquivos CSS que vão para a pasta do projeto. O documento completo, com regras de uso, estrutura de páginas, movimento, fotografia e prompts, está em <code>DESIGN-SYSTEM.md</code>.</p>
+    <div class="files">
+      <div><code>DESIGN-SYSTEM.md</code><span>Documento completo das duas direções.</span></div>
+      <div><code>d1/tokens.css · d1/components.css</code><span>Ative com a classe <code>.d1</code> no &lt;html&gt;.</span></div>
+      <div><code>d3/tokens.css · d3/components.css</code><span>Ative com a classe <code>.d3</code> no &lt;html&gt;.</span></div>
+      <div><code>tokens.json</code><span>Os mesmos tokens em JSON, para ferramentas.</span></div>
+      <div><code>img/</code><span>Imagem de cada componente e das páginas inteiras.</span></div>
+      <div><code>PRODUCAO-VIDEO-3D.md</code><span>Briefings e prompts para vídeos, loops e 3D.</span></div>
+    </div>
+  </section>
+
+  <!-- ===================================================== D1 -->
+  <section class="dir" id="d1">
+    <div class="dir__head">
+      <span class="d1-label" style="font-family: var(--mono); color: var(--muted)">DIREÇÃO 1</span>
+      <h2>D1 · Prancha técnica</h2>
+      <p>O site é um jogo de pranchas de engenharia. Cada seção é uma folha numerada (01/11 a 11/11), com faixa de folha, cotas, chamadas de detalhe e carimbo. Papel milimetrado, nanquim azul-marinho e âmbar de sinalização. Cantos sempre retos.</p>
+    </div>
+
+    <div class="grp">
+      <h3>Cores</h3>
+      <p>Âmbar #F2B417 é preenchimento, nunca texto sobre papel. Para texto em âmbar, use #8A5A00.</p>
+      <figure class="spec" id="d1-cores"><div class="spec__stage d1" style="background: var(--paper)">
+        <div class="swatches">
+          <div class="sw"><i style="background:#F3F1EA"></i><b>Papel</b><span>--paper · #F3F1EA<br>fundo principal</span></div>
+          <div class="sw"><i style="background:#0F1E33"></i><b>Nanquim</b><span>--ink · #0F1E33<br>texto, bordas, seções escuras</span></div>
+          <div class="sw"><i style="background:#F2B417"></i><b>Âmbar</b><span>--amber · #F2B417<br>botões, marcos, destaque</span></div>
+          <div class="sw"><i style="background:#8A5A00"></i><b>Âmbar texto</b><span>--amber-text · #8A5A00<br>5,2:1 sobre papel</span></div>
+          <div class="sw"><i style="background:#33415A"></i><b>Texto 2</b><span>--text-2 · #33415A<br>9,1:1</span></div>
+          <div class="sw"><i style="background:#4B5A6E"></i><b>Texto 3</b><span>--text-3 · #4B5A6E<br>rótulos mono · 6,2:1</span></div>
+          <div class="sw"><i style="background:#FFFFFF"></i><b>Branco</b><span>--white<br>cartões, tabelas, carimbo</span></div>
+          <div class="sw"><i style="background:#FBF6E4"></i><b>Papel quente</b><span>--paper-warm · #FBF6E4<br>coluna "você recebe"</span></div>
+          <div class="sw"><i style="background:#0B1626"></i><b>Noite</b><span>--night · #0B1626<br>rodapé</span></div>
+          <div class="sw"><i style="background:#C9D0DA"></i><b>Texto no escuro</b><span>--text-on-ink-2 · #C9D0DA<br>10,8:1 sobre nanquim</span></div>
+        </div>
+      </div><figcaption><span>Paleta D1</span><code>d1/tokens.css</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Tipografia</h3>
+      <p>IBM Plex Sans para tudo o que se lê; IBM Plex Mono para o que é "anotação de prancha": códigos, rótulos, cotas, carimbo. Rótulos mono sempre em caixa alta com +0,08em.</p>
+      <figure class="spec" id="d1-tipo"><div class="spec__stage d1 d1-paper">
+        <div class="typerow"><code>display-xl<br>92 / 50 · 700 · -0.04em</code><span style="font-size: 72px; font-weight: 700; letter-spacing: -0.04em; line-height: 1">Quatro sinais</span></div>
+        <div class="typerow"><code>h1 hero<br>60 / 36 · 700 · -0.03em</code><span style="font-size: 52px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.04">Elétrica com projeto</span></div>
+        <div class="typerow"><code>h2<br>44 / 28 · 700</code><span style="font-size: 40px; font-weight: 700; letter-spacing: -0.025em">Quatro serviços</span></div>
+        <div class="typerow"><code>h3 / h4<br>34 · 23 / 26 · 20</code><span style="font-size: 30px; font-weight: 700">Instalação elétrica</span></div>
+        <div class="typerow"><code>body-lg / body<br>19 · 16 / 17 · 15 · 1.55</code><span style="font-size: 18px; line-height: 1.55; color: var(--text-2)">Cada serviço sai com responsável técnico e ART registrada.</span></div>
+        <div class="typerow"><code>label mono<br>13 · 600 · +0.08em · CAIXA ALTA</code><span class="d1-label d1-eyebrow">Folha 02 · Serviços</span></div>
+        <div class="typerow" style="border-bottom: 0"><code>micro mono<br>11 · faixa de folha, carimbo</code><span class="d1-mono" style="font-size: 11px; letter-spacing: .08em">FOLHA 01 / 11 · ESC. 1:1 · REV. 2026</span></div>
+      </div><figcaption><span>Escala tipográfica (computador / celular)</span><code>--fs-* · --font-sans · --font-mono</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Botões e links</h3>
+      <p>Um botão primário por tela. Ele tem sombra sólida deslocada (4px) que "levanta" no hover e "afunda" no clique.</p>
+      <figure class="spec" id="d1-botoes"><div class="spec__stage d1 d1-paper" style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center">
+        <a href="#d1" class="d1-btn d1-btn--primary">Pedir orçamento grátis <span aria-hidden="true">→</span></a>
+        <a href="#d1" class="d1-btn d1-btn--outline">Ver os 4 serviços</a>
+        <a href="#d1" class="d1-btn d1-btn--dark">Pedir orçamento <span aria-hidden="true">→</span></a>
+        <a href="#d1" class="d1-link-mono">Ver detalhe A <span aria-hidden="true">↓</span></a>
+        <span class="d1-tag">E-01</span>
+      </div><figcaption><span>Primário · contorno · escuro · link mono · etiqueta</span><code>.d1-btn--primary · --outline · --dark · .d1-link-mono · .d1-tag</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Elementos de prancha</h3>
+      <p>Toda seção abre com a faixa de folha. A cota é o divisor entre blocos. O carimbo é a assinatura do engenheiro e aparece no hero, no formulário e no rodapé.</p>
+      <div class="row2">
+        <figure class="spec" id="d1-folha"><div class="spec__stage d1 d1-paper" style="display: grid; gap: 40px">
+          <div class="d1-sheet"><span>FOLHA 02 / 11 · ÍNDICE DE SERVIÇOS</span><span>4 DETALHES</span></div>
+          <div class="d1-dimension"><span>DETALHE B</span></div>
+          <div class="d1-blueprint" style="padding: 0 16px 16px"><div class="d1-sheet"><span>FOLHA 03 / 11 · NOTAS DE ATENÇÃO</span><span>LEIA ANTES DE RELIGAR</span></div></div>
+        </div><figcaption><span>Faixa de folha (claro/escuro) e cota</span><code>.d1-sheet · .d1-dimension</code></figcaption></figure>
+        <figure class="spec" id="d1-carimbo"><div class="spec__stage d1 d1-paper" style="display: flex; justify-content: center">
+          <div class="d1-titleblock" style="width: 330px">
+            <div class="d1-titleblock__wide"><span class="d1-titleblock__k">RESPONSÁVEL TÉCNICO</span><span class="d1-titleblock__name">Eng. [NOME SOBRENOME]</span></div>
+            <div><span class="d1-titleblock__k">CREA-SP</span><span class="d1-titleblock__v">000000000-0</span></div>
+            <div><span class="d1-titleblock__k">DESDE</span><span class="d1-titleblock__v">[ANO]</span></div>
+            <div><span class="d1-titleblock__k">ÁREA</span><span class="d1-titleblock__v">[CIDADE / REGIÃO]</span></div>
+            <div class="d1-titleblock__accent"><span>FOLHA</span><span class="d1-titleblock__v">01 / 11</span></div>
+          </div>
+        </div><figcaption><span>Carimbo (title block)</span><code>.d1-titleblock</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Serviços: índice e detalhe</h3>
+      <p>O índice é uma tabela contínua (bordas compartilhadas). Cada card leva ao seu detalhe pela chamada circular A–D. No detalhe, a tabela tem sempre três colunas: problema, o que eu faço, você recebe.</p>
+      <figure class="spec" id="d1-servico"><div class="spec__stage d1 d1-paper">
+        <div class="d1-index">
+          <a href="#d1" class="d1-service"><div class="d1-service__head"><span class="d1-tag">E-01</span><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#0F1E33" stroke-width="1.6" aria-hidden="true"><circle cx="20" cy="20" r="14"></circle><path d="M14 17v6M26 17v6M17 29h6"></path></svg></div><h4 class="d1-service__title">Instalação elétrica</h4><p class="d1-service__text">Obra nova, reforma ou ampliação, da entrada de energia à última tomada.</p><span class="d1-service__more d1-link-mono">Ver detalhe A <span aria-hidden="true">↓</span></span></a>
+          <a href="#d1" class="d1-service"><div class="d1-service__head"><span class="d1-tag">E-02</span><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#0F1E33" stroke-width="1.6" aria-hidden="true"><rect x="7" y="9" width="26" height="22"></rect><path d="M7 25h26M13 25v6M19 9v10h8"></path></svg></div><h4 class="d1-service__title">Projetos elétricos</h4><p class="d1-service__text">Memorial de cálculo, ART e aprovação na concessionária.</p><span class="d1-service__more d1-link-mono">Ver detalhe B <span aria-hidden="true">↓</span></span></a>
+          <a href="#d1" class="d1-service"><div class="d1-service__head"><span class="d1-tag">E-03</span><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#0F1E33" stroke-width="1.6" aria-hidden="true"><path d="M8 28a14 14 0 0 1 24 0"></path><path d="M20 28l6-9"></path><circle cx="20" cy="28" r="2"></circle><path d="M8 33h24"></path></svg></div><h4 class="d1-service__title">Inspeções e laudos</h4><p class="d1-service__text">Medições e laudo assinado para imóvel, seguro ou vistoria.</p><span class="d1-service__more d1-link-mono">Ver detalhe C <span aria-hidden="true">↓</span></span></a>
+        </div>
+      </div><figcaption><span>Índice de serviços (3 de 4)</span><code>.d1-index &gt; .d1-service</code></figcaption></figure>
+      <figure class="spec" id="d1-detalhe"><div class="spec__stage d1 d1-paper" style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: start">
+        <div style="display: flex; align-items: center; gap: 18px"><span class="d1-callout"><span class="d1-callout__letter">A</span><span class="d1-callout__ref">E-01</span></span><h3 style="font-size: 30px; line-height: 1.05">Instalação<br>elétrica</h3></div>
+        <div class="d1-spec">
+          <div class="d1-spec__col"><span class="d1-spec__k">01 · O problema</span><p class="d1-spec__v">Casa antiga que não aguenta ar, chuveiro e forno ao mesmo tempo.</p></div>
+          <div class="d1-spec__col"><span class="d1-spec__k">02 · O que eu faço</span><p class="d1-spec__v">Dimensiono circuitos e quadro e identifico cada circuito.</p></div>
+          <div class="d1-spec__col"><span class="d1-spec__k">03 · Você recebe</span><ul class="d1-checklist"><li class="is-done">Quadro identificado</li><li class="is-done">Diagrama na porta</li><li>ART de execução</li><li>Garantia de [X] meses</li></ul></div>
+        </div>
+      </div><figcaption><span>Chamada de detalhe + tabela de detalhe</span><code>.d1-callout · .d1-spec · .d1-checklist (li.is-done)</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Alertas, especificações e comparação</h3>
+      <p>Alertas vivem sempre na versão "blueprint" (fundo nanquim). A lista de especificações usa o termo em mono grande. Os marcadores numerados ligam o "antes" ao "depois".</p>
+      <figure class="spec" id="d1-alerta"><div class="spec__stage d1 d1-blueprint" style="display: grid; gap: 32px">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 40px">
+          <div class="d1-alert"><svg width="64" height="58" viewBox="0 0 64 58" aria-hidden="true"><path d="M32 3 L61 55 H3 Z" fill="none" stroke="#F2B417" stroke-width="3"></path><text x="32" y="47" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="22" font-weight="600" fill="#F2B417">1</text></svg><div><h4 class="d1-alert__title">Disjuntor desarmando</h4><p class="d1-alert__text">Sobrecarga ou fuga de corrente. Religar e torcer não resolve.</p></div></div>
+          <div class="d1-alert"><svg width="64" height="58" viewBox="0 0 64 58" aria-hidden="true"><path d="M32 3 L61 55 H3 Z" fill="none" stroke="#F2B417" stroke-width="3"></path><text x="32" y="47" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="22" font-weight="600" fill="#F2B417">4</text></svg><div><h4 class="d1-alert__title">Tomada quente</h4><p class="d1-alert__text">Mau contato ou cabo fino demais. Começo comum de incêndio.</p></div></div>
+        </div>
+        <div class="d1-emergency"><p style="font-size: 17px"><strong>Fumaça ou faísca?</strong> Desligue o disjuntor geral e afaste-se do quadro.</p><a href="#d1" class="d1-btn d1-btn--dark">Chamar no WhatsApp agora →</a></div>
+      </div><figcaption><span>Nota de atenção + faixa de emergência</span><code>.d1-blueprint · .d1-alert · .d1-emergency</code></figcaption></figure>
+      <div class="row2">
+        <figure class="spec" id="d1-specs"><div class="spec__stage d1 d1-paper">
+          <ol class="d1-specs">
+            <li><span class="d1-specs__term">ART</span><p class="d1-specs__def"><strong>Anotação de Responsabilidade Técnica.</strong> Registro no CREA de quem responde pelo serviço.</p></li>
+            <li><span class="d1-specs__term">NBR 5410</span><p class="d1-specs__def"><strong>A norma de baixa tensão.</strong> Bitola, proteção, aterramento e DR.</p></li>
+          </ol>
+        </div><figcaption><span>Lista de especificações</span><code>.d1-specs · .d1-highlight</code></figcaption></figure>
+        <figure class="spec" id="d1-pinos"><div class="spec__stage d1" style="display: grid; grid-template-columns: 1fr 1fr; padding: 0">
+          <div style="background: #3A3A3A; min-height: 220px; display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 20px; color: #F3F1EA"><span class="d1-pin"><span class="d1-pin__n">1</span><span class="d1-pin__t">Emendas expostas</span></span><span class="d1-pin"><span class="d1-pin__n">2</span><span class="d1-pin__t">Sem DR</span></span></div>
+          <div class="d1-photo" style="min-height: 220px; flex-direction: column; gap: 16px; align-items: flex-end; padding: 20px; border: 0"><span class="d1-pin d1-pin--after" style="color: #F3F1EA"><span class="d1-pin__t">Barramento e DPS</span><span class="d1-pin__n">1</span></span><span class="d1-pin d1-pin--after" style="color: #F3F1EA"><span class="d1-pin__t">DR instalado</span><span class="d1-pin__n">2</span></span></div>
+        </div><figcaption><span>Marcadores antes/depois</span><code>.d1-pin · .d1-pin--after · .d1-photo</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Trajetória e cronograma</h3>
+      <p>A trajetória é uma régua com cotas em anos. O cronograma substitui o "passo a passo" genérico: barras de prazo, losango de aprovação e a linha "você está aqui".</p>
+      <figure class="spec" id="d1-regua"><div class="spec__stage d1 d1-paper">
+        <div class="d1-ruler">
+          <div class="d1-ruler__mark"><span class="d1-ruler__year">[ANO]</span><span style="font-size: 14px; color: var(--text-2)">Formação · [UNIVERSIDADE]</span></div>
+          <div class="d1-ruler__mark"><span class="d1-ruler__year">[ANO]</span><span style="font-size: 14px; color: var(--text-2)">Primeiros anos em [EMPRESA]</span></div>
+          <div class="d1-ruler__mark"><span class="d1-ruler__year">[ANO]</span><span style="font-size: 14px; color: var(--text-2)">Primeiras obras com ART</span></div>
+          <div class="d1-ruler__mark"><span class="d1-ruler__year">[ANO]</span><span style="font-size: 14px; color: var(--text-2)">Abre a [NOME]</span></div>
+          <div class="d1-ruler__mark d1-ruler__mark--now"><span class="d1-ruler__year">HOJE</span><span style="font-size: 14px">[XXX] clientes</span></div>
+        </div>
+      </div><figcaption><span>Régua de trajetória</span><code>.d1-ruler · .d1-ruler__mark--now</code></figcaption></figure>
+      <figure class="spec" id="d1-cronograma"><div class="spec__stage d1 d1-paper">
+        <div class="d1-gantt" role="table" aria-label="Cronograma de exemplo">
+          <div class="d1-gantt__row d1-gantt__head" role="row"><span role="columnheader" style="border-left: 0; padding-left: 18px">ETAPA</span><span role="columnheader" style="grid-column: 2 / 5">CONTATO · LEVANTAMENTO</span><span role="columnheader" style="grid-column: 5 / 11">OBRA</span><span role="columnheader" style="grid-column: 11 / 14; background: var(--amber); color: var(--ink)">ENTREGA</span></div>
+          <div class="d1-gantt__row" role="row"><div class="d1-gantt__step" role="cell"><b>02 Visita técnica</b><span style="font-size: 14px; color: var(--text-3)">Medições no local</span></div><div class="d1-gantt__bar" role="cell" style="grid-column: 3 / 5">[X] DIAS</div></div>
+          <div class="d1-gantt__row" role="row"><div class="d1-gantt__step" role="cell"><b>03 Orçamento</b><span style="font-size: 14px; color: var(--text-3)">Marco de aprovação</span></div><div role="cell" style="grid-column: 5 / 6"><div class="d1-gantt__milestone"></div></div></div>
+          <div class="d1-gantt__row" role="row"><div class="d1-gantt__step" role="cell"><b>04 Execução</b><span style="font-size: 14px; color: var(--text-3)">Duração varia</span></div><div class="d1-gantt__bar d1-gantt__bar--variable" role="cell" style="grid-column: 6 / 11">CONFORME ORÇAMENTO</div></div>
+          <div class="d1-gantt__row" role="row" style="border-bottom: 0; background: var(--paper-warm)"><div class="d1-gantt__step" role="cell"><b>05 Entrega e ART</b></div><div class="d1-gantt__bar d1-gantt__bar--done" role="cell" style="grid-column: 11 / 13">ART ✓</div></div>
+        </div>
+      </div><figcaption><span>Cronograma de atendimento</span><code>.d1-gantt · __bar · __bar--variable · __bar--done · __milestone · __now</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Notas de campo, FAQ e formulário-carimbo</h3>
+      <p>O pedido de orçamento é o próprio carimbo da prancha. Campos em células com rótulo mono minúsculo; o envio é a célula âmbar.</p>
+      <div class="row2">
+        <figure class="spec" id="d1-notas"><div class="spec__stage d1 d1-paper" style="display: grid; gap: 24px">
+          <figure class="d1-fieldnote"><span class="d1-mono" style="font-size: 11px; color: var(--amber-text)">NOTA DE CAMPO 01 · INSTALAÇÃO · CASA</span><blockquote>“[Depoimento real de cliente residencial.]”</blockquote><figcaption>[Nome], [bairro]</figcaption></figure>
+          <div class="d1-faq"><details open><summary><span><span class="d1-faq__q">Q1</span>Eletricista ou engenheiro?</span></summary><p>O engenheiro calcula, projeta e assina a ART.</p></details><details><summary><span><span class="d1-faq__q">Q2</span>A visita técnica é cobrada?</span></summary></details></div>
+        </div><figcaption><span>Nota de campo + FAQ</span><code>.d1-fieldnote · .d1-faq</code></figcaption></figure>
+        <figure class="spec" id="d1-form"><div class="spec__stage d1 d1-blueprint" style="padding: 32px 44px 44px 32px">
+          <form class="d1-formblock" aria-label="Exemplo de formulário-carimbo" onsubmit="event.preventDefault()">
+            <div class="d1-formblock__bar"><span>PEDIDO Nº ____</span><span>DATA __/__/____</span></div>
+            <label class="d1-field" for="d1f-n"><span class="d1-field__k">Solicitante</span><input id="d1f-n" class="d1-input" placeholder="Seu nome"></label>
+            <label class="d1-field" for="d1f-w"><span class="d1-field__k">WhatsApp</span><input id="d1f-w" class="d1-input" placeholder="(11) 9 0000-0000"></label>
+            <fieldset class="d1-field d1-field--full" style="border: 0; border-bottom: 1px solid var(--ink); margin: 0"><legend class="d1-field__k" style="padding: 0; float: left; width: 100%; margin-bottom: 8px">Serviço</legend><div style="display: flex; gap: 8px; flex-wrap: wrap"><label class="d1-chip"><input type="radio" name="d1fs" checked>E-01</label><label class="d1-chip"><input type="radio" name="d1fs">E-02</label><label class="d1-chip"><input type="radio" name="d1fs">E-03</label></div></fieldset>
+            <label class="d1-field" for="d1f-f" style="border-bottom: 0"><span class="d1-field__k">Anexo</span><input id="d1f-f" type="file" style="font-size: 12px"></label>
+            <button class="d1-submit" type="submit">Enviar pedido <span aria-hidden="true">→</span></button>
+          </form>
+        </div><figcaption><span>Formulário-carimbo</span><code>.d1-formblock · .d1-field · .d1-chip · .d1-submit</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Rodapé e anotação</h3>
+      <div class="row2">
+        <figure class="spec" id="d1-rodape"><div class="spec__stage d1" style="background: var(--night)"><div class="d1-footstrip"><span>© 2026 [NOME]</span><span>RESP. TÉC.: ENG. [NOME]</span><span>NORMA: NBR 5410</span><span>FOLHA 11 / 11 · FIM</span></div></div><figcaption><span>Faixa final do rodapé</span><code>.d1-footstrip</code></figcaption></figure>
+        <figure class="spec" id="d1-momento"><div class="spec__stage d1 d1-paper"><div class="d1-moment">[MOMENTO: o que se move · gatilho · o que acontece no celular]</div></div><figcaption><span>Anotação de animação (só protótipo)</span><code>.d1-moment</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Estrutura da página</h3>
+      <p>Alturas proporcionais às medidas reais a 1440 px. Seções escuras são momentos de respiro e escala grande; claras são densas.</p>
+      <figure class="spec" id="d1-layout"><div class="spec__stage">
+        <div class="map">
+          <div class="map__label" style="background:#F3F1EA;color:#0F1E33;min-height:46px">01 Hero · 831 px</div><div class="map__note">denso <span class="pill">carimbo</span> <span class="pill">cotas</span></div>
+          <div class="map__label" style="background:#F3F1EA;color:#0F1E33;min-height:37px">02 Índice de serviços · 668</div><div class="map__note">denso <span class="pill">tabela contínua</span></div>
+          <div class="map__label" style="background:#0F1E33;color:#F3F1EA;min-height:64px">03 Sinais de alerta · 1167</div><div class="map__note">respiro · escala grande</div>
+          <div class="map__label" style="background:#F3F1EA;color:#0F1E33;min-height:99px">04 Detalhes A–D · 1798</div><div class="map__note">denso <span class="pill">A/B alternam · C/D alinhados</span></div>
+          <div class="map__label" style="background:#F3F1EA;color:#0F1E33;min-height:59px">05 Por que engenheiro · 1073</div><div class="map__note">respiro <span class="pill">3D</span></div>
+          <div class="map__label" style="background:#0F1E33;color:#F3F1EA;min-height:58px">06 Antes × depois · 1053</div><div class="map__note">médio <span class="pill">slider</span></div>
+          <div class="map__label" style="background:#F3F1EA;color:#0F1E33;min-height:47px">07 Trajetória · 849</div><div class="map__note">médio <span class="pill">régua</span></div>
+          <div class="map__label" style="background:#FFFFFF;color:#0F1E33;min-height:59px">08 Cronograma · 1080</div><div class="map__note">denso <span class="pill">gantt</span></div>
+          <div class="map__label" style="background:#F3F1EA;color:#0F1E33;min-height:42px">09 Notas e FAQ · 759</div><div class="map__note">denso</div>
+          <div class="map__label" style="background:#0F1E33;color:#F3F1EA;min-height:43px">10 Pedido (carimbo) · 779</div><div class="map__note">respiro <span class="pill">formulário</span></div>
+          <div class="map__label" style="background:#0B1626;color:#C9D0DA;min-height:16px">11 Rodapé · 278</div><div class="map__note">faixa final</div>
+        </div>
+      </div><figcaption><span>Mapa de ritmo · total 10.421 px no computador, 9.551 px no celular</span><code>container 1200 · gutter 32/20 · malha 24/20</code></figcaption></figure>
+      <div class="shots">
+        <a href="../img/pagina-D1-computador.png" target="_blank" rel="noopener"><img src="../img/pagina-D1-computador.png" alt="Página D1 completa no computador" loading="lazy"></a>
+        <a href="../img/pagina-D1-celular.png" target="_blank" rel="noopener"><img src="../img/pagina-D1-celular.png" alt="Página D1 completa no celular" loading="lazy"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== D3 -->
+  <section class="dir" id="d3">
+    <div class="dir__head">
+      <span style="font-family: var(--mono); font-size: 13px; color: var(--muted)">DIREÇÃO 3</span>
+      <h2>D3 · Unifilar</h2>
+      <p>A página é um diagrama unifilar vivo. Uma linha de cobre de 3 px desce do hero ao rodapé; cada seção é um circuito que liga. Verde-petróleo e papel se alternam; cobre é o único acento. Tipografia Archivo em largura expandida para títulos.</p>
+    </div>
+
+    <div class="grp">
+      <h3>Cores</h3>
+      <p>Cobre #D0844A é linha, botão e número. Como texto sobre papel, use #7A3E15; sobre petróleo, use #E8A574 para rótulos.</p>
+      <figure class="spec" id="d3-cores"><div class="spec__stage d3" style="background: var(--paper)">
+        <div class="swatches">
+          <div class="sw"><i style="background:#0E2F2E"></i><b>Petróleo</b><span>--petrol · #0E2F2E<br>seções escuras, texto</span></div>
+          <div class="sw"><i style="background:#F1ECE2"></i><b>Papel</b><span>--paper · #F1ECE2<br>seções claras, formulário</span></div>
+          <div class="sw"><i style="background:#D0844A"></i><b>Cobre</b><span>--copper · #D0844A<br>tronco, botões, C1–C4</span></div>
+          <div class="sw"><i style="background:#E8A574"></i><b>Cobre claro</b><span>--copper-light · #E8A574<br>rótulos no escuro · 6,9:1</span></div>
+          <div class="sw"><i style="background:#7A3E15"></i><b>Cobre texto</b><span>--copper-text · #7A3E15<br>rótulos no claro · 7,1:1</span></div>
+          <div class="sw"><i style="background:#E6DECF"></i><b>Areia</b><span>--sand · #E6DECF<br>leituras e FAQ</span></div>
+          <div class="sw"><i style="background:#F7F3EB"></i><b>Papel 2</b><span>--paper-2 · #F7F3EB<br>bloco "entrada"</span></div>
+          <div class="sw"><i style="background:#BFD0CC"></i><b>Névoa</b><span>--text-on-dark-3 · #BFD0CC<br>corpo no escuro · 9,0:1</span></div>
+          <div class="sw"><i style="background:#B9B0A0"></i><b>Fio desligado</b><span>--wire-off · #B9B0A0<br>estado OFF, borda de campo</span></div>
+          <div class="sw"><i style="background:#081E1D"></i><b>Terra</b><span>--petrol-deep · #081E1D<br>rodapé</span></div>
+        </div>
+      </div><figcaption><span>Paleta D3</span><code>d3/tokens.css</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Tipografia</h3>
+      <p>Archivo variável: títulos sempre em largura 125% e peso 900, com entrelinha apertada. Subtítulos em 112%/800. DM Mono para códigos de circuito, rótulos e números de registro.</p>
+      <figure class="spec" id="d3-tipo"><div class="spec__stage d3 d3-dark">
+        <div class="typerow" style="border-color: rgba(241,236,226,.15)"><code>hero<br>128 / 46 · wdth 125 · 900</code><span class="d3-display" style="font-size: 88px">Eletricidade</span></div>
+        <div class="typerow" style="border-color: rgba(241,236,226,.15)"><code>display<br>112 / 52 · wdth 125 · 900</code><span class="d3-display" style="font-size: 64px">Quem calcula, <span class="d3-accent">responde.</span></span></div>
+        <div class="typerow" style="border-color: rgba(241,236,226,.15)"><code>h2<br>60 / 30 · wdth 125 · 900</code><span class="d3-display" style="font-size: 44px; line-height: .95">Quatro serviços.</span></div>
+        <div class="typerow" style="border-color: rgba(241,236,226,.15)"><code>h3 / número<br>32 · 60 · wdth 112–125</code><span><span class="d3-num" style="font-size: 48px">C1</span> <span class="d3-title" style="font-size: 28px">Instalação elétrica</span></span></div>
+        <div class="typerow" style="border-color: rgba(241,236,226,.15)"><code>body-lg / body<br>22 · 16 / 17 · 15</code><span style="font-size: 20px; line-height: 1.5; color: var(--text-on-dark-2)">Um engenheiro que calcula antes de puxar o primeiro fio.</span></div>
+        <div class="typerow" style="border: 0"><code>label mono<br>12 · +0.1em · CAIXA ALTA</code><span class="d3-label">QDG · Barramento · 4 circuitos</span></div>
+      </div><figcaption><span>Escala tipográfica (computador / celular)</span><code>.d3-display · .d3-title · .d3-num · .d3-label</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Linha-tronco e símbolos</h3>
+      <p>O tronco é uma borda esquerda de 3 px em cobre, sempre na mesma posição horizontal em todas as seções. Nós marcam o início das seções: medidor (entrada), círculo (seção), losango (falta). A página termina no símbolo de aterramento.</p>
+      <div class="row2">
+        <figure class="spec" id="d3-tronco"><div class="spec__stage d3 d3-dark" style="padding-left: 56px">
+          <div class="d3-trunk" style="display: grid; gap: 44px; padding-block: 8px 0">
+            <div style="position: relative; min-height: 40px"><span class="d3-node d3-node--meter" style="top: 0; left: calc(-1 * var(--trunk-pad) - 22px)">kWh</span><span class="d3-label">Entrada · nó medidor</span></div>
+            <div style="position: relative; min-height: 20px"><span class="d3-node" style="top: 0; left: calc(-1 * var(--trunk-pad) - 10px)"></span><span class="d3-label">Nó de seção</span></div>
+            <div style="position: relative; min-height: 40px"><span class="d3-node d3-node--fault" style="top: 0; left: calc(-1 * var(--trunk-pad) - 20px)"></span><span class="d3-label">Nó de falta</span></div>
+            <div style="position: relative"><div class="d3-branch" style="width: 160px; margin-left: calc(-1 * var(--trunk-pad))"></div><span class="d3-label" style="display: block; margin-top: 10px">Derivação</span></div>
+          </div>
+          <div style="margin-left: -22px; padding-top: 24px"><div style="border-left: 3px solid var(--copper); height: 24px; margin-left: 22px"></div><span class="d3-ground"><i></i><i></i><i></i></span></div>
+        </div><figcaption><span>Tronco, nós, derivação, aterramento</span><code>.d3-trunk · .d3-node(--meter|--fault) · .d3-branch · .d3-ground</code></figcaption></figure>
+        <figure class="spec" id="d3-disjuntor"><div class="spec__stage d3 d3-light" style="display: flex; gap: 56px; align-items: flex-end; justify-content: center">
+          <div style="display: grid; justify-items: center; gap: 12px"><span class="d3-breaker is-off" style="transform: scale(2.4); transform-origin: bottom; margin-top: 80px"><i></i><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><b></b><i></i></span><span class="d3-label" style="margin-top: 8px">Aberto · OFF</span></div>
+          <div style="display: grid; justify-items: center; gap: 12px"><span class="d3-breaker" style="transform: scale(2.4); transform-origin: bottom; margin-top: 80px"><i></i><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><b></b><i></i></span><span class="d3-label" style="margin-top: 8px">Fechado · ON</span></div>
+        </div><figcaption><span>Disjuntor (IEC): lâmina −35° → 0°</span><code>.d3-breaker · .is-off</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Botões</h3>
+      <figure class="spec" id="d3-botoes"><div class="spec__stage d3 d3-hero" style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center">
+        <a href="#d3" class="d3-btn d3-btn--copper">Pedir orçamento</a>
+        <span style="background: var(--paper); padding: 16px; display: inline-flex"><a href="#d3" class="d3-btn d3-btn--petrol" style="min-width: 280px">Receber meu orçamento <span class="d3-btn__arrow" aria-hidden="true">→</span></a></span>
+        <a href="#d3" class="d3-phone" style="color: var(--text-on-dark)">(11) 90000-0000</a>
+        <span style="background: var(--paper); padding: 0 16px; min-width: 220px; color: var(--petrol)"><a href="#d3" class="d3-link">Orçar C1 <span aria-hidden="true">→</span></a></span>
+      </div><figcaption><span>Cobre · petróleo · telefone · link de circuito</span><code>.d3-btn--copper · .d3-btn--petrol · .d3-phone · .d3-link</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Circuitos C1–C4 (interativo)</h3>
+      <p>Clique no cabeçalho de um circuito: ele liga e os outros desligam. A estrutura e as alturas mínimas são iguais nos quatro (cabeçalho 96 px, entrada 150 px, dispositivo 160 px), para os blocos ficarem alinhados mesmo quando o título ocupa uma linha só.</p>
+      <figure class="spec" id="d3-circuito"><div class="spec__stage d3 d3-light">
+        <div class="d3-bus" style="margin-bottom: 0"></div>
+        <div class="d3-services" data-circuits style="gap: 20px">
+          <div style="display: flex; flex-direction: column"><div class="d3-circuit__wire" style="height: 28px; margin-left: 26px"></div>
+            <article class="d3-circuit"><button type="button" class="d3-circuit__head" aria-pressed="true"><span class="d3-breaker"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span><span class="d3-circuit__name"><span class="d3-num" style="font-size: 34px">C1</span><span class="d3-circuit__title">Instalação elétrica</span></span><span class="d3-circuit__state">FECHADO · ON</span></button>
+              <div class="d3-circuit__block d3-circuit__in"><span class="d3-circuit__k">Entrada · o problema</span><p style="font-size: 15px; line-height: 1.5">Casa antiga que não aguenta ar, chuveiro e forno juntos.</p></div><div class="d3-circuit__wire"></div>
+              <div class="d3-circuit__block d3-circuit__dev"><span class="d3-circuit__k">Dispositivo · o que eu faço</span><p style="font-size: 15px; line-height: 1.5">Dimensiono circuitos e quadro e instalo com material certificado.</p></div><div class="d3-circuit__wire"></div>
+              <div class="d3-circuit__block d3-circuit__out"><span class="d3-circuit__k">Carga · você recebe</span><ul class="d3-loads"><li>Quadro identificado</li><li>ART de execução</li></ul></div></article></div>
+          <div style="display: flex; flex-direction: column"><div class="d3-circuit__wire" style="height: 28px; margin-left: 26px; background: var(--wire-off)"></div>
+            <article class="d3-circuit is-off"><button type="button" class="d3-circuit__head" aria-pressed="false"><span class="d3-breaker is-off"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span><span class="d3-circuit__name"><span class="d3-num" style="font-size: 34px">C4</span><span class="d3-circuit__title">Manutenção</span></span><span class="d3-circuit__state">ABERTO · OFF</span></button>
+              <div class="d3-circuit__block d3-circuit__in"><span class="d3-circuit__k">Entrada · o problema</span><p style="font-size: 15px; line-height: 1.5">Disjuntor desarma, luz pisca, a empresa não pode parar.</p></div><div class="d3-circuit__wire"></div>
+              <div class="d3-circuit__block d3-circuit__dev"><span class="d3-circuit__k">Dispositivo · o que eu faço</span><p style="font-size: 15px; line-height: 1.5">Diagnóstico, reaperto e teste de DR e DPS.</p></div><div class="d3-circuit__wire"></div>
+              <div class="d3-circuit__block d3-circuit__out"><span class="d3-circuit__k">Carga · você recebe</span><ul class="d3-loads"><li>Relatório por visita</li><li>Prioridade</li></ul></div></article></div>
+        </div>
+      </div><figcaption><span>Circuito ligado e desligado (clique para alternar)</span><code>.d3-circuit · .is-off · __head · __in · __dev · __out · __wire · .d3-loads</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Faltas, legenda e leituras</h3>
+      <div class="row2">
+        <figure class="spec" id="d3-falta"><div class="spec__stage d3 d3-dark" style="display: grid; gap: 28px">
+          <div class="d3-faults" style="grid-template-columns: 1fr 1fr"><div class="d3-fault" style="padding-right: 20px"><span class="d3-fault__code">F1 · SOBRECARGA</span><h4 class="d3-fault__title" style="font-size: 26px">Disjuntor desarmando</h4><p class="d3-fault__text" style="font-size: 15px">Religar e torcer não resolve.</p></div><div class="d3-fault" style="padding-left: 20px"><span class="d3-fault__code">F4 · MAU CONTATO</span><h4 class="d3-fault__title" style="font-size: 26px">Tomada quente</h4><p class="d3-fault__text" style="font-size: 15px">Começo comum de incêndio.</p></div></div>
+          <div class="d3-emergency" style="padding: 18px 20px"><p style="font-size: 15px"><strong>Fumaça ou faísca?</strong> Desligue o geral.</p><a href="#d3" class="d3-btn d3-btn--petrol" style="min-height: 44px">WhatsApp →</a></div>
+        </div><figcaption><span>Falta + faixa de emergência</span><code>.d3-faults · .d3-fault · .d3-emergency</code></figcaption></figure>
+        <figure class="spec" id="d3-legenda"><div class="spec__stage d3 d3-dark">
+          <div class="d3-legend"><div class="d3-legend__head">LEGENDA</div>
+            <div class="d3-legend__row" style="grid-template-columns: 56px 110px 1fr"><svg width="44" height="44" viewBox="0 0 56 56" fill="none" stroke="#D0844A" stroke-width="2.5" aria-hidden="true"><rect x="10" y="6" width="36" height="44"></rect><path d="M18 18h20M18 26h20M18 34h10"></path><circle cx="38" cy="40" r="7" fill="#0E2F2E"></circle></svg><span class="d3-legend__term" style="font-size: 20px">ART</span><p class="d3-legend__def" style="font-size: 15px">Registro de quem responde pelo serviço.</p></div>
+            <div class="d3-legend__row" style="grid-template-columns: 56px 110px 1fr"><svg width="44" height="44" viewBox="0 0 56 56" fill="none" stroke="#D0844A" stroke-width="2.5" aria-hidden="true"><path d="M40 10H14l16 18-16 18h26"></path></svg><span class="d3-legend__term" style="font-size: 20px">CÁLCULO</span><p class="d3-legend__def" style="font-size: 15px">Cabos, queda de tensão e curto para a sua carga.</p></div>
+          </div>
+        </div><figcaption><span>Linha de legenda</span><code>.d3-legend · __row · __term · __def</code></figcaption></figure>
+      </div>
+      <figure class="spec" id="d3-leitura"><div class="spec__stage d3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px; background: var(--sand)">
+        <div class="d3-dark" style="padding: 26px; display: grid; gap: 16px"><span class="d3-num" style="font-size: 44px">C1</span><div class="d3-reading"><div class="d3-reading__before"><span class="d3-label" style="font-size: 10px">Leitura antes</span><strong>[ex.: 3 desarmes / semana]</strong></div><span class="d3-reading__arrow" aria-hidden="true">→</span><div class="d3-reading__after"><span style="font-family: var(--font-mono); font-size: 10px">LEITURA DEPOIS</span><strong>[ex.: 0 em 6 meses]</strong></div></div><blockquote style="margin: 0; font-stretch: 108%; font-weight: 700; font-size: 20px; line-height: 1.25">“[Depoimento real.]”</blockquote></div>
+        <figure class="d3-reading-card"><div style="display: flex; justify-content: space-between; align-items: baseline"><span class="d3-num" style="font-size: 36px">C3</span><span class="d3-label" style="color: var(--text-3); font-size: 11px">Laudo · escritório</span></div><div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-family: var(--font-mono); font-size: 13px"><span style="text-decoration: line-through; color: var(--text-3)">[ex.: quadro a 70 °C]</span><span aria-hidden="true" style="color: var(--copper-text)">→</span><span style="background: var(--petrol); color: var(--text-on-dark); padding: 4px 8px">[ex.: 38 °C]</span></div><blockquote style="margin: 0; font-size: 17px; line-height: 1.5">“[Depoimento real.]”</blockquote></figure>
+      </div><figcaption><span>Leitura de campo (destaque e compacta)</span><code>.d3-reading · .d3-reading-card</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>FAQ, formulário e sequência</h3>
+      <div class="row2">
+        <figure class="spec" id="d3-faq"><div class="spec__stage d3 d3-sand">
+          <div class="d3-faq">
+            <details open><summary><span class="d3-breaker"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span>Eletricista ou engenheiro?</summary><p>O engenheiro calcula, projeta e assina a ART.</p></details>
+            <details><summary><span class="d3-breaker"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span>A visita técnica é cobrada?</summary><p>[Política de visita.]</p></details>
+          </div>
+        </div><figcaption><span>FAQ: abrir a pergunta fecha o disjuntor</span><code>.d3-faq</code></figcaption></figure>
+        <figure class="spec" id="d3-form"><div class="spec__stage d3 d3-hero" style="padding: 32px 48px 48px 32px">
+          <form class="d3-form" aria-label="Exemplo de formulário" onsubmit="event.preventDefault()">
+            <fieldset style="border: 0; margin: 0; padding: 0"><legend class="d3-form__label" style="padding: 0; margin-bottom: 10px">Circuito</legend><div class="d3-chips"><label class="d3-chip"><input type="radio" name="d3fc" checked>C1</label><label class="d3-chip"><input type="radio" name="d3fc">C2</label><label class="d3-chip"><input type="radio" name="d3fc">C3</label><label class="d3-chip"><input type="radio" name="d3fc">C4</label></div></fieldset>
+            <label class="d3-form__label" for="d3f-w">WhatsApp<input id="d3f-w" class="d3-input" placeholder="(11) 9 0000-0000"></label>
+            <button class="d3-btn d3-btn--petrol" type="submit">Ligar: enviar pedido <span class="d3-btn__arrow" aria-hidden="true">→</span></button>
+          </form>
+        </div><figcaption><span>Formulário "carga final"</span><code>.d3-form · .d3-chips · .d3-chip · .d3-input</code></figcaption></figure>
+      </div>
+      <figure class="spec" id="d3-sequencia"><div class="spec__stage d3 d3-light">
+        <div class="d3-bus"></div>
+        <ol class="d3-sequence">
+          <li><span class="d3-breaker" style="margin-left: 6px"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span><span class="d3-sequence__n">1</span><b>Contato</b><span style="font-size: 14px; color: var(--text-2)">Descreva o problema e mande fotos.</span></li>
+          <li><span class="d3-breaker" style="margin-left: 6px"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span><span class="d3-sequence__n">2</span><b>Visita técnica</b><span style="font-size: 14px; color: var(--text-2)">Medições no local.</span></li>
+          <li><span class="d3-breaker is-off" style="margin-left: 6px"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span><span class="d3-sequence__n">3</span><b>Orçamento</b><span style="font-size: 14px; color: var(--text-2)">Por escrito, valor fechado.</span></li>
+          <li><span class="d3-breaker is-off" style="margin-left: 6px"><i></i><svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><b></b><i></i></span><span class="d3-sequence__n">4</span><b>Execução</b><span style="font-size: 14px; color: var(--text-2)">Na data combinada.</span></li>
+        </ol>
+      </div><figcaption><span>Sequência de manobra (etapas já feitas ficam fechadas)</span><code>.d3-sequence · .d3-breaker(.is-off)</code></figcaption></figure>
+      <figure class="spec" id="d3-momento"><div class="spec__stage d3 d3-dark"><div class="d3-moment">[MOMENTO: o que se move · gatilho · o que acontece no celular]</div></div><figcaption><span>Anotação de animação (só protótipo)</span><code>.d3-moment</code></figcaption></figure>
+    </div>
+
+    <div class="grp">
+      <h3>Estrutura da página</h3>
+      <p>Alturas proporcionais às medidas reais a 1440 px. A linha de cobre atravessa todas as seções na mesma posição.</p>
+      <figure class="spec" id="d3-layout"><div class="spec__stage">
+        <div class="map" style="border-left: 4px solid #D0844A">
+          <div class="map__label" style="background:#0E2F2E;color:#F1ECE2;min-height:67px">01 Hero · entrada · 1223 px</div><div class="map__note">denso <span class="pill">formulário</span> <span class="pill">3D tronco</span></div>
+          <div class="map__label" style="background:#F1ECE2;color:#0E2F2E;min-height:41px">02 Barramento · 750</div><div class="map__note">denso <span class="pill">disjuntores</span></div>
+          <div class="map__label" style="background:#0E2F2E;color:#F1ECE2;min-height:72px">03 Faltas · 1313</div><div class="map__note">respiro · escala grande</div>
+          <div class="map__label" style="background:#F1ECE2;color:#0E2F2E;min-height:66px">04 Circuitos C1–C4 · 1201</div><div class="map__note">denso <span class="pill">interativo</span></div>
+          <div class="map__label" style="background:#0E2F2E;color:#F1ECE2;min-height:56px">05 Legenda · 1020</div><div class="map__note">respiro · escala grande</div>
+          <div class="map__label" style="background:#F1ECE2;color:#0E2F2E;min-height:55px">06 Antes/depois · 1007</div><div class="map__note">médio <span class="pill">3D quadro</span></div>
+          <div class="map__label" style="background:#0E2F2E;color:#F1ECE2;min-height:45px">07 Trajetória · 815</div><div class="map__note">médio <span class="pill">nós no tronco</span></div>
+          <div class="map__label" style="background:#F1ECE2;color:#0E2F2E;min-height:36px">08 Sequência · 656</div><div class="map__note">denso</div>
+          <div class="map__label" style="background:#E6DECF;color:#0E2F2E;min-height:88px">09 Leituras + FAQ · 1603</div><div class="map__note">denso</div>
+          <div class="map__label" style="background:#0E2F2E;color:#F1ECE2;min-height:43px">10 Contato · carga final · 785</div><div class="map__note">respiro <span class="pill">formulário</span></div>
+          <div class="map__label" style="background:#081E1D;color:#BFD0CC;min-height:17px">11 Rodapé · aterramento · 318</div><div class="map__note">fim da linha</div>
+        </div>
+      </div><figcaption><span>Mapa de ritmo · total 10.691 px no computador, 9.824 px no celular</span><code>container 1280 · gutter 48/20 · tronco 3px · recuo 64/22</code></figcaption></figure>
+      <div class="shots">
+        <a href="../img/pagina-D3-computador.png" target="_blank" rel="noopener"><img src="../img/pagina-D3-computador.png" alt="Página D3 completa no computador" loading="lazy"></a>
+        <a href="../img/pagina-D3-celular.png" target="_blank" rel="noopener"><img src="../img/pagina-D3-celular.png" alt="Página D3 completa no celular" loading="lazy"></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* Interação de referência: um circuito ligado por vez. */
+document.querySelectorAll('[data-circuits]').forEach(function (group) {
+  group.addEventListener('click', function (e) {
+    var head = e.target.closest('.d3-circuit__head'); if (!head) return;
+    group.querySelectorAll('.d3-circuit').forEach(function (c) {
+      var on = c.contains(head);
+      c.classList.toggle('is-off', !on);
+      c.querySelector('.d3-breaker').classList.toggle('is-off', !on);
+      c.querySelector('.d3-circuit__head').setAttribute('aria-pressed', on ? 'true' : 'false');
+      c.querySelector('.d3-circuit__state').textContent = on ? 'FECHADO · ON' : 'ABERTO · OFF';
+      var drop = c.previousElementSibling; if (drop) drop.style.background = on ? '' : 'var(--wire-off)';
+    });
+  });
+});
+</script>

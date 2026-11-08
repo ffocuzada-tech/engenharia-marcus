@@ -1,0 +1,83 @@
+/* ==========================================================================
+   [NOME] Engenharia Elétrica — D3 · Unifilar — TOKENS
+   Aplique a classe .d3 no <html> (ou em qualquer contêiner) para ativar.
+   Conceito: a página é um diagrama unifilar vivo. Uma linha de cobre conduz o visitante;
+   cada seção é um circuito que "liga".
+   ========================================================================== */
+.d3 {
+  /* ---- Cor: superfícies ---- */
+  --petrol:       #0E2F2E;  /* seções escuras, texto principal sobre papel */
+  --petrol-2:     #1D4A47;  /* placeholder de foto no escuro */
+  --petrol-deep:  #081E1D;  /* rodapé (aterramento) */
+  --paper:        #F1ECE2;  /* seções claras, formulário */
+  --paper-2:      #F7F3EB;  /* bloco "entrada" do circuito */
+  --sand:         #E6DECF;  /* seção de leituras/FAQ */
+  --white:        #FFFFFF;
+  --placeholder:  #DED6C6;  /* placeholder de foto no claro */
+
+  /* ---- Cor: texto ---- */
+  --text:         #0E2F2E;  /* sobre papel · 12,2:1 */
+  --text-2:       #2F4644;  /* corpo secundário sobre papel · 8,6:1 */
+  --text-3:       #4F625F;  /* rótulos sobre papel · 5,5:1 */
+  --text-on-dark: #F1ECE2;  /* sobre petróleo · 12,2:1 */
+  --text-on-dark-2: #DCE5E2;
+  --text-on-dark-3: #BFD0CC;  /* corpo secundário sobre petróleo · 9,0:1 */
+
+  /* ---- Cor: cobre (acento) ---- */
+  --copper:       #D0844A;  /* 4,8:1 com petróleo (texto/fundo) · linha-tronco, botões, números C1–C4, sombra do form */
+  --copper-light: #E8A574;  /* rótulos mono sobre petróleo */
+  --copper-text:  #7A3E15;  /* cobre legível como texto sobre papel · 7,1:1 */
+  --wire-off:     #B9B0A0;  /* fio desligado, borda de input */
+
+  /* ---- Linhas ---- */
+  --line-dark:    rgba(241, 236, 226, .25);
+  --line-light:   rgba(14, 47, 46, .3);
+  --trunk-w:      3px;
+
+  /* ---- Anotação de design (só protótipo) ---- */
+  --note-fg: #5B21B6; --note-bg: #F1EAFF; --note-line: #6D28D9;
+  --note-fg-dark: #E4D7FF; --note-bg-dark: #2A1F4A; --note-line-dark: #A78BFA;
+
+  /* ---- Tipografia ---- */
+  /* Archivo variável com eixo de largura (wdth 62–125). Display sempre a 125%. */
+  --font-sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --wdth-display: 125%; --wdth-title: 112%; --wdth-body: 100%;
+
+  --fs-hero:       clamp(46px, 8.4vw, 128px);
+  --fs-display:    clamp(50px, 7.4vw, 112px);  /* "Quem calcula, responde." */
+  --fs-h2:         clamp(30px, 4vw, 60px);
+  --fs-h3:         clamp(21px, 2.1vw, 32px);
+  --fs-num:        clamp(26px, 4vw, 60px);     /* C1, C2… */
+  --fs-body-lg:    clamp(17px, 1.6vw, 22px);
+  --fs-body:       16px;
+  --fs-small:      15px;
+  --fs-label:      12px;   /* mono, CAIXA ALTA, +0.1em */
+  --fs-micro:      10px;
+
+  --lh-display: .88; --lh-head: .95; --lh-body: 1.55;
+  --tracking-display: -0.04em; --tracking-head: -0.03em; --tracking-label: .1em;
+
+  /* ---- Espaço (base 4) ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+  --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-14: 56px; --s-16: 64px; --s-18: 72px;
+  --s-20: 80px; --s-24: 96px; --s-26: 104px; --s-28: 112px; --s-34: 136px;
+
+  /* ---- Layout ---- */
+  --container: 1280px;
+  --gutter: clamp(20px, 3.4vw, 48px);
+  --trunk-pad: clamp(22px, 4.4vw, 64px);       /* distância do conteúdo até a linha-tronco */
+  --section-y: clamp(48px, 7vw, 104px);
+  --section-y-air: clamp(56px, 9.5vw, 136px);
+
+  /* ---- Forma ---- */
+  --radius: 0;
+  --shadow-form: 14px 14px 0 var(--copper);
+  --shadow-form-sm: 8px 8px 0 var(--copper);
+
+  /* ---- Movimento ---- */
+  --ease-switch: cubic-bezier(.3, 1.6, .5, 1);  /* lâmina do disjuntor fechando com "clique" */
+  --ease-flow: cubic-bezier(.4, 0, .2, 1);
+  --t-fast: 150ms; --t-switch: 250ms; --t-flow: 800ms; --stagger: 150ms;
+  --blade-open: -35deg;
+}

@@ -1,0 +1,169 @@
+/* ==========================================================================
+   D3 · Unifilar — COMPONENTES
+   Depende de d3/tokens.css. Prefixo d3- em tudo. Cantos retos.
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+.d3 { font-family: var(--font-sans); color: var(--text); background: var(--paper); }
+.d3 *, .d3 *::before, .d3 *::after { box-sizing: border-box; }
+:where(.d3) :where(h1, h2, h3, h4) { margin: 0; text-wrap: balance; }
+:where(.d3) p { margin: 0; }
+:where(.d3) a { color: inherit; }  /* especificidade zero: não sobrescreve a cor dos botões */
+.d3 :focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+
+.d3-container { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.d3-dark  { background-color: var(--petrol); color: var(--text-on-dark); background-image: repeating-linear-gradient(0deg, rgba(241,236,226,.025) 0 1px, transparent 1px 6px); }
+.d3-hero  { background-color: var(--petrol); color: var(--text-on-dark); background-image: radial-gradient(circle at 85% 8%, rgba(208,132,74,.18), transparent 42%), repeating-linear-gradient(0deg, rgba(241,236,226,.03) 0 1px, transparent 1px 6px); }
+.d3-light { background: var(--paper); color: var(--text); }
+.d3-sand  { background: var(--sand); color: var(--text); }
+
+.d3-display { font-stretch: var(--wdth-display); font-weight: 900; line-height: var(--lh-display); letter-spacing: var(--tracking-display); }
+.d3-title   { font-stretch: var(--wdth-title); font-weight: 800; letter-spacing: -0.02em; }
+.d3-accent  { color: var(--copper); }
+.d3-label   { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--copper-text); }
+.d3-dark .d3-label, .d3-hero .d3-label { color: var(--copper-light); }
+.d3-num     { font-stretch: var(--wdth-display); font-weight: 900; line-height: .85; color: var(--copper); letter-spacing: -0.04em; }
+
+/* ---------- Linha-tronco (atravessa a página inteira) ---------- */
+.d3-trunk { position: relative; border-left: var(--trunk-w) solid var(--copper); padding-left: var(--trunk-pad); }
+/* Nó de seção: círculo cheio no tronco */
+.d3-node { position: absolute; left: -10px; width: 17px; height: 17px; border-radius: 50%; background: var(--copper); }
+/* Nó de entrada (medidor kWh) */
+.d3-node--meter { left: -22px; width: 40px; height: 40px; background: var(--petrol); border: 3px solid var(--copper); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; color: var(--copper-light); }
+/* Nó de falta (losango) */
+.d3-node--fault { left: -20px; width: 36px; height: 36px; border-radius: 0; background: var(--petrol); border: 3px solid var(--copper-light); transform: rotate(45deg); }
+/* Derivação: trecho horizontal que sai do tronco */
+.d3-branch { height: var(--trunk-w); background: var(--copper); }
+/* Barramento: linha horizontal larga */
+.d3-bus { height: var(--trunk-w); background: var(--copper); position: relative; }
+.d3-bus::after { content: ""; position: absolute; right: 0; top: -6px; width: 15px; height: 15px; border-radius: 50%; background: var(--copper); }
+
+/* ---------- Disjuntor (símbolo IEC) ---------- */
+/* Uso: <span class="d3-breaker"><i></i><svg…X…></svg><b></b><i></i></span>
+   Estado aberto: .is-off (lâmina a -35°, fio cinza). Fechado: padrão. */
+.d3-breaker { --wire: var(--copper); --blade: 0deg; display: inline-flex; flex-direction: column; align-items: center; width: 16px; }
+.d3-breaker > i { display: block; width: var(--trunk-w); height: 10px; background: var(--wire); transition: background var(--t-switch); }
+.d3-breaker > b { display: block; width: var(--trunk-w); height: 22px; background: var(--petrol); transform-origin: 50% 100%; transform: rotate(var(--blade)); transition: transform var(--t-switch) var(--ease-switch); }
+.d3-breaker.is-off { --wire: var(--wire-off); --blade: var(--blade-open); }
+.d3-dark .d3-breaker > b { background: var(--text-on-dark); }
+
+/* ---------- Botões ---------- */
+.d3-btn { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--s-3); min-height: 52px; padding: 0 22px; border: 0; font: 700 16px/1 var(--font-sans); text-decoration: none; cursor: pointer; transition: background var(--t-fast), transform var(--t-fast); }
+.d3-btn--copper { background: var(--copper); color: var(--petrol); }
+.d3-btn--copper:hover { background: var(--copper-light); }
+.d3-btn--petrol { background: var(--petrol); color: var(--text-on-dark); }
+.d3-btn--petrol:hover { background: var(--petrol-2); }
+.d3-btn__arrow { color: var(--copper-light); }
+.d3-link { font-weight: 700; font-size: 15px; text-decoration: none; display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1.5px solid currentColor; }
+.d3-phone { font-family: var(--font-mono); font-size: 14px; text-decoration: none; border-bottom: 1.5px solid var(--copper); padding-bottom: 3px; }
+
+/* ---------- Card de serviço no barramento ---------- */
+.d3-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: var(--s-6); }
+.d3-service { display: flex; flex-direction: column; text-decoration: none; color: var(--text); }
+.d3-service__drop { margin-left: 32px; }
+.d3-service__body { border-top: 3px solid var(--petrol); padding-top: 18px; display: flex; flex-direction: column; gap: var(--s-3); flex: 1; }
+.d3-service__badge { font-family: var(--font-mono); font-size: 11px; background: var(--petrol); color: var(--text-on-dark); padding: 3px 7px; }
+.d3-service.is-off .d3-service__badge { background: transparent; color: var(--text-2); border: 1px solid var(--petrol); }
+
+/* ---------- Card de circuito (detalhe C1–C4, interativo) ---------- */
+/* Estrutura fixa e alturas mínimas IGUAIS em todos, para alinhar os blocos internos. */
+.d3-circuit { display: flex; flex-direction: column; background: var(--white); border: 2px solid var(--copper); transition: opacity var(--t-switch), border-color var(--t-switch); }
+.d3-circuit.is-off { border-color: rgba(14, 47, 46, .25); opacity: .72; }
+.d3-circuit__head { display: flex; align-items: center; gap: 14px; padding: var(--s-4); min-height: 96px; border: 0; border-bottom: 1.5px solid var(--petrol); background: transparent; font: inherit; color: var(--text); text-align: left; cursor: pointer; width: 100%; }
+.d3-circuit__name { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.d3-circuit__title { font-stretch: var(--wdth-title); font-weight: 800; font-size: 19px; line-height: 1.1; }
+.d3-circuit__state { font-family: var(--font-mono); font-size: 10px; padding: 3px 6px; border: 1px solid var(--petrol); background: var(--petrol); color: var(--text-on-dark); white-space: nowrap; align-self: flex-start; }
+.d3-circuit.is-off .d3-circuit__state { background: transparent; color: var(--text-2); }
+.d3-circuit__block { padding: var(--s-4); display: flex; flex-direction: column; gap: 6px; }
+.d3-circuit__in  { background: var(--paper-2); min-height: 150px; }
+.d3-circuit__dev { background: var(--petrol); color: var(--text-on-dark); min-height: 160px; }
+.d3-circuit__out { flex: 1; }
+.d3-circuit__wire { width: var(--trunk-w); height: 18px; margin-left: 24px; background: var(--copper); transition: background var(--t-switch); }
+.d3-circuit.is-off .d3-circuit__wire { background: var(--wire-off); }
+.d3-circuit__k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; color: var(--copper-text); text-transform: uppercase; }
+.d3-circuit__dev .d3-circuit__k { color: var(--copper-light); }
+.d3-loads { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.d3-loads li::before { content: "○ "; }
+.d3-circuit:not(.is-off) .d3-loads li::before { content: "● "; color: var(--copper); }
+
+/* ---------- Falta (sinal de alerta) ---------- */
+.d3-faults { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr)); }
+.d3-fault { padding: var(--s-8) var(--s-10) var(--s-8) 0; border-top: 1px solid var(--line-dark); display: flex; flex-direction: column; gap: var(--s-3); }
+.d3-fault:nth-child(odd) { border-right: 1px solid var(--line-dark); }
+.d3-fault:nth-child(even) { padding: var(--s-8) 0 var(--s-8) var(--s-10); }
+.d3-fault__code { font-family: var(--font-mono); font-size: 13px; color: var(--copper-light); }
+.d3-fault__title { font-stretch: var(--wdth-title); font-weight: 800; font-size: clamp(25px, 2.8vw, 40px); line-height: 1; letter-spacing: -0.025em; }
+.d3-fault__text { font-size: 17px; line-height: var(--lh-body); color: var(--text-on-dark-3); max-width: 420px; }
+.d3-emergency { display: flex; justify-content: space-between; align-items: center; gap: var(--s-6); flex-wrap: wrap; background: var(--copper); color: var(--petrol); padding: 26px 30px; }
+
+/* ---------- Legenda (por que engenheiro) ---------- */
+.d3-legend { max-width: 980px; }
+.d3-legend__head { font-family: var(--font-mono); font-size: 12px; color: var(--copper-light); letter-spacing: .1em; padding-bottom: 14px; border-bottom: 1.5px solid var(--text-on-dark); }
+.d3-legend__row { display: grid; grid-template-columns: 96px 200px 1fr; gap: var(--s-6); align-items: center; padding: 26px 0; border-bottom: 1px solid rgba(241, 236, 226, .2); }
+.d3-legend__row:last-child { border-bottom: 1.5px solid var(--text-on-dark); }
+.d3-legend__term { font-family: var(--font-mono); font-size: 26px; font-weight: 500; }
+.d3-legend__def { font-size: 17px; line-height: var(--lh-body); color: var(--text-on-dark-3); }
+
+/* ---------- Leitura de campo (depoimento com medição) ---------- */
+.d3-reading { display: grid; grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr); align-items: center; border: 1px solid var(--line-dark); }
+.d3-reading__before, .d3-reading__after { padding: var(--s-4); display: flex; flex-direction: column; gap: 6px; }
+.d3-reading__before strong { font-stretch: var(--wdth-title); font-weight: 800; font-size: 24px; line-height: 1.1; color: var(--text-on-dark-3); text-decoration: line-through; text-decoration-color: var(--copper-light); }
+.d3-reading__after { background: var(--copper); color: var(--petrol); align-self: stretch; justify-content: center; }
+.d3-reading__after strong { font-stretch: var(--wdth-title); font-weight: 900; font-size: 24px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.d3-reading__arrow { color: var(--copper-light); font-size: 22px; text-align: center; }
+.d3-reading-card { margin: 0; background: var(--paper-2); border: 1.5px solid var(--petrol); padding: 26px; display: flex; flex-direction: column; gap: var(--s-4); }
+
+/* ---------- FAQ com mini-disjuntor ---------- */
+.d3-faq details { border-top: 1px solid var(--line-light); padding: var(--s-5) 0; }
+.d3-faq details:first-child { border-top: 3px solid var(--petrol); }
+.d3-faq details:last-child { border-bottom: 3px solid var(--petrol); }
+.d3-faq summary { display: flex; align-items: center; gap: var(--s-4); font-size: 19px; font-weight: 700; cursor: pointer; list-style: none; }
+.d3-faq summary::-webkit-details-marker { display: none; }
+.d3-faq summary .d3-breaker { flex-shrink: 0; }
+.d3-faq details:not([open]) .d3-breaker { --blade: var(--blade-open); }
+.d3-faq p { margin: 12px 0 0 30px; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+
+/* ---------- Formulário ("carga final") ---------- */
+.d3-form { background: var(--paper); color: var(--petrol); padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: var(--shadow-form); }
+.d3-form__label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; }
+.d3-input { width: 100%; height: 48px; border: 1.5px solid var(--wire-off); background: var(--white); border-radius: 0; padding: 0 14px; font: inherit; font-size: 16px; color: var(--petrol); }
+.d3-input:focus { border-color: var(--copper); outline: none; box-shadow: 0 0 0 3px rgba(208, 132, 74, .35); }
+.d3-chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--s-2); }
+.d3-chip { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1.5px solid var(--wire-off); font-size: 15px; cursor: pointer; }
+.d3-chip:has(input:checked) { background: var(--petrol); color: var(--text-on-dark); border-color: var(--petrol); font-weight: 600; }
+.d3-chip input { accent-color: var(--copper); width: 18px; height: 18px; margin: 0; }
+
+/* ---------- Sequência de manobra (como funciona) ---------- */
+.d3-sequence { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: var(--s-5); }
+.d3-sequence li { display: flex; flex-direction: column; gap: var(--s-3); }
+.d3-sequence__n { font-stretch: var(--wdth-display); font-weight: 900; font-size: 40px; color: var(--copper); line-height: .9; }
+
+/* ---------- Aterramento (fim da página) ---------- */
+.d3-ground { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 47px; }
+.d3-ground > i { display: block; height: var(--trunk-w); background: var(--copper); }
+.d3-ground > i:nth-child(1) { width: 47px; } .d3-ground > i:nth-child(2) { width: 31px; } .d3-ground > i:nth-child(3) { width: 15px; }
+
+/* ---------- Foto ---------- */
+.d3-photo { background-color: var(--petrol-2); background-image: repeating-linear-gradient(45deg, rgba(241,236,226,.06) 0 2px, transparent 2px 10px); border: 2px solid var(--copper); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 12px; color: var(--text-on-dark-3); object-fit: cover; }
+.d3-photo--light { background-color: var(--placeholder); border: 1.5px solid var(--petrol); color: var(--text-3); }
+
+/* ---------- Anotação de momento (só protótipo) ---------- */
+.d3-moment { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--note-fg); background: var(--note-bg); border: 1.5px dashed var(--note-line); padding: 10px 12px; }
+.d3-dark .d3-moment, .d3-hero .d3-moment { color: var(--note-fg-dark); background: var(--note-bg-dark); border-color: var(--note-line-dark); }
+
+/* ---------- Movimento ---------- */
+@keyframes d3-pulse { 0% { background-position: 0 -40px; } 100% { background-position: 0 100%; } }
+@keyframes d3-flicker { 0%, 18%, 22%, 26% { opacity: 1; } 20%, 24% { opacity: .35; } }
+.d3-anim-flicker { animation: d3-flicker 1.2s steps(1) 1 both; }
+@media (prefers-reduced-motion: reduce) { .d3 * { animation: none !important; transition: none !important; } }
+
+/* ---------- Celular ---------- */
+@media (max-width: 640px) {
+  .d3-fault, .d3-fault:nth-child(even) { padding: 18px 0; border-right: 0; }
+  .d3-legend__row { grid-template-columns: 44px 1fr; gap: 14px; }
+  .d3-legend__term { font-size: 19px; }
+  .d3-legend__def { grid-column: 2; font-size: 15px; }
+  .d3-form { padding: 20px 16px; box-shadow: var(--shadow-form-sm); }
+  .d3-circuit__head { min-height: 72px; }
+  .d3-circuit__in, .d3-circuit__dev { min-height: 92px; }
+}

@@ -1,0 +1,80 @@
+/* ==========================================================================
+   [NOME] Engenharia Elétrica — D1 · Prancha técnica — TOKENS
+   Aplique a classe .d1 no <html> (ou em qualquer contêiner) para ativar.
+   Conceito: o site é um jogo de pranchas de engenharia. Papel, nanquim, âmbar de sinalização.
+   ========================================================================== */
+.d1 {
+  /* ---- Cor: superfícies ---- */
+  --paper:        #F3F1EA;  /* fundo principal (papel) */
+  --paper-warm:   #FBF6E4;  /* realce de "você recebe" / linha de entrega */
+  --white:        #FFFFFF;  /* cartões, tabelas, carimbo */
+  --ink:          #0F1E33;  /* nanquim: texto principal, bordas fortes, seções escuras */
+  --night:        #0B1626;  /* rodapé */
+  --placeholder:  #DCD8CC;  /* fundo de foto ainda não fornecida */
+
+  /* ---- Cor: texto ---- */
+  --text:         #0F1E33;  /* 14,8:1 sobre --paper */
+  --text-2:       #33415A;  /* corpo secundário · 9,1:1 */
+  --text-3:       #4B5A6E;  /* rótulos mono · 6,2:1 */
+  --text-on-ink:  #F3F1EA;  /* texto sobre --ink */
+  --text-on-ink-2:#C9D0DA;  /* corpo secundário sobre --ink · 10,8:1 */
+  --text-on-ink-3:#B9C2CF;  /* rótulos sobre --ink */
+
+  /* ---- Cor: acento (sinalização) ---- */
+  --amber:        #F2B417;  /* preenchimentos, botões, marcos. Texto sobre ele: --ink */
+  --amber-text:   #8A5A00;  /* âmbar legível como texto sobre papel · 5,2:1 */
+  --amber-icon:   #B07A00;  /* marcadores pequenos (■) */
+
+  /* ---- Linhas ---- */
+  --line:         rgba(15, 30, 51, .18);  /* divisões suaves */
+  --line-2:       rgba(15, 30, 51, .35);  /* tracejados internos */
+  --line-strong:  #0F1E33;                /* 1.5px, contornos de prancha */
+  --grid:         rgba(15, 30, 51, .06);  /* malha de fundo 24px */
+  --grid-on-ink:  rgba(243, 241, 234, .06);
+
+  /* ---- Anotação de design (só no protótipo, nunca em produção) ---- */
+  --note-fg: #5B21B6; --note-bg: #F1EAFF; --note-line: #6D28D9;
+
+  /* ---- Tipografia ---- */
+  --font-sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --fs-display-xl: clamp(50px, 6.4vw, 92px);  /* "Quatro sinais…" */
+  --fs-display:    clamp(38px, 5vw, 72px);    /* "Eletricista instala…" */
+  --fs-h1:         clamp(36px, 4.2vw, 60px);  /* hero */
+  --fs-h2:         clamp(28px, 3.1vw, 44px);
+  --fs-h3:         clamp(24px, 2.4vw, 34px);
+  --fs-h4:         clamp(20px, 1.6vw, 23px);
+  --fs-body-lg:    clamp(17px, 1.35vw, 19px);
+  --fs-body:       16px;
+  --fs-small:      15px;
+  --fs-label:      13px;  /* mono, CAIXA ALTA, +0.08em */
+  --fs-micro:      11px;  /* mono, faixas de folha e carimbo */
+
+  --lh-tight: 1.04; --lh-head: 1.08; --lh-body: 1.55; --lh-loose: 1.65;
+  --tracking-display: -0.03em; --tracking-head: -0.02em; --tracking-label: .08em;
+
+  /* ---- Espaço (base 4) ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px;
+  --s-7: 28px; --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-14: 56px; --s-16: 64px;
+  --s-18: 72px; --s-20: 80px; --s-24: 96px; --s-28: 112px; --s-30: 120px;
+
+  /* ---- Layout ---- */
+  --container: 1200px;
+  --gutter: clamp(20px, 2.5vw, 32px);
+  --section-y: clamp(44px, 7vw, 96px);       /* seção densa */
+  --section-y-air: clamp(56px, 9vw, 120px);  /* seção de respiro */
+  --grid-size: 24px;                          /* malha de fundo (20px no celular) */
+
+  /* ---- Forma ---- */
+  --radius: 0;                                 /* prancha não tem canto arredondado */
+  --border: 1.5px solid var(--line-strong);
+  --shadow-offset: 4px 4px 0 var(--ink);       /* botão primário */
+  --shadow-sheet: 8px 8px 0 rgba(15, 30, 51, .12); /* carimbo, notas */
+  --shadow-form: 12px 12px 0 var(--amber);     /* carimbo-formulário */
+
+  /* ---- Movimento ---- */
+  --ease-draw: cubic-bezier(.65, 0, .35, 1);   /* traço de nanquim */
+  --ease-stamp: cubic-bezier(.2, 1.4, .4, 1);  /* carimbo "bate" */
+  --t-fast: 150ms; --t-base: 250ms; --t-draw: 600ms; --stagger: 120ms;
+}

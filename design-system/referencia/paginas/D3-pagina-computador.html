@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>D3 Unifilar — página completa</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=DM+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+
+<style>
+body{margin:0;background:#081E1D}
+a{color:#F1ECE2}a:hover{color:#E8A574}
+.p3-dark{background-color:#0E2F2E;background-image:repeating-linear-gradient(0deg,rgba(241,236,226,.025) 0 1px,transparent 1px 6px)}
+.p3-hero{background-color:#0E2F2E;background-image:radial-gradient(circle at 85% 8%,rgba(208,132,74,.18),transparent 42%),repeating-linear-gradient(0deg,rgba(241,236,226,.03) 0 1px,transparent 1px 6px)}
+.p3-paper{background:#F1ECE2;color:#0E2F2E}
+.p3-wrap{max-width:1280px;margin:0 auto;padding-left:48px;padding-right:48px;box-sizing:border-box}
+.p3-trunk{border-left:3px solid #D0844A;padding-left:64px;position:relative}
+.p3-mono{font-family:'DM Mono',ui-monospace,monospace}
+.p3-ph{background-color:#1D4A47;background-image:repeating-linear-gradient(45deg,rgba(241,236,226,.06) 0 2px,transparent 2px 10px)}
+.p3-phl{background-color:#DED6C6;background-image:repeating-linear-gradient(45deg,rgba(14,47,46,.06) 0 2px,transparent 2px 10px)}
+.p3-mom{font-family:'DM Mono',ui-monospace,monospace;font-size:12px;line-height:1.5;color:#5B21B6;background:#F1EAFF;border:1.5px dashed #6D28D9;padding:10px 12px}
+.p3-momd{font-family:'DM Mono',ui-monospace,monospace;font-size:12px;line-height:1.5;color:#E4D7FF;background:#2A1F4A;border:1.5px dashed #A78BFA;padding:10px 12px}
+.p3-in{width:100%;box-sizing:border-box;height:48px;border:1.5px solid #B9B0A0;background:#FFFFFF;border-radius:0;padding:0 14px;font:inherit;font-size:15px;color:#0E2F2E}
+details summary{cursor:pointer;list-style:none}
+details summary::-webkit-details-marker{display:none}
+</style>
+</helmet>
+<div style="font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif; color: #F1ECE2">
+
+  
+  <!-- 01 HERO · ENTRADA -->
+  <section class="p3-hero">
+    <header class="p3-wrap" style="padding-top: 24px; padding-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+      <a href="#" style="display: flex; align-items: center; gap: 14px; text-decoration: none">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="#D0844A" stroke-width="2"></circle><path d="M20 2v36" stroke="#D0844A" stroke-width="2"></path><path d="M15 13l10 10M25 13L15 23" stroke="#F1ECE2" stroke-width="2"></path></svg>
+        <span style="font-stretch: 125%; font-weight: 800; font-size: 18px; line-height: 1.05">[NOME]<br><span style="font-stretch: 100%; font-weight: 400; font-size: 13px; color: #BFD0CC">Engenharia Elétrica</span></span>
+      </a>
+      <nav aria-label="Principal" style="display: flex; gap: 28px; font-size: 15px; font-weight: 500; flex-wrap: wrap">
+        <a href="#servicos" style="text-decoration: none">Serviços</a><a href="#alerta" style="text-decoration: none">Sinais de alerta</a><a href="#engenheiro" style="text-decoration: none">Por que engenheiro</a><a href="#trajetoria" style="text-decoration: none">Minha história</a><a href="#processo" style="text-decoration: none">Como funciona</a>
+      </nav>
+      <a href="#orcamento" style="background: #D0844A; color: #0E2F2E; text-decoration: none; font-weight: 700; font-size: 15px; padding: 13px 20px">Pedir orçamento</a>
+    </header>
+
+    <div class="p3-wrap" style="padding-top: 48px">
+      <h1 style="margin: 0 0 56px; font-stretch: 125%; font-weight: 900; font-size: clamp(56px, 8.4vw, 128px); line-height: .9; letter-spacing: -0.035em">Eletricidade<br><span style="color: #D0844A">não é improviso.</span></h1>
+      <div class="p3-trunk" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 56px; padding-bottom: 96px">
+        <div aria-hidden="true" style="position: absolute; left: -22px; top: -6px; width: 40px; height: 40px; border-radius: 50%; background: #0E2F2E; border: 3px solid #D0844A; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #E8A574">kWh</div>
+        <div style="display: flex; flex-direction: column; gap: 30px">
+          <span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #E8A574">ENTRADA · 220/127 V · RESPONSÁVEL TÉCNICO</span>
+          <p style="margin: 0; font-size: 22px; line-height: 1.5; color: #DCE5E2; max-width: 520px">Projeto, instalação, inspeção e manutenção elétrica para casas, comércios e pequenas empresas. Um engenheiro que calcula antes de puxar o primeiro fio e assina pelo que entrega.</p>
+          <div style="display: flex; align-items: center; gap: 18px">
+            <div class="p3-ph" style="width: 72px; height: 72px; border-radius: 50%; border: 2px solid #D0844A; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 10px; color: #BFD0CC">[FOTO]</div>
+            <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700; font-size: 18px">Eng. [Nome Sobrenome]</span><span class="p3-mono" style="font-size: 13px; color: #BFD0CC">CREA-SP 000000000-0 · desde [ANO]</span></div>
+          </div>
+          <div style="position: relative; height: 150px; border: 1.5px dashed #A78BFA; display: flex; align-items: flex-start; padding: 12px; box-sizing: border-box">
+            <span class="p3-mono" style="font-size: 12px; font-weight: 500; color: #C4B5FD">[ESPAÇO 3D / WebGL · o tronco de cobre]</span>
+          </div>
+          <div class="p3-momd">[MOMENTO 3D: a linha de cobre vira um tubo 3D com partículas de corrente descendo pela página; a velocidade acompanha a rolagem e a linha fica mais brilhante a cada circuito que "liga" · gatilho: rolagem contínua · celular: linha 2D com um pulso de luz descendo, sem WebGL]</div>
+        </div>
+
+        <form id="orcamento-topo" aria-label="Pedido rápido de orçamento" style="background: #F1ECE2; color: #0E2F2E; padding: 32px; display: flex; flex-direction: column; gap: 18px; box-shadow: 14px 14px 0 #D0844A; align-self: start">
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-stretch: 115%; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Pedir orçamento</h2><span class="p3-mono" style="font-size: 12px; color: #4F625F">grátis · sem compromisso</span></div>
+          <fieldset style="border: 0; margin: 0; padding: 0">
+            <legend style="font-size: 14px; font-weight: 600; padding: 0; margin-bottom: 10px">Qual circuito você quer ligar?</legend>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+              <label style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; background: #0E2F2E; color: #F1ECE2; font-size: 15px; font-weight: 600"><input type="radio" name="p3a" checked style="accent-color: #D0844A; width: 18px; height: 18px; margin: 0">C1 Instalação</label>
+              <label style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1.5px solid #B9B0A0; font-size: 15px"><input type="radio" name="p3a" style="accent-color: #D0844A; width: 18px; height: 18px; margin: 0">C2 Projeto</label>
+              <label style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1.5px solid #B9B0A0; font-size: 15px"><input type="radio" name="p3a" style="accent-color: #D0844A; width: 18px; height: 18px; margin: 0">C3 Inspeção</label>
+              <label style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1.5px solid #B9B0A0; font-size: 15px"><input type="radio" name="p3a" style="accent-color: #D0844A; width: 18px; height: 18px; margin: 0">C4 Manutenção</label>
+            </div>
+          </fieldset>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Seu nome<input class="p3-in" type="text" placeholder="Como posso te chamar?"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">WhatsApp<input class="p3-in" type="tel" placeholder="(11) 9 0000-0000"></label>
+          </div>
+          <button type="submit" style="height: 56px; border: 0; background: #0E2F2E; color: #F1ECE2; font: inherit; font-weight: 700; font-size: 17px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; cursor: pointer">Receber meu orçamento <span aria-hidden="true" style="color: #E8A574">→</span></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 SERVIÇOS · BARRAMENTO -->
+  <section id="servicos" class="p3-paper">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 72px; padding-bottom: 48px">
+        <div aria-hidden="true" style="position: absolute; left: -10px; top: 76px; width: 17px; height: 17px; border-radius: 50%; background: #D0844A"></div>
+        <span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #7A3E15">QDG · BARRAMENTO · 4 CIRCUITOS</span>
+        <h2 style="margin: 14px 0 0; font-stretch: 125%; font-weight: 900; font-size: 60px; line-height: .95; letter-spacing: -0.03em; max-width: 760px">Quatro serviços. Uma só assinatura.</h2>
+      </div>
+      <div aria-hidden="true" style="height: 3px; background: #D0844A; margin-left: 0; position: relative"><div style="position: absolute; right: 0; top: -6px; width: 15px; height: 15px; border-radius: 50%; background: #D0844A"></div></div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 24px; padding-bottom: 56px">
+        <a href="#c1" style="display: flex; flex-direction: column; text-decoration: none; color: #0E2F2E">
+          <div aria-hidden="true" style="margin-left: 32px; display: flex; flex-direction: column; align-items: flex-start; width: 40px">
+            <div style="width: 3px; height: 18px; background: #D0844A; margin-left: 0"></div>
+            <svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg>
+            <div style="width: 3px; height: 26px; background: #0E2F2E"></div>
+            <div style="width: 3px; height: 14px; background: #D0844A"></div>
+          </div>
+          <div style="border-top: 3px solid #0E2F2E; padding-top: 18px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+            <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-stretch: 125%; font-weight: 900; font-size: 60px; line-height: .8; color: #D0844A; letter-spacing: -0.04em">C1</span><span class="p3-mono" style="font-size: 11px; background: #0E2F2E; color: #F1ECE2; padding: 3px 7px">FECHADO · ON</span></div>
+            <h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Instalação elétrica</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #2F4644; flex-grow: 1">Obra nova, reforma ou ampliação, da entrada à última tomada.</p>
+            <span style="font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1.5px solid #0E2F2E">Ver circuito C1 <span aria-hidden="true">↓</span></span>
+          </div>
+        </a>
+        <a href="#c2" style="display: flex; flex-direction: column; text-decoration: none; color: #0E2F2E">
+          <div aria-hidden="true" style="margin-left: 32px; display: flex; flex-direction: column; align-items: flex-start; width: 40px">
+            <div style="width: 3px; height: 18px; background: #D0844A"></div>
+            <svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg>
+            <div style="width: 3px; height: 26px; background: #0E2F2E"></div>
+            <div style="width: 3px; height: 14px; background: #D0844A"></div>
+          </div>
+          <div style="border-top: 3px solid #0E2F2E; padding-top: 18px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+            <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-stretch: 125%; font-weight: 900; font-size: 60px; line-height: .8; color: #D0844A; letter-spacing: -0.04em">C2</span><span class="p3-mono" style="font-size: 11px; background: #0E2F2E; color: #F1ECE2; padding: 3px 7px">FECHADO · ON</span></div>
+            <h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Projetos elétricos</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #2F4644; flex-grow: 1">Memorial de cálculo, ART e aprovação na concessionária.</p>
+            <span style="font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1.5px solid #0E2F2E">Ver circuito C2 <span aria-hidden="true">↓</span></span>
+          </div>
+        </a>
+        <a href="#c3" style="display: flex; flex-direction: column; text-decoration: none; color: #0E2F2E">
+          <div aria-hidden="true" style="margin-left: 32px; display: flex; flex-direction: column; align-items: flex-start; width: 40px">
+            <div style="width: 3px; height: 18px; background: #D0844A"></div>
+            <svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg>
+            <div style="width: 3px; height: 26px; background: #0E2F2E"></div>
+            <div style="width: 3px; height: 14px; background: #D0844A"></div>
+          </div>
+          <div style="border-top: 3px solid #0E2F2E; padding-top: 18px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+            <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-stretch: 125%; font-weight: 900; font-size: 60px; line-height: .8; color: #D0844A; letter-spacing: -0.04em">C3</span><span class="p3-mono" style="font-size: 11px; background: #0E2F2E; color: #F1ECE2; padding: 3px 7px">FECHADO · ON</span></div>
+            <h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Inspeções e laudos</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #2F4644; flex-grow: 1">Medições, termografia e laudo assinado.</p>
+            <span style="font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1.5px solid #0E2F2E">Ver circuito C3 <span aria-hidden="true">↓</span></span>
+          </div>
+        </a>
+        <a href="#c4" style="display: flex; flex-direction: column; text-decoration: none; color: #0E2F2E">
+          <div aria-hidden="true" style="margin-left: 32px; display: flex; flex-direction: column; align-items: flex-start; width: 40px">
+            <div style="width: 3px; height: 18px; background: #D0844A"></div>
+            <svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg>
+            <div style="width: 3px; height: 26px; background: #0E2F2E"></div>
+            <div style="width: 3px; height: 14px; background: #D0844A"></div>
+          </div>
+          <div style="border-top: 3px solid #0E2F2E; padding-top: 18px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+            <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-stretch: 125%; font-weight: 900; font-size: 60px; line-height: .8; color: #D0844A; letter-spacing: -0.04em">C4</span><span class="p3-mono" style="font-size: 11px; background: #0E2F2E; color: #F1ECE2; padding: 3px 7px">FECHADO · ON</span></div>
+            <h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Manutenção</h3>
+            <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #2F4644; flex-grow: 1">Preventiva com agenda ou corretiva quando algo falha.</p>
+            <span style="font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1.5px solid #0E2F2E">Ver circuito C4 <span aria-hidden="true">↓</span></span>
+          </div>
+        </a>
+      </div>
+      <div class="p3-mom" style="margin-bottom: 64px">[MOMENTO: cada disjuntor começa aberto (lâmina a −35°) e FECHA girando até 0° com um "clique" visual; ao fechar, o trecho abaixo dele acende em cobre e o selo muda para "FECHADO · ON" · gatilho: barramento entra na tela, C1→C4 em sequência (150 ms) · celular: cada um fecha quando o seu card entra na tela]</div>
+    </div>
+  </section>
+
+  <!-- 03 SINAIS DE ALERTA · FALTAS (respiro) -->
+  <section id="alerta" class="p3-dark">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 128px; padding-bottom: 128px; display: flex; flex-direction: column; gap: 80px">
+        <div aria-hidden="true" style="position: absolute; left: -20px; top: 128px; width: 36px; height: 36px; background: #0E2F2E; border: 3px solid #E8A574; transform: rotate(45deg)"></div>
+        <div style="display: flex; flex-direction: column; gap: 18px">
+          <span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #E8A574">FALTA DETECTADA · A PROTEÇÃO ESTÁ AVISANDO</span>
+          <h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 104px; line-height: .88; letter-spacing: -0.04em">Quando a casa<br><span style="color: #D0844A">dá sinal.</span></h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr)); gap: 0">
+          <div style="padding: 32px 40px 32px 0; border-top: 1px solid rgba(241,236,226,.25); border-right: 1px solid rgba(241,236,226,.25); display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 13px; color: #E8A574">F1 · SOBRECARGA</span><h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 40px; letter-spacing: -0.025em; line-height: 1">Disjuntor desarmando</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC; max-width: 420px">O circuito pede mais do que aguenta, ou há fuga de corrente. Religar e torcer não resolve.</p></div>
+          <div style="padding: 32px 0 32px 40px; border-top: 1px solid rgba(241,236,226,.25); display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 13px; color: #E8A574">F2 · AQUECIMENTO</span><h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 40px; letter-spacing: -0.025em; line-height: 1">Cheiro de queimado</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC; max-width: 420px">Isolação aquecendo. Desligue o circuito no quadro e chame no mesmo dia.</p></div>
+          <div style="padding: 32px 40px 32px 0; border-top: 1px solid rgba(241,236,226,.25); border-right: 1px solid rgba(241,236,226,.25); display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 13px; color: #E8A574">F3 · FUGA À TERRA</span><h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 40px; letter-spacing: -0.025em; line-height: 1">Choque ou formigamento</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC; max-width: 420px">Falta aterramento ou DR. É o risco mais direto para pessoas.</p></div>
+          <div style="padding: 32px 0 32px 40px; border-top: 1px solid rgba(241,236,226,.25); display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 13px; color: #E8A574">F4 · MAU CONTATO</span><h3 style="margin: 0; font-stretch: 112%; font-weight: 800; font-size: 40px; letter-spacing: -0.025em; line-height: 1">Tomada ou espelho quente</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC; max-width: 420px">Conexão frouxa ou cabo fino demais. É assim que muitos incêndios começam.</p></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; background: #D0844A; color: #0E2F2E; padding: 26px 30px">
+          <p style="margin: 0; font-size: 18px; line-height: 1.45; max-width: 620px"><strong>Fumaça ou faísca?</strong> Desligue o disjuntor geral e afaste-se do quadro. Depois, fale comigo.</p>
+          <a href="#" style="background: #0E2F2E; color: #F1ECE2; text-decoration: none; font-weight: 700; font-size: 16px; padding: 16px 26px">Chamar no WhatsApp agora →</a>
+        </div>
+        <div class="p3-momd">[MOMENTO: o tronco de cobre "pisca" em âmbar no losango de falta e volta ao normal; cada F1–F4 entra com um leve deslocamento lateral · gatilho: seção entra 30% na tela · celular: só o piscar do losango]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 DETALHES · CIRCUITOS C1–C4 -->
+  <section class="p3-paper">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 96px; padding-bottom: 104px; display: flex; flex-direction: column; gap: 72px">
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #7A3E15">LEITURA: PROBLEMA → DISPOSITIVO → CARGA</span>
+          <h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 48px; line-height: .98; letter-spacing: -0.03em; max-width: 760px">Cada circuito, do problema à entrega.</h2>
+        </div>
+
+        <div style="display: flex; flex-direction: column; margin-top: -32px">
+          <div aria-hidden="true" style="height: 3px; background: #D0844A; margin-left: -64px"></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 20px">
+
+            <div style="display: flex; flex-direction: column">
+              <div aria-hidden="true" style="width: 3px; height: 28px; margin-left: 26px; background: #D0844A"></div>
+              <article id="c1" style="flex: 1; display: flex; flex-direction: column; background: #FFFFFF; border: 2px solid #D0844A; opacity: 1; transition: opacity .25s, border-color .25s">
+                <button type="button" onClick="" aria-pressed="true" aria-label="Ligar circuito C1, instalação elétrica" style="display: flex; align-items: center; gap: 14px; padding: 16px 16px; min-height: 84px; border: 0; border-bottom: 1.5px solid #0E2F2E; background: transparent; font: inherit; color: #0E2F2E; text-align: left; cursor: pointer">
+                  <span aria-hidden="true" style="display: flex; flex-direction: column; align-items: center; width: 16px; flex-shrink: 0"><span style="width: 3px; height: 10px; background: #D0844A"></span><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><span style="width: 3px; height: 22px; background: #0E2F2E; transform-origin: 50% 100%; transform: rotate(0deg); transition: transform .25s"></span><span style="width: 3px; height: 10px; background: #D0844A"></span></span>
+                  <span style="display: flex; flex-direction: column; gap: 4px; flex: 1"><span style="font-stretch: 125%; font-weight: 900; font-size: 34px; line-height: .9; color: #D0844A">C1</span><span style="font-stretch: 112%; font-weight: 800; font-size: 19px; line-height: 1.1">Instalação elétrica</span></span>
+                  <span class="p3-mono" style="font-size: 10px; padding: 3px 6px; background: #0E2F2E; color: #F1ECE2; border: 1px solid #0E2F2E; white-space: nowrap; align-self: flex-start">FECHADO · ON</span>
+                </button>
+                <div style="padding: 16px; min-height: 150px; box-sizing: border-box; background: #F7F3EB; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">ENTRADA · O PROBLEMA</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Casa antiga que não aguenta ar, chuveiro e forno juntos, ou obra sem carga calculada.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #D0844A"></div>
+                <div style="padding: 16px; min-height: 160px; box-sizing: border-box; background: #0E2F2E; color: #F1ECE2; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #E8A574">DISPOSITIVO · O QUE EU FAÇO</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Dimensiono circuitos e quadro, instalo com material certificado e identifico cada circuito.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #D0844A"></div>
+                <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">CARGA · VOCÊ RECEBE</span><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 14px"><li>○ Quadro identificado</li><li>○ Diagrama na porta</li><li>○ ART de execução</li><li>○ Garantia de [X] meses</li></ul></div>
+                <a href="#orcamento" style="margin: 0 16px 16px; padding: 13px 0; border-top: 1.5px solid #0E2F2E; color: #0E2F2E; font-weight: 700; font-size: 15px; text-decoration: none; display: flex; justify-content: space-between">Orçar C1 <span aria-hidden="true">→</span></a>
+              </article>
+            </div>
+
+            <div style="display: flex; flex-direction: column">
+              <div aria-hidden="true" style="width: 3px; height: 28px; margin-left: 26px; background: #B9B0A0"></div>
+              <article id="c2" style="flex: 1; display: flex; flex-direction: column; background: #FFFFFF; border: 2px solid rgba(14,47,46,.25); opacity: 0.72; transition: opacity .25s, border-color .25s">
+                <button type="button" onClick="" aria-pressed="false" aria-label="Ligar circuito C2, projetos elétricos" style="display: flex; align-items: center; gap: 14px; padding: 16px 16px; min-height: 84px; border: 0; border-bottom: 1.5px solid #0E2F2E; background: transparent; font: inherit; color: #0E2F2E; text-align: left; cursor: pointer">
+                  <span aria-hidden="true" style="display: flex; flex-direction: column; align-items: center; width: 16px; flex-shrink: 0"><span style="width: 3px; height: 10px; background: #B9B0A0"></span><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><span style="width: 3px; height: 22px; background: #0E2F2E; transform-origin: 50% 100%; transform: rotate(-35deg); transition: transform .25s"></span><span style="width: 3px; height: 10px; background: #B9B0A0"></span></span>
+                  <span style="display: flex; flex-direction: column; gap: 4px; flex: 1"><span style="font-stretch: 125%; font-weight: 900; font-size: 34px; line-height: .9; color: #D0844A">C2</span><span style="font-stretch: 112%; font-weight: 800; font-size: 19px; line-height: 1.1">Projetos elétricos</span></span>
+                  <span class="p3-mono" style="font-size: 10px; padding: 3px 6px; background: transparent; color: #2F4644; border: 1px solid #0E2F2E; white-space: nowrap; align-self: flex-start">ABERTO · OFF</span>
+                </button>
+                <div style="padding: 16px; min-height: 150px; box-sizing: border-box; background: #F7F3EB; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">ENTRADA · O PROBLEMA</span><p style="margin: 0; font-size: 15px; line-height: 1.5">A concessionária ou o arquiteto pediram o projeto elétrico para a obra começar.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #B9B0A0"></div>
+                <div style="padding: 16px; min-height: 160px; box-sizing: border-box; background: #0E2F2E; color: #F1ECE2; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #E8A574">DISPOSITIVO · O QUE EU FAÇO</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Calculo cabos, queda de tensão e curto, e desenho planta e diagrama unifilar.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #B9B0A0"></div>
+                <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">CARGA · VOCÊ RECEBE</span><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 14px"><li>○ Pranchas em PDF e DWG</li><li>○ Memorial de cálculo</li><li>○ Lista de materiais</li><li>○ ART de projeto</li></ul></div>
+                <a href="#orcamento" style="margin: 0 16px 16px; padding: 13px 0; border-top: 1.5px solid #0E2F2E; color: #0E2F2E; font-weight: 700; font-size: 15px; text-decoration: none; display: flex; justify-content: space-between">Orçar C2 <span aria-hidden="true">→</span></a>
+              </article>
+            </div>
+
+            <div style="display: flex; flex-direction: column">
+              <div aria-hidden="true" style="width: 3px; height: 28px; margin-left: 26px; background: #B9B0A0"></div>
+              <article id="c3" style="flex: 1; display: flex; flex-direction: column; background: #FFFFFF; border: 2px solid rgba(14,47,46,.25); opacity: 0.72; transition: opacity .25s, border-color .25s">
+                <button type="button" onClick="" aria-pressed="false" aria-label="Ligar circuito C3, inspeções e laudos" style="display: flex; align-items: center; gap: 14px; padding: 16px 16px; min-height: 84px; border: 0; border-bottom: 1.5px solid #0E2F2E; background: transparent; font: inherit; color: #0E2F2E; text-align: left; cursor: pointer">
+                  <span aria-hidden="true" style="display: flex; flex-direction: column; align-items: center; width: 16px; flex-shrink: 0"><span style="width: 3px; height: 10px; background: #B9B0A0"></span><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><span style="width: 3px; height: 22px; background: #0E2F2E; transform-origin: 50% 100%; transform: rotate(-35deg); transition: transform .25s"></span><span style="width: 3px; height: 10px; background: #B9B0A0"></span></span>
+                  <span style="display: flex; flex-direction: column; gap: 4px; flex: 1"><span style="font-stretch: 125%; font-weight: 900; font-size: 34px; line-height: .9; color: #D0844A">C3</span><span style="font-stretch: 112%; font-weight: 800; font-size: 19px; line-height: 1.1">Inspeções e laudos</span></span>
+                  <span class="p3-mono" style="font-size: 10px; padding: 3px 6px; background: transparent; color: #2F4644; border: 1px solid #0E2F2E; white-space: nowrap; align-self: flex-start">ABERTO · OFF</span>
+                </button>
+                <div style="padding: 16px; min-height: 150px; box-sizing: border-box; background: #F7F3EB; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">ENTRADA · O PROBLEMA</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Compra de imóvel, seguro ou vistoria sem saber o estado real da instalação.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #B9B0A0"></div>
+                <div style="padding: 16px; min-height: 160px; box-sizing: border-box; background: #0E2F2E; color: #F1ECE2; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #E8A574">DISPOSITIVO · O QUE EU FAÇO</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Meço isolamento e aterramento, faço termografia do quadro e verifico o SPDA.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #B9B0A0"></div>
+                <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">CARGA · VOCÊ RECEBE</span><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 14px"><li>○ Laudo técnico assinado</li><li>○ Fotos térmicas</li><li>○ Lista de prioridades</li><li>○ ART</li></ul></div>
+                <a href="#orcamento" style="margin: 0 16px 16px; padding: 13px 0; border-top: 1.5px solid #0E2F2E; color: #0E2F2E; font-weight: 700; font-size: 15px; text-decoration: none; display: flex; justify-content: space-between">Orçar C3 <span aria-hidden="true">→</span></a>
+              </article>
+            </div>
+
+            <div style="display: flex; flex-direction: column">
+              <div aria-hidden="true" style="width: 3px; height: 28px; margin-left: 26px; background: #B9B0A0"></div>
+              <article id="c4" style="flex: 1; display: flex; flex-direction: column; background: #FFFFFF; border: 2px solid rgba(14,47,46,.25); opacity: 0.72; transition: opacity .25s, border-color .25s">
+                <button type="button" onClick="" aria-pressed="false" aria-label="Ligar circuito C4, manutenção" style="display: flex; align-items: center; gap: 14px; padding: 16px 16px; min-height: 84px; border: 0; border-bottom: 1.5px solid #0E2F2E; background: transparent; font: inherit; color: #0E2F2E; text-align: left; cursor: pointer">
+                  <span aria-hidden="true" style="display: flex; flex-direction: column; align-items: center; width: 16px; flex-shrink: 0"><span style="width: 3px; height: 10px; background: #B9B0A0"></span><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.4"></path></svg><span style="width: 3px; height: 22px; background: #0E2F2E; transform-origin: 50% 100%; transform: rotate(-35deg); transition: transform .25s"></span><span style="width: 3px; height: 10px; background: #B9B0A0"></span></span>
+                  <span style="display: flex; flex-direction: column; gap: 4px; flex: 1"><span style="font-stretch: 125%; font-weight: 900; font-size: 34px; line-height: .9; color: #D0844A">C4</span><span style="font-stretch: 112%; font-weight: 800; font-size: 19px; line-height: 1.1">Manutenção</span></span>
+                  <span class="p3-mono" style="font-size: 10px; padding: 3px 6px; background: transparent; color: #2F4644; border: 1px solid #0E2F2E; white-space: nowrap; align-self: flex-start">ABERTO · OFF</span>
+                </button>
+                <div style="padding: 16px; min-height: 150px; box-sizing: border-box; background: #F7F3EB; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">ENTRADA · O PROBLEMA</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Disjuntor desarma, luz pisca, a conta subiu, ou a empresa não pode parar.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #B9B0A0"></div>
+                <div style="padding: 16px; min-height: 160px; box-sizing: border-box; background: #0E2F2E; color: #F1ECE2; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #E8A574">DISPOSITIVO · O QUE EU FAÇO</span><p style="margin: 0; font-size: 15px; line-height: 1.5">Diagnóstico, reaperto, troca de componentes e teste de DR e DPS, com agenda preventiva.</p></div>
+                <div aria-hidden="true" style="width: 3px; height: 18px; margin-left: 24px; background: #B9B0A0"></div>
+                <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px"><span class="p3-mono" style="font-size: 10px; color: #7A3E15">CARGA · VOCÊ RECEBE</span><ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 14px"><li>○ Relatório por visita</li><li>○ Histórico do quadro</li><li>○ Prioridade no atendimento</li><li>○ Contrato opcional</li></ul></div>
+                <a href="#orcamento" style="margin: 0 16px 16px; padding: 13px 0; border-top: 1.5px solid #0E2F2E; color: #0E2F2E; font-weight: 700; font-size: 15px; text-decoration: none; display: flex; justify-content: space-between">Orçar C4 <span aria-hidden="true">→</span></a>
+              </article>
+            </div>
+
+          </div>
+        </div>
+        <div class="p3-mom">[MOMENTO / INTERAÇÃO: clique no cabeçalho de um circuito → o disjuntor dele fecha (lâmina −35° → 0°), a derivação e os fios internos acendem em cobre e o selo vira "FECHADO · ON"; os outros três abrem e esmaecem. Já funciona no Play deste quadro · gatilho: clique; ao rolar, C1 começa ligado · celular: toque, mesmo comportamento]</div>
+      </div>
+    </div>
+  </section>
+
+  
+  
+  <!-- 05 POR QUE ENGENHEIRO · LEGENDA (respiro) -->
+  <section id="engenheiro" class="p3-dark">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 136px; padding-bottom: 136px; display: flex; flex-direction: column; gap: 88px">
+        <h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 112px; line-height: .86; letter-spacing: -0.045em">Quem calcula,<br><span style="color: #D0844A">responde.</span></h2>
+        <div style="display: flex; flex-direction: column; gap: 0; max-width: 980px">
+          <div class="p3-mono" style="font-size: 12px; color: #E8A574; letter-spacing: .1em; padding-bottom: 14px; border-bottom: 1.5px solid #F1ECE2">LEGENDA</div>
+          <div style="display: grid; grid-template-columns: 96px 200px 1fr; gap: 24px; align-items: center; padding: 26px 0; border-bottom: 1px solid rgba(241,236,226,.2)"><svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="#D0844A" stroke-width="2.5" aria-hidden="true"><rect x="10" y="6" width="36" height="44"></rect><path d="M18 18h20M18 26h20M18 34h10"></path><circle cx="38" cy="40" r="7" fill="#0E2F2E"></circle></svg><span class="p3-mono" style="font-size: 26px; font-weight: 500">ART</span><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC">Registro no CREA de quem responde pelo serviço. Se algo der errado, há um responsável com nome.</p></div>
+          <div style="display: grid; grid-template-columns: 96px 200px 1fr; gap: 24px; align-items: center; padding: 26px 0; border-bottom: 1px solid rgba(241,236,226,.2)"><svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="#D0844A" stroke-width="2.5" aria-hidden="true"><path d="M8 10h18a4 4 0 0 1 4 4v34a4 4 0 0 0-4-4H8z M48 10H30v38a4 4 0 0 1 4-4h14z"></path></svg><span class="p3-mono" style="font-size: 26px; font-weight: 500">NBR 5410</span><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC">A norma de instalações de baixa tensão: bitola, proteção, aterramento e DR. É o que seguradoras e vistorias cobram.</p></div>
+          <div style="display: grid; grid-template-columns: 96px 200px 1fr; gap: 24px; align-items: center; padding: 26px 0; border-bottom: 1px solid rgba(241,236,226,.2)"><svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="#D0844A" stroke-width="2.5" aria-hidden="true"><circle cx="28" cy="22" r="14"></circle><path d="M20 34l-4 16 12-6 12 6-4-16"></path></svg><span class="p3-mono" style="font-size: 26px; font-weight: 500">CREA</span><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC">Registro verificável. Consulte 000000000-0 no site do conselho antes de contratar.</p></div>
+          <div style="display: grid; grid-template-columns: 96px 200px 1fr; gap: 24px; align-items: center; padding: 26px 0; border-bottom: 1.5px solid #F1ECE2"><svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="#D0844A" stroke-width="2.5" aria-hidden="true"><path d="M40 10H14l16 18-16 18h26"></path></svg><span class="p3-mono" style="font-size: 26px; font-weight: 500">CÁLCULO</span><p style="margin: 0; font-size: 17px; line-height: 1.55; color: #BFD0CC">Nada "no olho": seção dos cabos, queda de tensão e corrente de curto calculadas para a sua carga real.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 ANTES E DEPOIS + 3D -->
+  <section class="p3-paper">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 96px; padding-bottom: 104px; display: flex; flex-direction: column; gap: 40px">
+        <div style="display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap">
+          <div style="display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #7A3E15">QDG · ANTES → DEPOIS</span><h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 52px; line-height: .95; letter-spacing: -0.03em">O mesmo quadro, religado.</h2></div>
+          <p style="margin: 0; max-width: 360px; font-size: 16px; line-height: 1.6; color: #2F4644">[Cliente / bairro / tipo de imóvel]. Arraste para comparar, gire o modelo para ver por dentro.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px">
+          <div style="position: relative; height: 520px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1.5px solid #0E2F2E">
+            <div style="background: #3A3A3A; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 2px, transparent 2px 12px); display: flex; align-items: center; justify-content: center; position: relative"><span class="p3-mono" style="font-size: 12px; color: #D0D0D0">[FOTO REAL · ANTES]</span><span class="p3-mono" style="position: absolute; top: 14px; left: 14px; background: #F1ECE2; color: #0E2F2E; font-size: 11px; padding: 4px 8px">ANTES · ABERTO</span></div>
+            <div class="p3-phl" style="display: flex; align-items: center; justify-content: center; position: relative"><span class="p3-mono" style="font-size: 12px; color: #4F625F">[FOTO REAL · DEPOIS]</span><span class="p3-mono" style="position: absolute; top: 14px; right: 14px; background: #D0844A; color: #0E2F2E; font-size: 11px; padding: 4px 8px">DEPOIS · FECHADO</span></div>
+            <div aria-hidden="true" style="position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: #D0844A; transform: translateX(-50%)"></div>
+            <button aria-label="Arrastar para comparar" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; border-radius: 50%; background: #D0844A; border: 3px solid #0E2F2E; color: #0E2F2E; font-size: 18px; font-weight: 700">↔</button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <div style="flex: 1; min-height: 360px; border: 1.5px dashed #6D28D9; background: #FFFFFF; position: relative; display: flex; align-items: center; justify-content: center">
+              <svg width="170" height="220" viewBox="0 0 170 220" fill="none" stroke="#0E2F2E" stroke-width="1.6" aria-hidden="true"><path d="M30 30 L130 10 L150 30 L150 200 L50 210 L30 190 Z"></path><path d="M30 30 L50 50 L150 30 M50 50 V210"></path><g stroke="#D0844A" stroke-width="2.4"><path d="M70 80 H130 M70 110 H130 M70 140 H130"></path></g></svg>
+              <span class="p3-mono" style="position: absolute; top: 12px; left: 12px; font-size: 12px; color: #5B21B6">[ESPAÇO 3D / WebGL · quadro]</span>
+            </div>
+            <div class="p3-mom">[MOMENTO 3D: modelo do quadro gira 360° ao arrastar; ao rolar, a tampa se afasta (vista explodida) e os 4 disjuntores fecham em sequência · gatilho: arraste + rolagem · celular: imagem estática explodida com toque para alternar antes/depois]</div>
+          </div>
+        </div>
+        <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 24px">
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.5"><span class="p3-mono" style="color: #7A3E15; font-weight: 500">01</span>Emendas expostas → barramento</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.5"><span class="p3-mono" style="color: #7A3E15; font-weight: 500">02</span>Sem DR → DR e DPS instalados</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.5"><span class="p3-mono" style="color: #7A3E15; font-weight: 500">03</span>Circuitos misturados → identificados</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.5"><span class="p3-mono" style="color: #7A3E15; font-weight: 500">04</span>Sem registro → diagrama na porta</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 TRAJETÓRIA · NÓS NO TRONCO -->
+  <section id="trajetoria" class="p3-dark">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 104px; padding-bottom: 112px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 72px">
+        <div style="display: flex; flex-direction: column; gap: 28px">
+          <span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #E8A574">MINHA HISTÓRIA</span>
+          <h2 style="margin: 0; font-stretch: 115%; font-weight: 800; font-size: 44px; line-height: 1.04; letter-spacing: -0.025em">[Frase dele: por que escolheu a engenharia elétrica.]</h2>
+          <ol style="margin: 16px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 32px">
+            <li style="position: relative; display: flex; flex-direction: column; gap: 4px"><span aria-hidden="true" style="position: absolute; left: -75px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: #0E2F2E; border: 3px solid #D0844A"></span><span class="p3-mono" style="font-size: 20px; color: #E8A574">[ANO]</span><span style="font-size: 17px; color: #DCE5E2">Formação em Engenharia Elétrica · [UNIVERSIDADE]</span></li>
+            <li style="position: relative; display: flex; flex-direction: column; gap: 4px"><span aria-hidden="true" style="position: absolute; left: -75px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: #0E2F2E; border: 3px solid #D0844A"></span><span class="p3-mono" style="font-size: 20px; color: #E8A574">[ANO]</span><span style="font-size: 17px; color: #DCE5E2">Primeiros anos em [EMPRESA / SETOR]</span></li>
+            <li style="position: relative; display: flex; flex-direction: column; gap: 4px"><span aria-hidden="true" style="position: absolute; left: -75px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: #0E2F2E; border: 3px solid #D0844A"></span><span class="p3-mono" style="font-size: 20px; color: #E8A574">[ANO]</span><span style="font-size: 17px; color: #DCE5E2">Primeiras obras com ART própria</span></li>
+            <li style="position: relative; display: flex; flex-direction: column; gap: 4px"><span aria-hidden="true" style="position: absolute; left: -75px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: #0E2F2E; border: 3px solid #D0844A"></span><span class="p3-mono" style="font-size: 20px; color: #E8A574">[ANO]</span><span style="font-size: 17px; color: #DCE5E2">Abre a [NOME] Engenharia Elétrica</span></li>
+            <li style="position: relative; display: flex; flex-direction: column; gap: 4px"><span aria-hidden="true" style="position: absolute; left: -77px; top: 2px; width: 20px; height: 20px; border-radius: 50%; background: #D0844A"></span><span class="p3-mono" style="font-size: 20px; color: #D0844A">HOJE</span><span style="font-size: 17px; color: #F1ECE2; font-weight: 600">[XXX] clientes em [CIDADE]</span></li>
+          </ol>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 24px">
+          <div class="p3-ph" style="height: 480px; border: 2px solid #D0844A; display: flex; align-items: center; justify-content: center"><span class="p3-mono" style="font-size: 13px; color: #BFD0CC">[RETRATO REAL do engenheiro]</span></div>
+          <p style="margin: 0; font-size: 18px; line-height: 1.65; color: #BFD0CC">[Dois parágrafos curtos na voz dele: o que aprendeu nos primeiros anos e por que decidiu atender casas e pequenos negócios com o rigor de uma indústria.]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 COMO FUNCIONA · SEQUÊNCIA DE MANOBRA -->
+  <section id="processo" class="p3-paper">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 96px; padding-bottom: 104px; display: flex; flex-direction: column; gap: 48px">
+        <div style="display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 12px; letter-spacing: .1em; color: #7A3E15">SEQUÊNCIA DE MANOBRA · 5 ETAPAS</span><h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 52px; line-height: .95; letter-spacing: -0.03em">Como o seu circuito liga.</h2></div>
+        <div aria-hidden="true" style="height: 3px; background: #D0844A; margin-left: -64px"></div>
+        <ol style="margin: -48px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 20px">
+          <li style="display: flex; flex-direction: column; gap: 12px"><div aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 12px"><div style="width: 3px; height: 16px; background: #D0844A"></div><svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><div style="width: 3px; height: 22px; background: #0E2F2E"></div></div><span style="font-stretch: 125%; font-weight: 900; font-size: 40px; color: #D0844A; line-height: .9">1</span><h3 style="margin: 0; font-size: 20px; font-weight: 800">Contato</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2F4644">Descreva o problema e mande fotos do quadro.</p></li>
+          <li style="display: flex; flex-direction: column; gap: 12px"><div aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 12px"><div style="width: 3px; height: 16px; background: #D0844A"></div><svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><div style="width: 3px; height: 22px; background: #0E2F2E"></div></div><span style="font-stretch: 125%; font-weight: 900; font-size: 40px; color: #D0844A; line-height: .9">2</span><h3 style="margin: 0; font-size: 20px; font-weight: 800">Visita técnica</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2F4644">Levantamento e medições no local. [Gratuita / abatida no serviço].</p></li>
+          <li style="display: flex; flex-direction: column; gap: 12px"><div aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 12px"><div style="width: 3px; height: 16px; background: #D0844A"></div><svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><div style="width: 3px; height: 22px; background: #0E2F2E"></div></div><span style="font-stretch: 125%; font-weight: 900; font-size: 40px; color: #D0844A; line-height: .9">3</span><h3 style="margin: 0; font-size: 20px; font-weight: 800">Orçamento</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2F4644">Por escrito: escopo, materiais, prazo e valor fechado.</p></li>
+          <li style="display: flex; flex-direction: column; gap: 12px"><div aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 12px"><div style="width: 3px; height: 16px; background: #D0844A"></div><svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><div style="width: 3px; height: 22px; background: #0E2F2E"></div></div><span style="font-stretch: 125%; font-weight: 900; font-size: 40px; color: #D0844A; line-height: .9">4</span><h3 style="margin: 0; font-size: 20px; font-weight: 800">Execução</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2F4644">Na data combinada, com o local limpo no fim.</p></li>
+          <li style="display: flex; flex-direction: column; gap: 12px"><div aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 12px"><div style="width: 3px; height: 16px; background: #D0844A"></div><svg width="16" height="16" viewBox="0 0 16 16" style="margin-left: -6.5px"><path d="M3 3l10 10M13 3L3 13" stroke="#0E2F2E" stroke-width="2.2"></path></svg><div style="width: 3px; height: 22px; background: #D0844A"></div></div><span style="font-stretch: 125%; font-weight: 900; font-size: 40px; color: #0E2F2E; line-height: .9; background: #D0844A; align-self: flex-start; padding: 2px 10px">ART</span><h3 style="margin: 0; font-size: 20px; font-weight: 800">Ligado e entregue</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2F4644">Documentação, ART registrada e garantia por escrito.</p></li>
+        </ol>
+        <div class="p3-mom">[MOMENTO: os 5 disjuntores fecham um por um enquanto a seção passa (scrub); o barramento acende da esquerda até a etapa atual · gatilho: rolagem · celular: lista vertical, cada etapa fecha ao cruzar o meio da tela]</div>
+      </div>
+    </div>
+  </section>
+
+  
+  
+  <!-- 09 DEPOIMENTOS + FAQ · MEDIÇÕES -->
+  <section style="background: #E6DECF; color: #0E2F2E">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 96px; padding-bottom: 104px; display: flex; flex-direction: column; gap: 72px">
+        <div style="display: flex; flex-direction: column; gap: 40px">
+          <div style="display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap">
+            <div style="display: flex; flex-direction: column; gap: 12px"><span class="p3-mono" style="font-size: 12px; color: #7A3E15; letter-spacing: .1em">LEITURAS DE CAMPO · ANTES × DEPOIS</span><h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 48px; line-height: .95; letter-spacing: -0.03em; max-width: 720px">O que o medidor mostrou depois.</h2></div>
+            <p style="margin: 0; max-width: 340px; font-size: 15px; line-height: 1.6; color: #2F4644">Cada depoimento vem com a leitura do circuito que o cliente contratou: o número antes, o número depois.</p>
+          </div>
+
+          <figure style="margin: 0 0 0 -64px; display: grid; grid-template-columns: 64px 64px minmax(0, 1fr); align-items: stretch">
+            <div aria-hidden="true" style="display: flex; align-items: center"><div style="width: 64px; height: 3px; background: #D0844A"></div></div>
+            <div aria-hidden="true" style="display: flex; align-items: center; justify-content: center; background: #0E2F2E"><div style="display: flex; flex-direction: column; align-items: center"><div style="width: 3px; height: 14px; background: #D0844A"></div><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 3l10 10M13 3L3 13" stroke="#F1ECE2" stroke-width="2.2"></path></svg><div style="width: 3px; height: 22px; background: #F1ECE2"></div><div style="width: 3px; height: 14px; background: #D0844A"></div></div></div>
+            <div class="p3-dark" style="color: #F1ECE2; padding: 36px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 40px; align-items: center">
+              <div style="display: flex; flex-direction: column; gap: 18px">
+                <div style="display: flex; align-items: baseline; gap: 14px"><span style="font-stretch: 125%; font-weight: 900; font-size: 52px; line-height: .85; color: #D0844A">C1</span><span class="p3-mono" style="font-size: 12px; color: #BFD0CC">INSTALAÇÃO · CASA · [BAIRRO]</span></div>
+                <div style="display: grid; grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr); align-items: center; border: 1px solid rgba(241,236,226,.25)">
+                  <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px"><span class="p3-mono" style="font-size: 10px; color: #BFD0CC">LEITURA ANTES</span><span style="font-stretch: 112%; font-weight: 800; font-size: 24px; line-height: 1.1; color: #BFD0CC; text-decoration: line-through; text-decoration-color: #E8A574">[ex.: 3 desarmes / semana]</span></div>
+                  <span aria-hidden="true" style="color: #E8A574; font-size: 22px; text-align: center">→</span>
+                  <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px; background: #D0844A; color: #0E2F2E; height: 100%; box-sizing: border-box; justify-content: center"><span class="p3-mono" style="font-size: 10px">LEITURA DEPOIS</span><span style="font-stretch: 112%; font-weight: 900; font-size: 24px; line-height: 1.1">[ex.: 0 em 6 meses]</span></div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 14px">
+                <blockquote style="margin: 0; font-stretch: 108%; font-weight: 700; font-size: 26px; line-height: 1.25; letter-spacing: -0.01em">“[Depoimento real, a frase mais forte, em até 2 linhas.]”</blockquote>
+                <figcaption class="p3-mono" style="font-size: 13px; color: #BFD0CC">[Nome] · cliente desde [ANO]</figcaption>
+              </div>
+            </div>
+          </figure>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 24px">
+            <figure style="margin: 0; background: #F7F3EB; border: 1.5px solid #0E2F2E; padding: 26px; display: flex; flex-direction: column; gap: 16px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-stretch: 125%; font-weight: 900; font-size: 36px; line-height: .85; color: #D0844A">C4</span><span class="p3-mono" style="font-size: 11px; color: #4F625F">MANUTENÇÃO · COMÉRCIO</span></div>
+              <div class="p3-mono" style="display: flex; align-items: center; gap: 10px; font-size: 13px; flex-wrap: wrap"><span style="text-decoration: line-through; color: #4F625F">[ex.: 2 paradas / mês]</span><span aria-hidden="true" style="color: #7A3E15">→</span><span style="background: #0E2F2E; color: #F1ECE2; padding: 4px 8px">[ex.: 0 paradas no trimestre]</span></div>
+              <blockquote style="margin: 0; font-size: 17px; line-height: 1.5">“[Depoimento real de dono de comércio.]”</blockquote>
+              <figcaption class="p3-mono" style="font-size: 12px; color: #2F4644">[Nome], [empresa]</figcaption>
+            </figure>
+            <figure style="margin: 0; background: #F7F3EB; border: 1.5px solid #0E2F2E; padding: 26px; display: flex; flex-direction: column; gap: 16px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-stretch: 125%; font-weight: 900; font-size: 36px; line-height: .85; color: #D0844A">C3</span><span class="p3-mono" style="font-size: 11px; color: #4F625F">LAUDO · ESCRITÓRIO</span></div>
+              <div class="p3-mono" style="display: flex; align-items: center; gap: 10px; font-size: 13px; flex-wrap: wrap"><span style="text-decoration: line-through; color: #4F625F">[ex.: quadro a 70 °C]</span><span aria-hidden="true" style="color: #7A3E15">→</span><span style="background: #0E2F2E; color: #F1ECE2; padding: 4px 8px">[ex.: 38 °C após reaperto]</span></div>
+              <blockquote style="margin: 0; font-size: 17px; line-height: 1.5">“[Depoimento real de pequena empresa.]”</blockquote>
+              <figcaption class="p3-mono" style="font-size: 12px; color: #2F4644">[Nome], [empresa]</figcaption>
+            </figure>
+          </div>
+          <div class="p3-mom">[MOMENTO: a leitura "antes" recebe o risco âmbar e a "depois" conta de 0 até o valor real (contador, 800 ms), como um display de multímetro · gatilho: cada leitura entra na tela · celular: igual, uma de cada vez]</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 48px">
+          <h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 44px; line-height: .98; letter-spacing: -0.03em">Dúvidas antes de ligar.</h2>
+          <div style="display: flex; flex-direction: column; grid-column: span 2">
+            <details open="" style="border-top: 3px solid #0E2F2E; padding: 20px 0"><summary style="display: flex; align-items: center; gap: 16px; font-size: 19px; font-weight: 700"><svg width="14" height="30" viewBox="0 0 14 30" aria-hidden="true"><path d="M7 0v9M7 21v9" stroke="#D0844A" stroke-width="3"></path><path d="M7 9v12" stroke="#0E2F2E" stroke-width="3"></path></svg>Qual a diferença entre eletricista e engenheiro eletricista?</summary><p style="margin: 12px 0 0 30px; font-size: 16px; line-height: 1.6; color: #2F4644">O engenheiro pode projetar, calcular e assinar a ART, respondendo tecnicamente pelo serviço. Eu também executo: quem calcula é quem instala.</p></details>
+            <details style="border-top: 1px solid rgba(14,47,46,.3); padding: 20px 0"><summary style="display: flex; align-items: center; gap: 16px; font-size: 19px; font-weight: 700"><svg width="14" height="30" viewBox="0 0 14 30" aria-hidden="true"><path d="M7 0v9M7 21v9" stroke="#D0844A" stroke-width="3"></path><path d="M7 9l6 10" stroke="#0E2F2E" stroke-width="3"></path></svg>A visita técnica é cobrada?</summary></details>
+            <details style="border-top: 1px solid rgba(14,47,46,.3); padding: 20px 0"><summary style="display: flex; align-items: center; gap: 16px; font-size: 19px; font-weight: 700"><svg width="14" height="30" viewBox="0 0 14 30" aria-hidden="true"><path d="M7 0v9M7 21v9" stroke="#D0844A" stroke-width="3"></path><path d="M7 9l6 10" stroke="#0E2F2E" stroke-width="3"></path></svg>Em quanto tempo recebo o orçamento?</summary></details>
+            <details style="border-top: 1px solid rgba(14,47,46,.3); padding: 20px 0"><summary style="display: flex; align-items: center; gap: 16px; font-size: 19px; font-weight: 700"><svg width="14" height="30" viewBox="0 0 14 30" aria-hidden="true"><path d="M7 0v9M7 21v9" stroke="#D0844A" stroke-width="3"></path><path d="M7 9l6 10" stroke="#0E2F2E" stroke-width="3"></path></svg>Faço só o projeto com você e executo com outro?</summary></details>
+            <details style="border-top: 1px solid rgba(14,47,46,.3); padding: 20px 0"><summary style="display: flex; align-items: center; gap: 16px; font-size: 19px; font-weight: 700"><svg width="14" height="30" viewBox="0 0 14 30" aria-hidden="true"><path d="M7 0v9M7 21v9" stroke="#D0844A" stroke-width="3"></path><path d="M7 9l6 10" stroke="#0E2F2E" stroke-width="3"></path></svg>Atende emergências e fins de semana?</summary></details>
+            <details style="border-top: 1px solid rgba(14,47,46,.3); border-bottom: 3px solid #0E2F2E; padding: 20px 0"><summary style="display: flex; align-items: center; gap: 16px; font-size: 19px; font-weight: 700"><svg width="14" height="30" viewBox="0 0 14 30" aria-hidden="true"><path d="M7 0v9M7 21v9" stroke="#D0844A" stroke-width="3"></path><path d="M7 9l6 10" stroke="#0E2F2E" stroke-width="3"></path></svg>Quais regiões você atende?</summary></details>
+            <div class="p3-mom" style="margin-top: 16px">[MOMENTO: ao abrir uma pergunta, o mini-disjuntor ao lado fecha (lâmina gira até a vertical) · gatilho: clique/toque · celular: igual]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 CONTATO · CARGA FINAL -->
+  <section id="orcamento" class="p3-hero">
+    <div class="p3-wrap">
+      <div class="p3-trunk" style="padding-top: 112px; padding-bottom: 112px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); gap: 64px; align-items: start">
+        <div style="display: flex; flex-direction: column; gap: 28px">
+          <h2 style="margin: 0; font-stretch: 125%; font-weight: 900; font-size: 84px; line-height: .88; letter-spacing: -0.04em">Ligue o seu <span style="color: #D0844A">circuito.</span></h2>
+          <p style="margin: 0; font-size: 19px; line-height: 1.6; color: #DCE5E2">Conte o que precisa. Respondo em até [PRAZO], por WhatsApp ou e-mail.</p>
+          <div class="p3-mono" style="display: flex; flex-direction: column; font-size: 15px; border-top: 1px solid rgba(241,236,226,.3)">
+            <a href="#" style="text-decoration: none; display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(241,236,226,.15)"><span style="color: #E8A574; width: 100px">WHATSAPP</span>(11) 90000-0000</a>
+            <a href="#" style="text-decoration: none; display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(241,236,226,.15)"><span style="color: #E8A574; width: 100px">E-MAIL</span>contato@nomeengenharia.com.br</a>
+            <span style="display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(241,236,226,.15)"><span style="color: #E8A574; width: 100px">ÁREA</span>[CIDADE E REGIÃO]</span>
+            <span style="display: flex; gap: 16px; padding: 14px 0"><span style="color: #E8A574; width: 100px">HORÁRIO</span>[SEG–SEX, 8h–18h]</span>
+          </div>
+        </div>
+        <form aria-label="Pedido de orçamento" style="background: #F1ECE2; color: #0E2F2E; padding: 36px; display: flex; flex-direction: column; gap: 18px; box-shadow: 14px 14px 0 #D0844A">
+          <fieldset style="border: 0; margin: 0; padding: 0">
+            <legend style="font-size: 14px; font-weight: 600; padding: 0; margin-bottom: 10px">Circuito</legend>
+            <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+              <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 64px; background: #0E2F2E; color: #F1ECE2; font-size: 13px; font-weight: 600"><input type="radio" name="p3b" checked style="accent-color: #D0844A; margin: 0">C1 Instalação</label>
+              <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 64px; border: 1.5px solid #B9B0A0; font-size: 13px"><input type="radio" name="p3b" style="accent-color: #D0844A; margin: 0">C2 Projeto</label>
+              <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 64px; border: 1.5px solid #B9B0A0; font-size: 13px"><input type="radio" name="p3b" style="accent-color: #D0844A; margin: 0">C3 Inspeção</label>
+              <label style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 64px; border: 1.5px solid #B9B0A0; font-size: 13px"><input type="radio" name="p3b" style="accent-color: #D0844A; margin: 0">C4 Manutenção</label>
+            </div>
+          </fieldset>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Nome<input class="p3-in" type="text" placeholder="Seu nome"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">WhatsApp<input class="p3-in" type="tel" placeholder="(11) 9 0000-0000"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">E-mail<input class="p3-in" type="email" placeholder="voce@email.com"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Imóvel<select class="p3-in"><option>Casa</option><option>Comércio</option><option>Empresa / escritório</option></select></label>
+          </div>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">O que está acontecendo?<textarea class="p3-in" rows="3" placeholder="Ex.: o disjuntor do chuveiro desarma toda noite" style="height: auto; padding: 12px 14px"></textarea></label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px"><input type="file" style="font-size: 13px">Fotos do quadro (opcional)</label>
+          <button type="submit" style="height: 60px; border: 0; background: #0E2F2E; color: #F1ECE2; font: inherit; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; cursor: pointer">Ligar: enviar pedido <span aria-hidden="true" style="color: #E8A574">→</span></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 RODAPÉ · ATERRAMENTO -->
+  <footer style="background: #081E1D; color: #BFD0CC">
+    <div class="p3-wrap">
+      <div style="border-left: 3px solid #D0844A; height: 56px"></div>
+      <div aria-hidden="true" style="margin-left: -22px; display: flex; flex-direction: column; align-items: center; gap: 6px; width: 47px"><div style="width: 47px; height: 3px; background: #D0844A"></div><div style="width: 31px; height: 3px; background: #D0844A"></div><div style="width: 15px; height: 3px; background: #D0844A"></div></div>
+      <div style="padding: 40px 0 32px; display: flex; flex-direction: column; gap: 40px">
+        <div style="display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap">
+          <div style="display: flex; flex-direction: column; gap: 12px; max-width: 360px"><span style="font-stretch: 125%; font-weight: 800; font-size: 20px; color: #F1ECE2">[NOME] Engenharia Elétrica</span><p style="margin: 0; font-size: 14px; line-height: 1.6">Projeto, instalação, inspeção e manutenção elétrica em [CIDADE E REGIÃO].</p></div>
+          <nav aria-label="Rodapé" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 48px; font-size: 14px"><a href="#servicos" style="color: #BFD0CC; text-decoration: none">Serviços</a><a href="#trajetoria" style="color: #BFD0CC; text-decoration: none">Minha história</a><a href="#alerta" style="color: #BFD0CC; text-decoration: none">Sinais de alerta</a><a href="#processo" style="color: #BFD0CC; text-decoration: none">Como funciona</a><a href="#engenheiro" style="color: #BFD0CC; text-decoration: none">Por que engenheiro</a><a href="#orcamento" style="color: #BFD0CC; text-decoration: none">Pedir orçamento</a></nav>
+          <div class="p3-mono" style="display: flex; flex-direction: column; gap: 8px; font-size: 13px"><span>(11) 90000-0000</span><span>contato@nomeengenharia.com.br</span><span>CREA-SP 000000000-0</span><span>CNPJ 00.000.000/0001-00</span></div>
+        </div>
+        <div class="p3-mono" style="font-size: 12px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(241,236,226,.15); padding-top: 18px"><span>© 2026 [NOME] Engenharia Elétrica</span><span style="color: #E8A574">⏚ ATERRADO · FIM DO DIAGRAMA</span></div>
+      </div>
+    </div>
+  </footer>
+  
+</div>
+</x-dc>
+
+</body>
+</html>
