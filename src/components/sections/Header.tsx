@@ -39,7 +39,7 @@ export function Header() {
 
         <nav
           aria-label="Principal"
-          className="hidden flex-wrap gap-7 text-[15px] font-medium lg:flex"
+          className="hidden flex-wrap gap-7 text-[15px] font-medium md:flex"
         >
           {NAV_LINKS.map((link) => (
             <a key={link.href} href={link.href} className="no-underline hover:text-amber-text">
@@ -48,7 +48,7 @@ export function Header() {
           ))}
         </nav>
 
-        <Button href="#orcamento" variant="dark" className="hidden lg:inline-flex">
+        <Button href="#orcamento" variant="dark" className="hidden md:inline-flex">
           Pedir orçamento
         </Button>
 
@@ -57,7 +57,7 @@ export function Header() {
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center border-[1.5px] border-ink bg-transparent lg:hidden"
+          className="flex h-11 w-11 items-center justify-center border-[1.5px] border-ink bg-transparent md:hidden"
         >
           {open ? (
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
@@ -72,7 +72,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="wrap flex flex-col gap-1 border-t border-ink/18 pb-6 lg:hidden">
+        <div className="wrap flex flex-col gap-1 border-t border-ink/18 pb-6 md:hidden">
           <nav aria-label="Principal" className="flex flex-col pt-4">
             {NAV_LINKS.map((link) => (
               <a
