@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/cn";
 
 export function Etiqueta({
   escuro = false,
@@ -15,7 +15,7 @@ export function Etiqueta({
   return (
     <p
       style={style}
-      className={twMerge(
+      className={cn(
         "inline-flex items-center gap-2.5 font-sans text-label font-bold tracking-[0.12em] uppercase",
         escuro ? "text-eletrico-claro" : "text-eletrico",
         className

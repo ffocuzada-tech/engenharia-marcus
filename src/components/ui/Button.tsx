@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/cn";
 import { Icone } from "@/components/ui/Icone";
 
 type Variant = "ambar" | "claro" | "vidro";
@@ -33,7 +33,7 @@ type ButtonAsButton = CommonProps &
 
 export function Button(props: ButtonAsLink | ButtonAsButton) {
   const { variant = "ambar", arrow = false, className = "", children, ...domProps } = props;
-  const classes = twMerge(base, variants[variant], className);
+  const classes = cn(base, variants[variant], className);
 
   const arrowIcon = arrow && (
     <Icone nome="seta" className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />

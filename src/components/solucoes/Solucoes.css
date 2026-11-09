@@ -116,10 +116,6 @@
   .sol-info h3 {
     font-size: 0.98rem;
   }
-  .sol-tag,
-  .sol-prob {
-    display: none;
-  }
 }
 
 .sol-prob {
@@ -143,6 +139,15 @@
 @media (max-width: 1180px) {
   .sol-prob {
     grid-template-rows: 1fr;
+  }
+}
+
+/* Depois de .sol-prob e do ajuste de 1180px para vencer a cascata: no celular
+   não há hover para revelar o problema, então tag e problema ficam ocultos. */
+@media (max-width: 640px) {
+  .sol-tag,
+  .sol-prob {
+    display: none;
   }
 }
 

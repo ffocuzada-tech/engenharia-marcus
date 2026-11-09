@@ -66,6 +66,17 @@
   --shadow-2: 0 2px 6px rgba(10, 26, 46, 0.06), 0 24px 48px -18px rgba(10, 26, 46, 0.32);
 }
 
+/* O preflight do Tailwind zera o peso de h1-h6; h1/h2 já ganham font-extrabold
+   explícito em cada uso, mas h3 aparece em vários lugares sem isso. */
+@layer base {
+  h3 {
+    font-family: var(--font-title);
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+  }
+}
+
 /*
  * Variáveis auxiliares que não geram utilitários Tailwind.
  */

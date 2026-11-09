@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/cn";
 import { Etiqueta } from "@/components/ui/Etiqueta";
 
 export function CabecalhoSecao({
@@ -21,7 +21,7 @@ export function CabecalhoSecao({
 }) {
   return (
     <header
-      className={twMerge(
+      className={cn(
         "flex max-w-[780px] flex-col gap-4",
         align === "centro" && "mx-auto items-center text-center",
         className
@@ -30,7 +30,7 @@ export function CabecalhoSecao({
       <Etiqueta escuro={escuro}>{etiqueta}</Etiqueta>
       <h2
         id={tituloId}
-        className={twMerge(
+        className={cn(
           "font-title text-h2 font-extrabold",
           escuro ? "text-claro" : "text-noite"
         )}
@@ -39,7 +39,7 @@ export function CabecalhoSecao({
       </h2>
       {subtitulo && (
         <p
-          className={twMerge(
+          className={cn(
             "max-w-[640px] text-body-lg",
             escuro ? "text-claro-2" : "text-texto-2",
             align === "centro" && "mx-auto"

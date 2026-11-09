@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/cn";
 
 export function IconeSprite() {
   return (
@@ -107,7 +107,7 @@ export function Icone({ nome, className }: { nome: string; className?: string })
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      className={twMerge("h-6 w-6 shrink-0", className)}
+      className={cn("h-6 w-6 shrink-0", className)}
     >
       <use href={`#i-${nome}`} />
     </svg>
