@@ -156,10 +156,15 @@ body {
   animation: stamp-bump 420ms var(--ease-stamp);
 }
 
-/* Foco visível (teclado): âmbar sobre qualquer fundo, claro ou escuro. */
+/*
+ * Foco visível (teclado): anel duplo. O nanquim (encostado no elemento)
+ * garante contraste sobre o papel claro, onde o âmbar sozinho não chega
+ * a 3:1; o âmbar (mais externo) garante contraste sobre fundos escuros.
+ */
 :focus-visible {
-  outline: 2px solid var(--color-amber);
-  outline-offset: 2px;
+  outline: 3px solid var(--color-amber);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--color-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
