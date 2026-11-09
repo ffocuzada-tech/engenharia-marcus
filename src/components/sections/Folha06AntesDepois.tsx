@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { Pin } from "@/components/ui/Pin";
 import { SheetBar } from "@/components/ui/SheetBar";
 
@@ -8,7 +10,81 @@ export function Folha06AntesDepois() {
   const [split, setSplit] = useState(50);
   const [mobileTab, setMobileTab] = useState<"antes" | "depois">("depois");
   const trackRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLButtonElement>(null);
+  const mobileContentRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
+
+  // No computador, ensina o gesto de arrastar: a linha desliza sozinha
+  // 50 -> 20 -> 80 -> 50% uma vez, ao entrar na seção; depois solta o
+  // controle (o estado React "split" nunca saiu de 50, então o repouso
+  // bate exatamente com o left:50% do JSX).
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 768px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          const { isDesktop, reduceMotion } = context.conditions as {
+            isDesktop: boolean;
+            reduceMotion: boolean;
+          };
+
+          if (!isDesktop || reduceMotion) return;
+
+          const track = trackRef.current;
+          const targets = [lineRef.current, handleRef.current];
+          if (!track) return;
+
+          const st = ScrollTrigger.create({
+            trigger: track,
+            start: "top 70%",
+            refreshPriority: -1,
+            once: true,
+            onEnter: () => {
+              const width = track.getBoundingClientRect().width;
+              const tl = gsap.timeline();
+              tl.to(targets, { x: -0.3 * width, duration: 0.6, ease: "power2.inOut" })
+                .to(targets, { x: 0.3 * width, duration: 0.6, ease: "power2.inOut" })
+                .to(targets, { x: 0, duration: 0.6, ease: "power2.inOut" })
+                .set(targets, { clearProps: "x" });
+            },
+          });
+
+          return () => st.kill();
+        }
+      );
+
+      return () => mm.revert();
+    },
+    { scope: trackRef }
+  );
+
+  function selectTab(tab: "antes" | "depois") {
+    if (tab === mobileTab) {
+      setMobileTab(tab);
+      return;
+    }
+
+    const el = mobileContentRef.current;
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!el || reduceMotion) {
+      setMobileTab(tab);
+      return;
+    }
+
+    const tl = gsap.timeline();
+    tl.to(el, { opacity: 0, duration: 0.125, ease: "power1.in" })
+      .call(() => setMobileTab(tab))
+      .to(el, { opacity: 1, duration: 0.125, ease: "power1.out" });
+  }
 
   function updateFromClientX(clientX: number) {
     const track = trackRef.current;
@@ -80,11 +156,13 @@ export function Folha06AntesDepois() {
           </div>
 
           <div
+            ref={lineRef}
             aria-hidden="true"
             className="absolute top-0 bottom-0 w-[3px] -translate-x-1/2 bg-amber"
             style={{ left: `${split}%` }}
           />
           <button
+            ref={handleRef}
             aria-label="Arrastar para comparar antes e depois"
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -112,7 +190,7 @@ export function Folha06AntesDepois() {
               type="button"
               role="tab"
               aria-selected={mobileTab === "antes"}
-              onClick={() => setMobileTab("antes")}
+              onClick={() => selectTab("antes")}
               className={`min-h-12 border-0 font-sans text-[15px] ${
                 mobileTab === "antes" ? "bg-amber font-bold text-ink" : "bg-transparent font-semibold text-on-ink"
               }`}
@@ -123,7 +201,7 @@ export function Folha06AntesDepois() {
               type="button"
               role="tab"
               aria-selected={mobileTab === "depois"}
-              onClick={() => setMobileTab("depois")}
+              onClick={() => selectTab("depois")}
               className={`min-h-12 border-0 font-sans text-[15px] ${
                 mobileTab === "depois" ? "bg-amber font-bold text-ink" : "bg-transparent font-semibold text-on-ink"
               }`}
@@ -132,7 +210,10 @@ export function Folha06AntesDepois() {
             </button>
           </div>
 
-          <div className="relative flex h-[380px] items-center justify-center border-[1.5px] border-on-ink bg-placeholder bg-[repeating-linear-gradient(135deg,rgba(15,30,51,.07)_0_2px,transparent_2px_12px)]">
+          <div
+            ref={mobileContentRef}
+            className="relative flex h-[380px] items-center justify-center border-[1.5px] border-on-ink bg-placeholder bg-[repeating-linear-gradient(135deg,rgba(15,30,51,.07)_0_2px,transparent_2px_12px)]"
+          >
             {mobileTab === "depois" ? (
               <>
                 <span className="font-mono text-[12px] text-text-3">[FOTO REAL · DEPOIS]</span>
