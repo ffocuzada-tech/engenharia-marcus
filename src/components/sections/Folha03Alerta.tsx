@@ -150,7 +150,7 @@ export function Folha03Alerta() {
             <span className="hidden md:inline"> Depois, fale comigo.</span>
           </p>
           <Button
-            href={waLink("Olá! Tenho uma emergência elétrica: fumaça ou faísca no quadro. Já desliguei o disjuntor geral.")}
+            href={waLink("Olá! Vi um sinal de alerta na instalação elétrica e preciso de ajuda com urgência.")}
             variant="dark"
             className="w-full justify-center md:w-auto md:justify-start"
           >
