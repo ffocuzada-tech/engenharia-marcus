@@ -151,6 +151,8 @@ export function Folha03Alerta() {
           </p>
           <Button
             href={waLink("Olá! Vi um sinal de alerta na instalação elétrica e preciso de ajuda com urgência.")}
+            target="_blank"
+            rel="noopener noreferrer"
             variant="dark"
             className="w-full justify-center md:w-auto md:justify-start"
           >

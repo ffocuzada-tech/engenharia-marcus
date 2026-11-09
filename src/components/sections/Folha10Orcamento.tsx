@@ -107,7 +107,12 @@ function Confirmation({ link, onVoltar }: { link: string; onVoltar: () => void }
       <p className="max-w-[360px] text-[18px] leading-relaxed">
         Abri o WhatsApp com seu pedido pronto. Confira a mensagem e toque em enviar por lá.
       </p>
-      <a href={link} target="_blank" rel="noopener" className="text-[14px] text-amber-text underline">
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[14px] text-amber-text underline"
+      >
         Não abriu? Toque aqui
       </a>
       <button
@@ -154,6 +159,8 @@ export function Folha10Orcamento() {
           <div className="flex flex-col gap-3.5 border-t border-on-ink/30 pt-3 font-mono text-[15px]">
             <a
               href={waLink("Olá! Gostaria de pedir um orçamento.")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex gap-3.5 text-on-ink no-underline"
             >
               <span className="w-[90px] text-amber">WHATSAPP</span>{whatsappExibicao()}
@@ -288,6 +295,8 @@ export function Folha10Orcamento() {
         <div className="flex flex-col gap-3 font-mono text-[14px]">
           <a
             href={waLink("Olá! Gostaria de pedir um orçamento.")}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex min-h-11 items-center gap-3 border-[1.5px] border-on-ink/40 px-3.5 text-on-ink no-underline"
           >
             <span className="text-amber">WHATSAPP</span>{whatsappExibicao()}

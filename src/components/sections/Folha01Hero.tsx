@@ -89,6 +89,8 @@ export function Folha01Hero() {
             </Button>
             <Button
               href={waLink("Olá! Tenho um problema elétrico agora e preciso de ajuda.")}
+              target="_blank"
+              rel="noopener noreferrer"
               variant="outline"
               arrow={false}
               className="w-full justify-center sm:w-auto"
