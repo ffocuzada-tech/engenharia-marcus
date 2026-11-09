@@ -80,6 +80,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Trava a rolagem da página: menu do celular e diálogo de soluções. */
+html.trava {
+  overflow: hidden;
+}
+
 body {
   background: #ffffff;
   color: var(--color-texto);
@@ -106,6 +111,17 @@ body {
 
 .escuro :focus-visible {
   outline-color: var(--color-ambar);
+}
+
+/* Revelar ao rolar (componente Revela): ver src/components/ui/Revela.tsx */
+.revela {
+  transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--atraso, 0s);
+}
+
+.revela-pre {
+  opacity: 0;
+  transform: translateY(26px);
 }
 
 @media (prefers-reduced-motion: reduce) {

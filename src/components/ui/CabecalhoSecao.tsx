@@ -5,6 +5,7 @@ import { Etiqueta } from "@/components/ui/Etiqueta";
 export function CabecalhoSecao({
   etiqueta,
   titulo,
+  tituloId,
   subtitulo,
   align = "esquerda",
   escuro = false,
@@ -12,6 +13,7 @@ export function CabecalhoSecao({
 }: {
   etiqueta: ReactNode;
   titulo: ReactNode;
+  tituloId?: string;
   subtitulo?: ReactNode;
   align?: "esquerda" | "centro";
   escuro?: boolean;
@@ -27,6 +29,7 @@ export function CabecalhoSecao({
     >
       <Etiqueta escuro={escuro}>{etiqueta}</Etiqueta>
       <h2
+        id={tituloId}
         className={twMerge(
           "font-title text-h2 font-extrabold",
           escuro ? "text-claro" : "text-noite"
