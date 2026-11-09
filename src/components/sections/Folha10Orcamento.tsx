@@ -98,28 +98,44 @@ function buildMensagem(formData: FormData): string {
   return linhas.join("\n");
 }
 
-function Confirmation() {
+function Confirmation({ link, onVoltar }: { link: string; onVoltar: () => void }) {
   return (
     <div className="flex min-h-[220px] flex-col items-center justify-center gap-3 border-2 border-on-ink bg-white px-6 py-14 text-center text-ink shadow-[var(--shadow-form)]">
       <span className="font-mono text-[12px] tracking-[.08em] text-amber-text uppercase">
-        Pedido recebido
+        WhatsApp aberto
       </span>
       <p className="max-w-[360px] text-[18px] leading-relaxed">
-        Obrigado! Recebi seu pedido e respondo em até [PRAZO] por WhatsApp ou e-mail.
+        Abri o WhatsApp com seu pedido pronto. Confira a mensagem e toque em enviar por lá.
       </p>
+      <a href={link} target="_blank" rel="noopener" className="text-[14px] text-amber-text underline">
+        Não abriu? Toque aqui
+      </a>
+      <button
+        type="button"
+        onClick={onVoltar}
+        className="mt-1 cursor-pointer border-0 bg-transparent font-mono text-[12px] tracking-[.06em] text-text-3 uppercase underline"
+      >
+        Voltar ao formulário
+      </button>
     </div>
   );
 }
 
 export function Folha10Orcamento() {
   const [submitted, setSubmitted] = useState(false);
+  const [lastLink, setLastLink] = useState("");
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const link = waLink(buildMensagem(formData));
     window.open(link, "_blank", "noopener");
+    setLastLink(link);
     setSubmitted(true);
+  }
+
+  function handleVoltar() {
+    setSubmitted(false);
   }
 
   return (
@@ -158,7 +174,7 @@ export function Folha10Orcamento() {
         </div>
 
         {submitted ? (
-          <Confirmation />
+          <Confirmation link={lastLink} onVoltar={handleVoltar} />
         ) : (
           <form
             aria-label="Pedido de orçamento"
@@ -227,7 +243,7 @@ export function Folha10Orcamento() {
         </h2>
 
         {submitted ? (
-          <Confirmation />
+          <Confirmation link={lastLink} onVoltar={handleVoltar} />
         ) : (
           <form
             aria-label="Pedido de orçamento"
