@@ -198,10 +198,13 @@ export function Folha05Engenheiro() {
           });
 
           if (isDesktop) {
+            // Começa quando o desenho entra na tela e termina com ele
+            // centralizado, para que os circuitos já estejam todos acesos
+            // enquanto o usuário ainda está olhando para a seção.
             const st = ScrollTrigger.create({
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
+              trigger: root,
+              start: "top 85%",
+              end: "center 45%",
               refreshPriority: -1,
               scrub: true,
               animation: tl,
