@@ -306,7 +306,7 @@ export function SolucoesProvider({ children }: { children: ReactNode }) {
                   rel="noopener noreferrer"
                   variant="ambar"
                 >
-                  <Icone nome="whats" />
+                  <Icone nome="whats" className="h-5 w-5" />
                   Solicitar orçamento
                 </Button>
                 <Button type="button" variant="claro" onClick={fecharSolucao}>

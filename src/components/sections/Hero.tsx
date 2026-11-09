@@ -341,7 +341,7 @@ export function Hero() {
           </p>
           <div className="hero-acoes">
             <Button href="#orcamento" variant="ambar">
-              <Icone nome="whats" />
+              <Icone nome="whats" className="h-5 w-5" />
               Solicitar orçamento
             </Button>
             <Button href="#servicos" variant="claro" arrow>

@@ -263,7 +263,7 @@ export function Navegacao() {
               aria-label="Falar no WhatsApp"
               className="flex h-[46px] w-[46px] items-center justify-center rounded-xl bg-gelo-2 text-azul transition-colors hover:bg-azul hover:text-white"
             >
-              <Icone nome="whats" />
+              <Icone nome="whats" className="h-[22px] w-[22px]" />
             </a>
             <Button href="#orcamento" variant="ambar" className="min-h-[46px] px-[18px] text-[0.95rem]">
               Solicitar orçamento
@@ -361,7 +361,7 @@ export function Navegacao() {
             style={{ "--i": 9 } as CSSProperties}
             className="nav-mm-anim"
           >
-            <Icone nome="whats" />
+            <Icone nome="whats" className="h-5 w-5" />
             Falar no WhatsApp
           </Button>
         </div>

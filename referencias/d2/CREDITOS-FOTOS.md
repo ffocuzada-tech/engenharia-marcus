@@ -14,3 +14,5 @@ Fotos gratuitas sob a Licença Unsplash (uso comercial permitido, sem obrigaçã
 | sol-08-padrao.jpg | https://unsplash.com/photos/0MKzwPmehRE |
 | sol-09-carregador.jpg | https://unsplash.com/photos/xJLsHl0hIik |
 | sol-10-nr10.jpg | https://unsplash.com/photos/fW6lwDM26o0 |
+
+Ícone do WhatsApp: Simple Icons (CC0), https://simpleicons.org/?q=whatsapp
