@@ -17,7 +17,7 @@ export function Dimension({
         aria-hidden="true"
         className={twMerge("flex w-3.5 flex-col items-center justify-center border-y border-ink", className)}
       >
-        <div className="w-px flex-1 bg-ink" />
+        <div className="dimension-line-v w-px flex-1 bg-ink" />
       </div>
     );
   }
@@ -27,7 +27,7 @@ export function Dimension({
       aria-hidden="true"
       className={twMerge("relative flex h-3.5 items-center border-x border-ink", className)}
     >
-      <div className="h-px flex-1 bg-ink" />
+      <div className="dimension-line-h h-px flex-1 bg-ink" />
       <span className="absolute left-1/2 -translate-x-1/2 bg-paper px-2 font-mono text-[11px]">
         {label}
       </span>

@@ -1,23 +1,21 @@
+import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-export function TitleBlock({
-  className = "",
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div
-      className={twMerge(
-        "grid grid-cols-2 border-[1.5px] border-ink bg-white font-mono text-[11px] shadow-[var(--shadow-sheet)]",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-}
+export const TitleBlock = forwardRef<HTMLDivElement, { className?: string; children: React.ReactNode }>(
+  function TitleBlock({ className = "", children }, ref) {
+    return (
+      <div
+        ref={ref}
+        className={twMerge(
+          "grid grid-cols-2 border-[1.5px] border-ink bg-white font-mono text-[11px] shadow-[var(--shadow-sheet)]",
+          className
+        )}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 export function TitleBlockCell({
   wide = false,
