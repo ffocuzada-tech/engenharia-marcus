@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { Button } from "@/components/ui/Button";
 import { SheetBar } from "@/components/ui/SheetBar";
 
@@ -29,22 +34,84 @@ const ALERTS = [
 ];
 
 export function Folha03Alerta() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 768px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          const { isDesktop, reduceMotion } = context.conditions as {
+            isDesktop: boolean;
+            reduceMotion: boolean;
+          };
+
+          if (reduceMotion) return;
+
+          const triangles = gsap.utils.toArray<SVGSVGElement>(".alert-triangle", gridRef.current);
+          gsap.set(triangles, { opacity: 0.25 });
+
+          if (isDesktop) {
+            gsap.set(titleRef.current, { scale: 0.96 });
+
+            const st = ScrollTrigger.create({
+              trigger: gridRef.current,
+              start: "top 70%",
+              refreshPriority: -1,
+              once: true,
+              onEnter: () => {
+                gsap.to(triangles, { opacity: 1, duration: 0.25, stagger: 0.12, ease: "power1.out" });
+                gsap.to(titleRef.current, { scale: 1, duration: 0.25, ease: "stampEase" });
+              },
+            });
+
+            return () => st.kill();
+          }
+
+          const triggers = triangles.map((tri) =>
+            ScrollTrigger.create({
+              trigger: tri,
+              start: "top 85%",
+              once: true,
+              onEnter: () => gsap.to(tri, { opacity: 1, duration: 0.25, ease: "power1.out" }),
+            })
+          );
+
+          return () => triggers.forEach((trigger) => trigger.kill());
+        }
+      );
+
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="alerta" className="bg-grid-night text-on-ink">
+    <section id="alerta" ref={sectionRef} className="bg-grid-night text-on-ink">
       <SheetBar numero="03" titulo="NOTAS DE ATENÇÃO" nota="LEIA ANTES DE RELIGAR" dark />
 
       <div className="wrap flex flex-col gap-14 py-16 md:gap-20 md:py-28">
-        <h2 className="max-w-[1000px] text-display-xl font-bold text-on-ink">
+        <h2 ref={titleRef} className="max-w-[1000px] text-display-xl font-bold text-on-ink">
           Quatro sinais que <span className="text-amber">não dá</span> para ignorar.
         </h2>
 
-        <div className="grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-20 md:gap-y-14">
+        <div ref={gridRef} className="grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-20 md:gap-y-14">
           {ALERTS.map((item, i) => (
             <div
               key={item.title}
               className="grid grid-cols-[48px_1fr] gap-4 border-t border-on-ink/30 pt-6 md:grid-cols-[72px_1fr] md:gap-6"
             >
-              <svg viewBox="0 0 64 58" className="h-10 w-11 md:h-[58px] md:w-16" aria-hidden="true">
+              <svg
+                viewBox="0 0 64 58"
+                className="alert-triangle h-10 w-11 md:h-[58px] md:w-16"
+                aria-hidden="true">
                 <path d="M32 3 L61 55 H3 Z" fill="none" stroke="#F2B417" strokeWidth="3.5" />
                 <text
                   x="32"
