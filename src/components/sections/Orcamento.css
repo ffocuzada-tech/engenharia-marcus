@@ -1,0 +1,63 @@
+/*
+ * CSS global (não .module.css), mesmo motivo de Navegacao.css.
+ * Classes prefixadas com "cta-" e "passo".
+ */
+
+.cta-section {
+  position: relative;
+  background: radial-gradient(70% 90% at 100% 0%, #13305a 0%, var(--color-noite) 60%);
+  color: var(--color-claro);
+}
+
+.cta-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "cabecalho" "formulario" "contatos" "passos";
+  gap: 32px;
+}
+
+@media (min-width: 960px) {
+  .cta-grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-areas:
+      "cabecalho formulario"
+      "contatos formulario"
+      "passos formulario";
+    align-items: start;
+    gap: 40px 72px;
+  }
+}
+
+.cta-area-cabecalho {
+  grid-area: cabecalho;
+}
+.cta-area-formulario {
+  grid-area: formulario;
+}
+.cta-area-contatos {
+  grid-area: contatos;
+}
+.cta-area-passos {
+  grid-area: passos;
+}
+
+.passo {
+  border-radius: 20px;
+  padding: 24px;
+  background: var(--color-noite-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 0 0 1px rgba(127, 174, 255, 0.1);
+}
+
+.passo-n {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-ambar);
+  color: var(--color-noite);
+  font: 700 0.95rem/1 var(--font-mono);
+}
