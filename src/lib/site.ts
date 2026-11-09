@@ -7,6 +7,9 @@ export const site = {
   cidade: "[CIDADE / REGIÃO]",
   tituloHero: "Elétrica com projeto, cálculo e engenheiro que assina.",
   prazoResposta: "[PRAZO]",
+  politicaVisita: "[POLÍTICA DE COBRANÇA DA VISITA TÉCNICA]",
+  email: "[EMAIL]",
+  horario: "[HORÁRIO DE ATENDIMENTO]",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? URL_MARCADOR,
 };
 
