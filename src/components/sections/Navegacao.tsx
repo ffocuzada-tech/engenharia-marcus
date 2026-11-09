@@ -4,15 +4,10 @@ import { useEffect, useRef, useState, type CSSProperties, type MouseEvent, type 
 import { Button } from "@/components/ui/Button";
 import { Icone } from "@/components/ui/Icone";
 import { Marca } from "@/components/ui/Marca";
+import { servicos } from "@/content/servicos";
 import { waLink } from "@/lib/contato";
+import { useSolucoes } from "@/providers/SolucoesProvider";
 import "./Navegacao.css";
-
-const SERVICOS = [
-  { icone: "casa", titulo: "Instalação elétrica", texto: "Obra nova, reforma e ampliação, executadas a partir de projeto." },
-  { icone: "planta", titulo: "Projeto elétrico", texto: "Cálculo, plantas e aprovação na concessionária." },
-  { icone: "lupa", titulo: "Inspeção e laudo", texto: "Medições e termografia para compra, venda, seguro e vistoria." },
-  { icone: "chave", titulo: "Manutenção", texto: "Planos preventivos e atendimento corretivo com histórico." },
-] as const;
 
 const LINKS_NAV = [
   { alvo: "diferenciais", nome: "Diferenciais" },
@@ -25,6 +20,7 @@ function reduzMovimento() {
 }
 
 export function Navegacao() {
+  const { abrirSolucao } = useSolucoes();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -114,6 +110,15 @@ export function Navegacao() {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [megaOpen, mobileOpen]);
+
+  // Mega menu e menu do celular: fecha o menu aberto e abre a solução correspondente
+  // (o SolucoesProvider rola até o card antes de abrir o diálogo).
+  function abrirSolucaoDoMenu(e: MouseEvent, solucaoIndice: number) {
+    e.preventDefault();
+    fecharMega();
+    fecharMenu(true);
+    abrirSolucao(solucaoIndice);
+  }
 
   // Usado só dentro do menu do celular: fecha o painel e, só depois, rola até a seção.
   function fecharMenuERolar(e: MouseEvent, alvo: string) {
@@ -214,8 +219,13 @@ export function Navegacao() {
             onPointerLeave={onMegaPointerLeave}
             className={`nav-mega ${megaOpen ? "nav-mega-aberto" : ""}`}
           >
-            {SERVICOS.map((s) => (
-              <a key={s.titulo} href="#servicos" onClick={fecharMega} className="nav-mega-item">
+            {servicos.map((s) => (
+              <a
+                key={s.id}
+                href="#servicos"
+                onClick={(e) => abrirSolucaoDoMenu(e, s.solucaoIndice)}
+                className="nav-mega-item"
+              >
                 <span className="nav-tile">
                   <Icone nome={s.icone} />
                 </span>
@@ -317,11 +327,11 @@ export function Navegacao() {
         </nav>
 
         <div className="grid grid-cols-2 gap-2">
-          {SERVICOS.map((s, i) => (
+          {servicos.map((s, i) => (
             <a
-              key={s.titulo}
+              key={s.id}
               href="#servicos"
-              onClick={(e) => fecharMenuERolar(e, "servicos")}
+              onClick={(e) => abrirSolucaoDoMenu(e, s.solucaoIndice)}
               style={{ "--i": i + 4 } as CSSProperties}
               className="nav-mm-anim flex flex-col gap-2.5 rounded-2xl bg-gelo p-3.5 text-[0.95rem] font-semibold leading-tight text-noite"
             >
