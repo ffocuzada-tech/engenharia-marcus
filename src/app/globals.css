@@ -1,170 +1,138 @@
 @import "tailwindcss";
 
 /*
- * Tokens da direção D1 · Prancha técnica.
- * Fonte: design-system/d1/tokens.css — qualquer mudança de cor, tipografia
+ * Tokens da direção D2 · institucional com DNA de engenharia.
+ * Fonte: design-system/d2/tokens.css — qualquer mudança de cor, tipografia
  * ou espaçamento deve ser decidida lá primeiro e só então replicada aqui.
  */
 @theme {
   /* ---- Cor: superfícies ---- */
-  --color-paper: #f3f1ea;
-  --color-paper-warm: #fbf6e4;
-  --color-white: #ffffff;
-  --color-ink: #0f1e33;
-  --color-night: #0b1626;
-  --color-placeholder: #dcd8cc;
+  --color-noite: #0a1a2e;
+  --color-noite-2: #112640;
+  --color-noite-3: #071324;
+  --color-azul: #14407a;
+  --color-eletrico: #1f5fd1;
+  --color-eletrico-claro: #7faeff;
+  --color-gelo: #f3f6fa;
+  --color-gelo-2: #e6edf6;
+  --color-papel: #fcfdff;
+
+  /* ---- Cor: acento (sinal, não decoração) ----
+   * --color-ambar é SEMPRE preenchimento ou destaque sobre fundo escuro.
+   * Nunca usar texto âmbar sobre fundo claro (contraste insuficiente).
+   */
+  --color-ambar: #ffb21e;
+  --color-ambar-2: #ffc654;
+  --color-ambar-escuro: #8a5600;
+  --color-tinta-ambar: #1e1400;
 
   /* ---- Cor: texto ---- */
-  --color-text-2: #33415a;
-  --color-text-3: #4b5a6e;
-  --color-on-ink: #f3f1ea;
-  --color-on-ink-2: #c9d0da;
-  --color-on-ink-3: #b9c2cf;
+  --color-texto: #0d1b2c;
+  --color-texto-2: #46566b;
+  --color-texto-3: #5f6e82;
+  --color-claro: #eef3f9;
+  --color-claro-2: #aebbcc;
 
-  /* ---- Cor: acento (sinalização) ----
-   * --color-amber é SEMPRE preenchimento (bg-amber). Nunca usar text-amber
-   * sobre papel: para texto em âmbar, use text-amber-text (contraste 5,2:1).
-   */
-  --color-amber: #f2b417;
-  --color-amber-text: #8a5a00;
-  --color-amber-icon: #b07a00;
+  /* ---- Cor: traços das pranchas técnicas (SVG da hero) ---- */
+  --color-traco: #2457a6;
+  --color-traco-ambar: #db8f06;
 
   /* ---- Tipografia ---- */
-  --font-sans: var(--font-plex-sans), "Helvetica Neue", Arial, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-sans: var(--font-figtree), "Helvetica Neue", Arial, sans-serif;
+  --font-title: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  --text-display-xl: clamp(50px, 6.4vw, 92px);
-  --text-display-xl--line-height: 0.98;
-  --text-display-xl--letter-spacing: -0.04em;
-  --text-display: clamp(38px, 5vw, 72px);
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.035em;
-  --text-h1: clamp(36px, 4.2vw, 60px);
-  --text-h1--line-height: 1.03;
-  --text-h1--letter-spacing: -0.03em;
-  --text-h2: clamp(28px, 3.1vw, 44px);
-  --text-h2--line-height: 1.08;
-  --text-h2--letter-spacing: -0.025em;
-  --text-h3: clamp(24px, 2.4vw, 34px);
-  --text-h3--line-height: 1.05;
-  --text-h3--letter-spacing: -0.02em;
-  --text-h4: clamp(20px, 1.6vw, 23px);
-  --text-h4--line-height: 1.2;
-  --text-body-lg: clamp(17px, 1.35vw, 19px);
-  --text-body-lg--line-height: 1.55;
-  --text-body: 16px;
-  --text-body--line-height: 1.55;
-  --text-small: 15px;
-  --text-label: 13px;
-  --text-label--line-height: 1.4;
-  --text-label--letter-spacing: 0.08em;
-  --text-micro: 11px;
-  --text-micro--line-height: 1.4;
-  --text-micro--letter-spacing: 0.08em;
+  --text-h1: clamp(2.3rem, 1.25rem + 3vw, 3.85rem);
+  --text-h1--line-height: 1.04;
+  --text-h1--letter-spacing: -0.024em;
+  --text-h2: clamp(1.95rem, 1.25rem + 2.3vw, 3.15rem);
+  --text-h2--line-height: 1.07;
+  --text-h2--letter-spacing: -0.024em;
+  --text-h3: 1.3rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.012em;
+  --text-body-lg: clamp(1.02rem, 0.97rem + 0.25vw, 1.15rem);
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-label: 0.8rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.12em;
+  --text-micro: 0.74rem;
+  --text-micro--line-height: 1.3;
 
-  /* ---- Forma: cantos sempre retos na D1 ---- */
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-full: 0px;
+  /* ---- Sombras suaves (nunca deslocadas/sólidas: isso era D1) ---- */
+  --shadow-1: 0 1px 2px rgba(10, 26, 46, 0.05), 0 6px 18px -8px rgba(10, 26, 46, 0.16);
+  --shadow-2: 0 2px 6px rgba(10, 26, 46, 0.06), 0 24px 48px -18px rgba(10, 26, 46, 0.32);
+}
+
+/* O preflight do Tailwind zera o peso de h1-h6; h1/h2 já ganham font-extrabold
+   explícito em cada uso, mas h3 aparece em vários lugares sem isso. */
+@layer base {
+  h3 {
+    font-family: var(--font-title);
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+  }
 }
 
 /*
- * Tokens que não geram utilitários Tailwind (linhas, sombras sólidas,
- * malha de fundo, movimento). Usados via var(--nome) ou arbitrary values,
- * ex.: shadow-[var(--shadow-offset)].
+ * Variáveis auxiliares que não geram utilitários Tailwind.
  */
 :root {
-  --line: rgba(15, 30, 51, 0.18);
-  --line-2: rgba(15, 30, 51, 0.35);
-  --line-strong: #0f1e33;
-  --grid: rgba(15, 30, 51, 0.06);
-  --grid-on-ink: rgba(243, 241, 234, 0.06);
-  --grid-size: 24px;
+  --gl: max(16px, env(safe-area-inset-left, 0px));
+  --gr: max(16px, env(safe-area-inset-right, 0px));
 
-  --shadow-offset: 4px 4px 0 var(--color-ink);
-  --shadow-sheet: 8px 8px 0 rgba(15, 30, 51, 0.12);
-  --shadow-form: 12px 12px 0 var(--color-amber);
-
-  --ease-draw: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-stamp: cubic-bezier(0.2, 1.4, 0.4, 1);
-  --t-fast: 150ms;
-  --t-base: 250ms;
-  --t-draw: 600ms;
-  --stagger: 120ms;
-
-  --container: 1200px;
-  --gutter: clamp(20px, 2.5vw, 32px);
-}
-
-@media (max-width: 640px) {
-  :root {
-    --grid-size: 20px;
-  }
+  --container: 1352px;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* Trava a rolagem da página: menu do celular e diálogo de soluções. */
+html.trava {
+  overflow: hidden;
+}
+
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: #ffffff;
+  color: var(--color-texto);
   font-family: var(--font-sans);
 }
 
-/* Malha de papel milimetrado (equivalente a .d1-paper do design system) */
-.bg-grid-paper {
-  background-color: var(--color-paper);
-  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-}
-
-/* Malha de papel milimetrado sobre fundo escuro (equivalente a .d1-blueprint) */
-.bg-grid-night {
-  background-color: var(--color-night);
-  background-image: linear-gradient(var(--grid-on-ink) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-on-ink) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-}
-
-/* Contêiner central de toda folha */
+/* Contêiner central de toda seção (equivalente ao .miolo do protótipo) */
 .wrap {
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
-/* Mini-carimbo fixo (SheetStamp): "bate" no canto quando aparece. */
-@keyframes stamp-bump {
-  from {
-    transform: scale(1.04);
-    box-shadow: 4px 4px 0 rgba(15, 30, 51, 0.12);
-  }
-  to {
-    transform: scale(1);
-    box-shadow: var(--shadow-sheet);
-  }
-}
-
-.sheet-stamp-enter {
-  transform-origin: bottom right;
-  animation: stamp-bump 420ms var(--ease-stamp);
+  padding-left: var(--gl);
+  padding-right: var(--gr);
 }
 
 /*
- * Foco visível (teclado): anel duplo. O nanquim (encostado no elemento)
- * garante contraste sobre o papel claro, onde o âmbar sozinho não chega
- * a 3:1; o âmbar (mais externo) garante contraste sobre fundos escuros.
+ * Foco visível (teclado): azul elétrico sobre fundo claro; em seções de
+ * fundo escuro (classe .escuro), o anel muda para âmbar para manter contraste.
  */
 :focus-visible {
-  outline: 3px solid var(--color-amber);
+  outline: 3px solid var(--color-eletrico);
   outline-offset: 3px;
-  box-shadow: 0 0 0 3px var(--color-ink);
+  border-radius: 6px;
+}
+
+.escuro :focus-visible {
+  outline-color: var(--color-ambar);
+}
+
+/* Revelar ao rolar (componente Revela): ver src/components/ui/Revela.tsx */
+.revela {
+  transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--atraso, 0s);
+}
+
+.revela-pre {
+  opacity: 0;
+  transform: translateY(26px);
 }
 
 @media (prefers-reduced-motion: reduce) {

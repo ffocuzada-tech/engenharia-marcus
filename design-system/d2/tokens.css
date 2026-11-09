@@ -1,0 +1,37 @@
+/*
+ * D2 · institucional com DNA de engenharia.
+ * Fonte da verdade dos tokens visuais da D2. Qualquer token novo nasce aqui
+ * e só depois é replicado em src/app/globals.css (via @theme do Tailwind 4).
+ * Claro e limpo; o azul-noite marca as seções de peso, o âmbar só aparece
+ * em ação e energia. Separação por fundo e espaço, nunca por linha.
+ */
+:root {
+  --noite: #0a1a2e;
+  --noite-2: #112640;
+  --noite-3: #071324;
+  --azul: #14407a;
+  --eletrico: #1f5fd1;
+  --eletrico-claro: #7faeff;
+  --ambar: #ffb21e;
+  --ambar-2: #ffc654;
+  --ambar-escuro: #8a5600;
+  --tinta-ambar: #1e1400;
+  --branco: #ffffff;
+  --gelo: #f3f6fa;
+  --gelo-2: #e6edf6;
+  --texto: #0d1b2c;
+  --texto-2: #46566b;
+  --texto-3: #5f6e82;
+  --claro: #eef3f9;
+  --claro-2: #aebbcc;
+  --papel: #fcfdff;
+  --traco: #2457a6;
+  --traco-ambar: #db8f06;
+
+  --sombra-1: 0 1px 2px rgba(10, 26, 46, 0.05), 0 6px 18px -8px rgba(10, 26, 46, 0.16);
+  --sombra-2: 0 2px 6px rgba(10, 26, 46, 0.06), 0 24px 48px -18px rgba(10, 26, 46, 0.32);
+
+  --f-tit: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-txt: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --f-num: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}

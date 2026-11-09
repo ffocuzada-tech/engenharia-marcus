@@ -1,0 +1,91 @@
+/*
+ * CSS global (não .module.css), mesmo motivo de Navegacao.css.
+ * Classes prefixadas com "faq-".
+ */
+
+.faq-lista {
+  max-width: 880px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 0.3s;
+}
+
+.faq-item.faq-aberto {
+  box-shadow: var(--shadow-2);
+}
+
+.faq-q {
+  width: 100%;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px;
+  text-align: left;
+  font: 650 1.04rem/1.35 var(--font-sans);
+  color: var(--color-noite);
+  border-radius: 18px;
+}
+
+.faq-ico {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-ambar);
+  color: var(--color-noite);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s, color 0.3s;
+}
+
+.faq-item.faq-aberto .faq-ico {
+  transform: rotate(90deg);
+  background: var(--color-azul);
+  color: #fff;
+}
+
+.faq-r {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.faq-r > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s 0.4s;
+}
+
+.faq-item.faq-aberto .faq-r {
+  grid-template-rows: 1fr;
+}
+
+.faq-item.faq-aberto .faq-r > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.faq-r p {
+  padding: 0 24px 22px 70px;
+  color: var(--color-texto-2);
+}
+
+@media (max-width: 640px) {
+  .faq-q {
+    padding: 14px 16px;
+    gap: 14px;
+    font-size: 1rem;
+  }
+  .faq-r p {
+    padding: 0 18px 20px 18px;
+  }
+}

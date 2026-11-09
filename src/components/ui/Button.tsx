@@ -1,16 +1,17 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
+import { cn } from "@/lib/cn";
+import { Icone } from "@/components/ui/Icone";
 
-type Variant = "primary" | "outline" | "dark";
+type Variant = "ambar" | "claro" | "vidro";
 
 const base =
-  "inline-flex min-h-12 items-center gap-2 border-[1.5px] border-ink px-6 font-sans text-base no-underline transition-[translate,box-shadow] duration-150 cursor-pointer";
+  "group inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl px-[22px] text-center font-sans text-base font-semibold no-underline transition-[background-color,color,box-shadow,transform] duration-200 cursor-pointer";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-amber font-bold text-ink shadow-[4px_4px_0_var(--color-ink)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--color-ink)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_var(--color-ink)]",
-  outline: "bg-transparent font-semibold text-ink hover:bg-white",
-  dark: "bg-ink font-semibold text-on-ink hover:bg-[#1C3150]",
+  ambar:
+    "bg-ambar text-tinta-ambar shadow-[0_10px_24px_-12px_rgba(219,143,6,0.9)] hover:bg-ambar-2 hover:-translate-y-0.5",
+  claro: "bg-white text-noite shadow-1 hover:shadow-2 hover:-translate-y-0.5",
+  vidro: "bg-white/10 text-claro inset-ring inset-ring-white/15 hover:bg-white/15",
 };
 
 type CommonProps = {
@@ -31,14 +32,18 @@ type ButtonAsButton = CommonProps &
   };
 
 export function Button(props: ButtonAsLink | ButtonAsButton) {
-  const { variant = "primary", arrow = true, className = "", children, ...domProps } = props;
-  const classes = twMerge(base, variants[variant], className);
+  const { variant = "ambar", arrow = false, className = "", children, ...domProps } = props;
+  const classes = cn(base, variants[variant], className);
+
+  const arrowIcon = arrow && (
+    <Icone nome="seta" className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
+  );
 
   if (domProps.href !== undefined) {
     return (
       <a className={classes} {...(domProps as AnchorHTMLAttributes<HTMLAnchorElement>)}>
         {children}
-        {arrow && <span aria-hidden="true">→</span>}
+        {arrowIcon}
       </a>
     );
   }
@@ -46,7 +51,7 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
   return (
     <button type="button" className={classes} {...(domProps as ButtonHTMLAttributes<HTMLButtonElement>)}>
       {children}
-      {arrow && <span aria-hidden="true">→</span>}
+      {arrowIcon}
     </button>
   );
 }

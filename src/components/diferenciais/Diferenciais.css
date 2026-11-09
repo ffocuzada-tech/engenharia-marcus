@@ -1,0 +1,141 @@
+/*
+ * CSS global (não .module.css), mesmo motivo de Navegacao.css.
+ * Classes prefixadas com "dif-".
+ */
+
+.dif-section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--color-noite);
+  color: var(--color-claro);
+}
+
+.dif-section::before {
+  content: "";
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  right: -300px;
+  top: -420px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(31, 95, 209, 0.28), rgba(31, 95, 209, 0));
+  pointer-events: none;
+}
+
+.dif-topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 24px 64px;
+  align-items: end;
+}
+
+@media (max-width: 959px) {
+  .dif-topo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dif-grade {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1180px) {
+  .dif-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .dif-grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dif-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: 30px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--color-noite-2);
+  box-shadow: inset 0 0 0 1px rgba(127, 174, 255, 0.1);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s;
+}
+
+.dif-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.45;
+  transition: opacity 0.4s;
+  background-image: linear-gradient(rgba(127, 174, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127, 174, 255, 0.2) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(240px circle at var(--mx, 85%) var(--my, 0%), #000, transparent 72%);
+}
+
+.dif-card:hover {
+  transform: translateY(-5px);
+  box-shadow: inset 0 0 0 1px rgba(127, 174, 255, 0.28), 0 24px 48px -20px rgba(0, 0, 0, 0.6);
+}
+
+.dif-card:hover::before {
+  opacity: 1;
+}
+
+.dif-icone {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(127, 174, 255, 0.12);
+  color: var(--color-eletrico-claro);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dif-icone svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dif-card:hover .dif-icone {
+  background: var(--color-ambar);
+  color: var(--color-noite);
+}
+
+.dif-icone svg .d2 {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.55, 0, 0.25, 1) 0.25s;
+}
+
+.dif-card.revela-pre .dif-icone svg .d2 {
+  stroke-dashoffset: 1;
+}
+
+.dif-spec {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 178, 30, 0.1);
+  color: var(--color-ambar-2);
+  font: 600 0.78rem/1.2 var(--font-mono);
+  letter-spacing: 0.01em;
+}

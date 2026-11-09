@@ -1,0 +1,181 @@
+/*
+ * CSS global (não .module.css): neste projeto, o Turbopack do Next 16
+ * processa todo *.css pelo loader do Tailwind (ver turbopack.rules em
+ * next.config.ts), que não aplica o escopo de CSS Modules — import de
+ * .module.css vira um objeto vazio. Por isso as classes aqui são
+ * prefixadas com "nav-" para não colidir com utilitários Tailwind.
+ */
+
+.nav-root {
+  position: fixed;
+  z-index: 50;
+  left: 0;
+  right: 0;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  padding-left: var(--gl);
+  padding-right: var(--gr);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+.nav-esconde {
+  transform: translateY(calc(-100% - 28px));
+}
+
+.nav-barra {
+  pointer-events: auto;
+  position: relative;
+  max-width: 1320px;
+  margin-inline: auto;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 0 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.nav-barra-vidro {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(16px) saturate(1.5);
+  box-shadow: 0 14px 34px -16px rgba(10, 26, 46, 0.34), 0 1px 3px rgba(10, 26, 46, 0.06);
+}
+
+.nav-indicador {
+  position: absolute;
+  top: 50%;
+  height: 40px;
+  transform: translateY(-50%);
+  left: 0;
+  width: 0;
+  border-radius: 10px;
+  background: var(--color-gelo-2);
+  opacity: 0;
+  transition:
+    left 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.25s;
+}
+
+.nav-mega {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  width: min(940px, calc(100vw - 32px));
+  padding: 12px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--shadow-2);
+  display: grid;
+  grid-template-columns: 1fr 1fr 290px;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -8px);
+  transition:
+    opacity 0.25s,
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s 0.3s;
+}
+
+.nav-mega-aberto {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+
+@media (max-width: 1040px) {
+  .nav-mega {
+    display: none;
+  }
+}
+
+.nav-mega-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 3px 14px;
+  padding: 16px;
+  border-radius: 16px;
+  transition: background-color 0.2s;
+}
+
+.nav-mega-item:hover,
+.nav-mega-item:focus-visible {
+  background: var(--color-gelo);
+}
+
+.nav-mega-item .nav-tile {
+  grid-row: span 2;
+}
+
+.nav-tile {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: var(--color-gelo-2);
+  color: var(--color-eletrico);
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.nav-mega-item:hover .nav-tile {
+  background: var(--color-azul);
+  color: #fff;
+}
+
+.nav-mega-emerg {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  border-radius: 16px;
+  padding: 22px;
+  background: var(--color-noite);
+  color: var(--color-claro);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-mega-emerg .nav-tile {
+  background: rgba(255, 178, 30, 0.14);
+  color: var(--color-ambar);
+}
+
+.nav-menu-movel {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: #fff;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) var(--gr) calc(env(safe-area-inset-bottom, 0px) + 20px)
+    var(--gl);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  overflow-y: auto;
+  clip-path: circle(0 at calc(100% - 44px) 46px);
+  visibility: hidden;
+  transition:
+    clip-path 0.55s cubic-bezier(0.7, 0, 0.2, 1),
+    visibility 0s 0.55s;
+}
+
+.nav-menu-movel-aberto {
+  clip-path: circle(150% at calc(100% - 44px) 46px);
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.nav-mm-anim {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.4s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.nav-menu-movel-aberto .nav-mm-anim {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(0.18s + var(--i, 0) * 0.05s);
+}

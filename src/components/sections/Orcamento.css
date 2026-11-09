@@ -1,0 +1,106 @@
+/*
+ * CSS global (não .module.css), mesmo motivo de Navegacao.css.
+ * Classes prefixadas com "cta-" e "passo".
+ */
+
+.cta-section {
+  position: relative;
+  background: radial-gradient(70% 90% at 100% 0%, #13305a 0%, var(--color-noite) 60%);
+  color: var(--color-claro);
+}
+
+/*
+ * Mobile: .cta-coluna-esquerda vira "contents" (some da árvore de caixas),
+ * então cabeçalho e contatos entram direto no fluxo de .cta-grade e a ordem
+ * visual é controlada só por "order" — sem precisar duplicar DOM para
+ * reordenar por breakpoint.
+ * Computador: .cta-coluna-esquerda volta a ser uma caixa (flex) com
+ * cabeçalho+contatos empilhados, e vira uma só coluna do grid ao lado do
+ * formulário — por isso nenhum dos dois precisa "esticar" linha vazia do
+ * outro (o que acontecia antes, quando os contatos ainda são marcador e
+ * ficam ausentes: a linha reservada para eles no grid inflava para
+ * acompanhar a altura do formulário, afastando os passos lá embaixo).
+ */
+.cta-grade {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.cta-coluna-esquerda {
+  display: contents;
+}
+
+.cta-area-cabecalho {
+  order: 1;
+}
+.cta-area-formulario {
+  order: 2;
+}
+.cta-area-contatos {
+  order: 3;
+}
+.cta-area-passos {
+  order: 4;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .cta-area-passos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .cta-grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: start;
+    column-gap: 72px;
+    row-gap: 24px;
+  }
+
+  .cta-coluna-esquerda {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .cta-area-formulario {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .cta-area-passos {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 32px;
+  }
+}
+
+.passo {
+  border-radius: 20px;
+  padding: 24px;
+  background: var(--color-noite-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 0 0 1px rgba(127, 174, 255, 0.1);
+}
+
+/* O número em âmbar já é o indicador de sequência entre os passos. */
+
+.passo-n {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-ambar);
+  color: var(--color-noite);
+  font: 700 0.95rem/1 var(--font-mono);
+}
