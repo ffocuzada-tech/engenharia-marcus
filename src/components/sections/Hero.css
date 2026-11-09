@@ -1,0 +1,509 @@
+/*
+ * Estilos da hero que não cabem em utilitários Tailwind: o 3D da pilha de
+ * pranchas e o SVG técnico injetado via dangerouslySetInnerHTML (pranchas.ts).
+ * CSS global (não .module.css): o Turbopack do Next 16 não reconhece
+ * :global() dentro de CSS Modules quando a cadeia passa pelo Tailwind, e o
+ * SVG injetado chega com classes literais (m1, tb, ts...) que precisam ficar
+ * fora do escopo de módulo. Por isso todo nome aqui é prefixado com "hero-".
+ */
+
+.hero-section {
+  position: relative;
+  isolation: isolate;
+  padding-block: calc(env(safe-area-inset-top, 0px) + 132px) 96px;
+  background:
+    radial-gradient(58% 70% at 74% 46%, #dce7f6 0%, rgba(220, 231, 246, 0) 72%),
+    linear-gradient(180deg, var(--color-gelo) 0%, #f8fafc 100%);
+}
+
+@media (max-width: 959px) {
+  .hero-section {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 92px);
+    padding-bottom: 64px;
+  }
+}
+
+.hero-mesa {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: clip;
+  pointer-events: none;
+}
+
+@media (max-width: 959px) {
+  .hero-mesa {
+    position: relative;
+    inset: auto;
+    height: clamp(290px, 84vw, 440px);
+    margin-bottom: 4px;
+  }
+}
+
+.hero-pilha-wrap {
+  position: absolute;
+  left: 49%;
+  top: 50%;
+  transform: translateY(-47%);
+  width: clamp(480px, 50vw, 780px);
+  aspect-ratio: 1.414;
+  max-width: 100%;
+  perspective: 2400px;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+
+@media (max-width: 959px) {
+  .hero-pilha-wrap {
+    left: 55%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    width: min(84vw, 480px);
+  }
+}
+
+.hero-pilha {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 52deg)) rotateZ(var(--rz, -30deg));
+}
+
+.hero-sombra-pilha {
+  position: absolute;
+  inset: 6% -1% -3% 3%;
+  border-radius: 10px;
+  background: rgba(10, 26, 46, 0.42);
+  filter: blur(30px);
+  transform: translateZ(-8px);
+}
+
+.hero-folha {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+.hero-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.hero-frente {
+  background-color: var(--color-papel);
+  background-image:
+    linear-gradient(rgba(36, 87, 166, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 87, 166, 0.06) 1px, transparent 1px);
+  background-size: 3.5% 4.95%;
+  box-shadow: inset 0 0 0 1px rgba(36, 87, 166, 0.12);
+}
+
+.hero-frente svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-verso {
+  transform: rotateY(180deg);
+  background: #e9eef6;
+  box-shadow: inset 0 0 0 1px rgba(36, 87, 166, 0.12);
+}
+
+.hero-brilho {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 26, 46, 0) 10%, rgba(10, 26, 46, 0.32) 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-varredura {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 26, 46, 0.22) 0%, rgba(10, 26, 46, 0) 38%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Estilo das pranchas técnicas (SVG injetado via dangerouslySetInnerHTML). */
+.hero-prancha line,
+.hero-prancha rect,
+.hero-prancha path,
+.hero-prancha circle,
+.hero-prancha polygon,
+.hero-prancha polyline {
+  fill: none;
+  stroke: var(--color-traco);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.hero-prancha .m1 {
+  stroke-width: 1.4;
+}
+.hero-prancha .m3 {
+  stroke-width: 4;
+}
+.hero-prancha .pa {
+  stroke-width: 13;
+  stroke: #1b3e73;
+  stroke-linecap: square;
+}
+.hero-prancha .am {
+  stroke: var(--color-traco-ambar);
+  stroke-width: 3.2;
+}
+.hero-prancha .tr {
+  stroke-dasharray: 12 9;
+}
+.hero-prancha text {
+  fill: var(--color-traco);
+  stroke: none;
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-weight: 500;
+}
+.hero-prancha .tb {
+  font-weight: 700;
+  font-size: 21px;
+}
+.hero-prancha .ts {
+  font-size: 16px;
+}
+.hero-prancha .tg {
+  font-family: var(--font-title);
+  font-size: 34px;
+  font-weight: 760;
+  fill: #163b70;
+}
+.hero-prancha .tA {
+  fill: #b87400;
+}
+.hero-prancha .mid {
+  text-anchor: middle;
+}
+.hero-prancha .fim {
+  text-anchor: end;
+}
+
+/* Abertura: a planta (folha 1) se traça e os grupos de detalhe sobem. */
+.hero-folha-principal.hero-animando .d {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: hero-tracar 1.25s cubic-bezier(0.55, 0, 0.25, 1) forwards;
+  animation-delay: var(--d, 0s);
+}
+.hero-folha-principal.hero-animando .gb {
+  opacity: 0;
+  animation: hero-surge 0.6s ease forwards;
+  animation-delay: var(--d, 1s);
+}
+
+@keyframes hero-tracar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes hero-surge {
+  to {
+    opacity: 1;
+  }
+}
+
+.hero-legenda {
+  position: absolute;
+  right: var(--gr);
+  bottom: 28px;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-1);
+  font-size: 0.86rem;
+  line-height: 1.3;
+  max-width: calc(100% - 32px);
+  transition: opacity 0.3s;
+}
+
+@media (max-width: 959px) {
+  .hero-legenda {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 6px;
+    padding: 8px 12px 8px 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+
+.hero-legenda.hero-legenda-troca {
+  opacity: 0;
+}
+
+.hero-legenda-num {
+  font: 700 0.78rem/1 var(--font-mono);
+  color: var(--color-azul);
+  background: var(--color-gelo-2);
+  padding: 8px 9px;
+  border-radius: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-fundo-folhas {
+  position: absolute;
+  inset: 0;
+  perspective: 2400px;
+  perspective-origin: 68% 45%;
+  opacity: 0.55;
+  mask-image: radial-gradient(70% 80% at 72% 48%, #000 35%, transparent 82%);
+}
+
+@media (max-width: 959px) {
+  .hero-fundo-folhas {
+    display: none;
+  }
+}
+
+.hero-mesa-fundo {
+  position: absolute;
+  left: 66%;
+  top: 48%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(52deg) rotateZ(-30deg);
+}
+
+.hero-esteira {
+  position: absolute;
+  left: -1500px;
+  top: -1050px;
+  transform-style: preserve-3d;
+  display: grid;
+  grid-template-columns: repeat(10, 560px);
+  grid-auto-rows: 396px;
+  column-gap: 70px;
+  row-gap: 760px;
+  animation: hero-esteira 140s linear infinite;
+}
+
+.hero-f-fundo {
+  position: relative;
+  border-radius: 4px;
+  background-color: var(--color-papel);
+  background-image:
+    linear-gradient(rgba(36, 87, 166, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 87, 166, 0.05) 1px, transparent 1px);
+  background-size: 3.5% 4.95%;
+  box-shadow: 0 30px 60px -34px rgba(10, 26, 46, 0.45), inset 0 0 0 1px rgba(36, 87, 166, 0.1);
+}
+
+.hero-f-fundo svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
+}
+
+@keyframes hero-esteira {
+  to {
+    transform: translateX(-3150px);
+  }
+}
+
+.hero-veu {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #f4f7fa 0%, #f4f7fa 33%, rgba(244, 247, 250, 0.84) 45%, rgba(244, 247, 250, 0) 60%);
+}
+
+@media (max-width: 959px) {
+  .hero-veu {
+    display: none;
+  }
+}
+
+.hero-grade {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 600px;
+}
+
+@media (max-width: 959px) {
+  .hero-grade {
+    min-height: 0;
+  }
+}
+
+.hero-texto {
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+@media (max-width: 959px) {
+  .hero-texto {
+    gap: 22px;
+  }
+}
+
+.hero-selo-topo {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px 7px 8px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: var(--shadow-1);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-texto-2);
+}
+
+.hero-selo-topo-icone {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-noite);
+  color: var(--color-ambar);
+}
+
+.hero-destaque {
+  background: linear-gradient(var(--color-ambar), var(--color-ambar)) no-repeat 0 90% / 100% 0.2em;
+}
+
+.hero-sub {
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.22rem);
+  color: var(--color-texto-2);
+  max-width: 560px;
+  text-wrap: pretty;
+}
+
+.hero-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .hero-acoes > * {
+    flex: 1 1 100%;
+  }
+}
+
+.hero-selos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 26px;
+}
+
+@media (max-width: 640px) {
+  .hero-selos {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.hero-selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.94rem;
+  color: var(--color-texto);
+}
+
+.hero-selo-icone {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--color-eletrico);
+  box-shadow: var(--shadow-1);
+}
+
+.hero-dica-swipe {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .hero-dica-swipe {
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--color-texto-3);
+    white-space: nowrap;
+  }
+}
+
+.hero-texto.hero-animando > * {
+  animation: hero-sobe 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero-texto.hero-animando > *:nth-child(1) {
+  animation-delay: 0.15s;
+}
+.hero-texto.hero-animando > *:nth-child(2) {
+  animation-delay: 0.28s;
+}
+.hero-texto.hero-animando > *:nth-child(3) {
+  animation-delay: 0.44s;
+}
+.hero-texto.hero-animando > *:nth-child(4) {
+  animation-delay: 0.58s;
+}
+.hero-texto.hero-animando > *:nth-child(5) {
+  animation-delay: 0.72s;
+}
+.hero-texto.hero-animando .hero-destaque {
+  animation: hero-sublinha 0.9s cubic-bezier(0.6, 0, 0.2, 1) 1.05s both;
+}
+
+@keyframes hero-sobe {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-sublinha {
+  from {
+    background-size: 0% 0.2em;
+  }
+  to {
+    background-size: 100% 0.2em;
+  }
+}
