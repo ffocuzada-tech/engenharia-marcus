@@ -92,30 +92,52 @@ const CONDUIT_H = 2.4;
 const PANEL_RISE: Point3 = [PANEL_POS[0], PANEL_POS[1], CONDUIT_H];
 
 // Circuitos ilustrativos, coerentes com a NBR 5410 (bitola/corrente por uso).
-const CIRCUITS: { code: string; spec: string; route: Point3[] }[] = [
+// labelAnchor/labelDx/labelDy afastam cada rótulo C1-C4 do nome de cômodo,
+// do quadro ou de outro rótulo mais próximo (ajustado por medição real via
+// getBoundingClientRect, não por olho — ver scripts/check-layout/_tmp-*).
+const CIRCUITS: {
+  code: string;
+  spec: string;
+  route: Point3[];
+  labelAnchor: "left" | "right";
+  labelDx: number;
+  labelDy: number;
+}[] = [
   {
     code: "C1",
     spec: "C1 · 1,5 mm² · 10 A · iluminação",
     // quadro -> parede v=10 -> parede u=0 -> parede v=0 -> sobe ao teto
     route: [PANEL_POS, PANEL_RISE, [0, 10, CONDUIT_H], [0, 0, CONDUIT_H], [2, 0, CONDUIT_H], [2, 0, WALL_H]],
+    labelAnchor: "right",
+    labelDx: 8,
+    labelDy: 12,
   },
   {
     code: "C2",
     spec: "C2 · 2,5 mm² · 20 A · tomadas",
     // quadro -> parede v=10 -> parede u=4 (espinha) -> parede v=0 -> desce à tomada
     route: [PANEL_POS, PANEL_RISE, [4, 10, CONDUIT_H], [4, 0, CONDUIT_H], [6, 0, CONDUIT_H], [6, 0, 0.3]],
+    labelAnchor: "left",
+    labelDx: -8,
+    labelDy: -16,
   },
   {
     code: "C3",
     spec: "C3 · 2,5 mm² · 20 A · tomadas da cozinha",
     // quadro -> mesma parede v=10 -> desce à tomada
     route: [PANEL_POS, PANEL_RISE, [1, 10, CONDUIT_H], [1, 10, 0.3]],
+    labelAnchor: "right",
+    labelDx: 8,
+    labelDy: 14,
   },
   {
     code: "C4",
     spec: "C4 · 6,0 mm² · 32 A · chuveiro",
     // quadro -> mesma parede v=10 -> desce ao chuveiro
     route: [PANEL_POS, PANEL_RISE, [6, 10, CONDUIT_H], [6, 10, 2.2]],
+    labelAnchor: "right",
+    labelDx: 8,
+    labelDy: -16,
   },
 ];
 
@@ -368,12 +390,16 @@ export function Folha05Engenheiro() {
                 })}
               </svg>
 
+              {/* Nomes de cômodo: só no computador — no celular (abaixo de
+                  768px) o desenho fica pequeno demais para os dois
+                  conjuntos de rótulo sem se sobrepor, então mostramos só
+                  os códigos de circuito. */}
               {ROOMS.map((r) => {
                 const { left, top } = pct(r.at);
                 return (
                   <span
                     key={r.label}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 font-mono text-[9px] tracking-[.04em] text-text-3 md:text-[10px]"
+                    className="iso-room-label absolute hidden -translate-x-1/2 -translate-y-1/2 font-mono text-[10px] tracking-[.04em] text-text-3 md:block"
                     style={{ left: `${left}%`, top: `${top}%` }}
                   >
                     {r.label}
@@ -383,11 +409,18 @@ export function Folha05Engenheiro() {
 
               {CIRCUITS.map((c) => {
                 const { left, top } = pct(circuitTarget(c));
+                const fromRight = c.labelAnchor === "right";
                 return (
                   <span
                     key={c.code}
-                    className="iso-circuit-code absolute -translate-y-1/2 pl-2 font-mono text-[11px] font-semibold text-amber-text"
-                    style={{ left: `${left}%`, top: `${top}%` }}
+                    className={`iso-circuit-code absolute font-mono text-[11px] font-semibold text-amber-text ${
+                      fromRight ? "text-left" : "text-right"
+                    }`}
+                    style={{
+                      left: `${left}%`,
+                      top: `${top}%`,
+                      transform: `translate(${fromRight ? "0%" : "-100%"}, -50%) translate(${c.labelDx}px, ${c.labelDy}px)`,
+                    }}
                   >
                     {c.code}
                   </span>
