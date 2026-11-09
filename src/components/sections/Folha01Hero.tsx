@@ -9,6 +9,7 @@ import { Photo } from "@/components/ui/Photo";
 import { SheetBar } from "@/components/ui/SheetBar";
 import { TitleBlock, TitleBlockCell } from "@/components/ui/TitleBlock";
 import { waLink } from "@/lib/contato";
+import { site } from "@/lib/site";
 
 export function Folha01Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -71,9 +72,7 @@ export function Folha01Hero() {
 
       <div className="wrap grid items-center gap-16 py-16 md:py-26 lg:grid-cols-2">
         <div className="flex flex-col gap-7">
-          <h1 className="text-h1 font-bold text-balance text-ink">
-            Elétrica com projeto, cálculo e engenheiro que assina.
-          </h1>
+          <h1 className="text-h1 font-bold text-balance text-ink">{site.tituloHero}</h1>
           <p className="max-w-[520px] text-body-lg text-text-2">
             Instalações, projetos, inspeções e manutenção para casas, comércios e pequenas
             empresas. Cada serviço sai com responsável técnico e ART registrada.

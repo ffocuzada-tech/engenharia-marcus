@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -15,8 +16,32 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "[NOME] Engenharia Elétrica",
-  description: "Engenharia elétrica: instalações, projetos, inspeções e manutenção.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.nome,
+    template: `%s · ${site.nome}`,
+  },
+  description: site.descricao,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: "/",
+    siteName: site.nome,
+    title: site.nome,
+    description: site.descricao,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.nome,
+    description: site.descricao,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0F1E33",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
