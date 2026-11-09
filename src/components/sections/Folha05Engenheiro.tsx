@@ -168,7 +168,7 @@ export function Folha05Engenheiro() {
 
           const walls = gsap.utils.toArray<SVGPathElement>(".iso-wall", root);
           const panel = root.querySelector<SVGPathElement>(".iso-panel");
-          const lines = gsap.utils.toArray<SVGPathElement>(".iso-circuit-line", root);
+          const lines = gsap.utils.toArray<SVGPathElement>(".iso-circuit-reveal", root);
           const rings = gsap.utils.toArray<SVGCircleElement>(".iso-circuit-ring", root);
           const codes = gsap.utils.toArray<HTMLElement>(".iso-circuit-code", root);
           const legend = gsap.utils.toArray<HTMLElement>(".iso-circuit-legend", root);
@@ -281,16 +281,41 @@ export function Folha05Engenheiro() {
                   vectorEffect="non-scaling-stroke"
                 />
 
+                {/* Revelação do traço: a máscara tem um path contínuo
+                    (pathLength=1, dasharray=1) cujo stroke-dashoffset é
+                    animado de 1 a 0. O path visível (tracejado "4 3" em
+                    unidades reais, fora da normalização de pathLength) só
+                    aparece onde a máscara estiver "pintada". */}
+                <defs>
+                  {CIRCUITS.map((c) => (
+                    <mask key={`mask-${c.code}`} id={`circuit-mask-${c.code}`} maskUnits="userSpaceOnUse">
+                      <path
+                        className="iso-circuit-reveal"
+                        d={circuitPath(c)}
+                        stroke="#fff"
+                        strokeWidth={6}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        fill="none"
+                        pathLength={1}
+                        strokeDasharray={1}
+                      />
+                    </mask>
+                  ))}
+                </defs>
+
                 {CIRCUITS.map((c) => (
                   <path
                     key={c.code}
-                    className="iso-circuit-line"
                     d={circuitPath(c)}
+                    fill="none"
                     stroke="#F2B417"
                     strokeWidth={1.6}
                     strokeDasharray="4 3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     vectorEffect="non-scaling-stroke"
-                    pathLength={1}
+                    mask={`url(#circuit-mask-${c.code})`}
                   />
                 ))}
 
