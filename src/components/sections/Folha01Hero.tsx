@@ -8,6 +8,7 @@ import { Dimension } from "@/components/ui/Dimension";
 import { Photo } from "@/components/ui/Photo";
 import { SheetBar } from "@/components/ui/SheetBar";
 import { TitleBlock, TitleBlockCell } from "@/components/ui/TitleBlock";
+import { waLink } from "@/lib/contato";
 
 export function Folha01Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -87,7 +88,9 @@ export function Folha01Hero() {
               Pedir orçamento grátis
             </Button>
             <Button
-              href="#alerta"
+              href={waLink("Olá! Tenho um problema elétrico agora e preciso de ajuda.")}
+              target="_blank"
+              rel="noopener noreferrer"
               variant="outline"
               arrow={false}
               className="w-full justify-center sm:w-auto"

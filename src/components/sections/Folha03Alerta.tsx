@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { Button } from "@/components/ui/Button";
 import { SheetBar } from "@/components/ui/SheetBar";
+import { waLink } from "@/lib/contato";
 
 const ALERTS = [
   {
@@ -149,7 +150,9 @@ export function Folha03Alerta() {
             <span className="hidden md:inline"> Depois, fale comigo.</span>
           </p>
           <Button
-            href="https://wa.me/55XXXXXXXXXXX"
+            href={waLink("Olá! Vi um sinal de alerta na instalação elétrica e preciso de ajuda com urgência.")}
+            target="_blank"
+            rel="noopener noreferrer"
             variant="dark"
             className="w-full justify-center md:w-auto md:justify-start"
           >

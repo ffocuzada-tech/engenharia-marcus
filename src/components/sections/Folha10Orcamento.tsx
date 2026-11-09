@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ReactNode } from "react";
 import { SheetBar } from "@/components/ui/SheetBar";
+import { waLink, whatsappExibicao } from "@/lib/contato";
 
 const INPUT_CLS =
   "w-full border-0 bg-transparent p-0 font-sans text-base text-ink outline-none placeholder:text-[#6B7789]";
@@ -38,26 +39,108 @@ function Field({
   );
 }
 
-function Confirmation() {
+function ServiceFieldset() {
+  return (
+    <fieldset className="col-span-4 m-0 flex flex-col gap-2.5 border-0 border-b border-ink px-4 py-3">
+      <legend className="mb-1 font-mono text-[10px] tracking-[.06em] text-text-3 uppercase">
+        SERVIÇO
+      </legend>
+      <div className="flex flex-wrap gap-2">
+        {SERVICES.map((s, i) => (
+          <label
+            key={s.value}
+            className="flex min-h-11 items-center gap-2 border-[1.5px] border-ink px-3.5 text-[15px] has-[:checked]:bg-amber has-[:checked]:font-semibold"
+          >
+            <input
+              type="radio"
+              name="servico"
+              value={s.value}
+              defaultChecked={i === 0}
+              className="m-0 accent-ink"
+            />
+            {s.label}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
+function handleNomeInvalid(e: React.InvalidEvent<HTMLInputElement>) {
+  e.currentTarget.setCustomValidity("Preencha seu nome.");
+}
+
+function handleDescricaoInvalid(e: React.InvalidEvent<HTMLTextAreaElement>) {
+  e.currentTarget.setCustomValidity("Descreva o problema ou o serviço que você precisa.");
+}
+
+function clearCustomValidity(e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  e.currentTarget.setCustomValidity("");
+}
+
+function buildMensagem(formData: FormData): string {
+  const nome = (formData.get("nome") as string | null)?.trim() ?? "";
+  const servicoValor = formData.get("servico") as string | null;
+  const servico = SERVICES.find((s) => s.value === servicoValor)?.label ?? "";
+  const imovel = (formData.get("imovel") as string | null)?.trim() ?? "";
+  const email = (formData.get("email") as string | null)?.trim() ?? "";
+  const descricao = (formData.get("descricao") as string | null)?.trim() ?? "";
+
+  const linhas = [
+    "Olá! Quero um orçamento.",
+    nome && `Nome: ${nome}`,
+    servico && `Serviço: ${servico}`,
+    imovel && `Imóvel: ${imovel}`,
+    email && `E-mail: ${email}`,
+    descricao && `Problema: ${descricao}`,
+  ].filter((linha): linha is string => Boolean(linha));
+
+  return linhas.join("\n");
+}
+
+function Confirmation({ link, onVoltar }: { link: string; onVoltar: () => void }) {
   return (
     <div className="flex min-h-[220px] flex-col items-center justify-center gap-3 border-2 border-on-ink bg-white px-6 py-14 text-center text-ink shadow-[var(--shadow-form)]">
       <span className="font-mono text-[12px] tracking-[.08em] text-amber-text uppercase">
-        Pedido recebido
+        WhatsApp aberto
       </span>
       <p className="max-w-[360px] text-[18px] leading-relaxed">
-        Obrigado! Recebi seu pedido e respondo em até [PRAZO] por WhatsApp ou e-mail.
+        Abri o WhatsApp com seu pedido pronto. Confira a mensagem e toque em enviar por lá.
       </p>
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[14px] text-amber-text underline"
+      >
+        Não abriu? Toque aqui
+      </a>
+      <button
+        type="button"
+        onClick={onVoltar}
+        className="mt-1 cursor-pointer border-0 bg-transparent font-mono text-[12px] tracking-[.06em] text-text-3 uppercase underline"
+      >
+        Voltar ao formulário
+      </button>
     </div>
   );
 }
 
 export function Folha10Orcamento() {
   const [submitted, setSubmitted] = useState(false);
+  const [lastLink, setLastLink] = useState("");
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: ligar o envio real do formulário (API route, e-mail ou webhook) aqui.
+    const formData = new FormData(e.currentTarget);
+    const link = waLink(buildMensagem(formData));
+    window.open(link, "_blank", "noopener");
+    setLastLink(link);
     setSubmitted(true);
+  }
+
+  function handleVoltar() {
+    setSubmitted(false);
   }
 
   return (
@@ -74,8 +157,13 @@ export function Folha10Orcamento() {
             Preencha o carimbo ao lado. Respondo em até [PRAZO], por WhatsApp ou e-mail.
           </p>
           <div className="flex flex-col gap-3.5 border-t border-on-ink/30 pt-3 font-mono text-[15px]">
-            <a href="https://wa.me/55XXXXXXXXXXX" className="flex gap-3.5 text-on-ink no-underline">
-              <span className="w-[90px] text-amber">WHATSAPP</span>(11) 90000-0000
+            <a
+              href={waLink("Olá! Gostaria de pedir um orçamento.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex gap-3.5 text-on-ink no-underline"
+            >
+              <span className="w-[90px] text-amber">WHATSAPP</span>{whatsappExibicao()}
             </a>
             <a
               href="mailto:contato@nomeengenharia.com.br"
@@ -93,7 +181,7 @@ export function Folha10Orcamento() {
         </div>
 
         {submitted ? (
-          <Confirmation />
+          <Confirmation link={lastLink} onVoltar={handleVoltar} />
         ) : (
           <form
             aria-label="Pedido de orçamento"
@@ -104,62 +192,52 @@ export function Folha10Orcamento() {
               <span>[NOME] ENGENHARIA ELÉTRICA · PEDIDO Nº ____</span>
               <span>DATA: __/__/____</span>
             </div>
-            <Field label="SOLICITANTE" borderRight>
-              <input type="text" placeholder="Seu nome" className={INPUT_CLS} />
-            </Field>
-            <Field label="WHATSAPP">
-              <input type="tel" placeholder="(11) 9 0000-0000" className={INPUT_CLS} />
+            <Field label="SOLICITANTE" full>
+              <input
+                type="text"
+                name="nome"
+                required
+                placeholder="Seu nome"
+                className={INPUT_CLS}
+                onInvalid={handleNomeInvalid}
+                onInput={clearCustomValidity}
+              />
             </Field>
             <Field label="E-MAIL" borderRight>
-              <input type="email" placeholder="voce@email.com" className={INPUT_CLS} />
+              <input type="email" name="email" placeholder="voce@email.com" className={INPUT_CLS} />
             </Field>
             <Field label="IMÓVEL">
-              <select className={INPUT_CLS}>
+              <select name="imovel" className={INPUT_CLS}>
                 <option>Casa</option>
                 <option>Comércio</option>
                 <option>Empresa / escritório</option>
               </select>
             </Field>
-            <fieldset className="col-span-4 m-0 flex flex-col gap-2.5 border-0 border-b border-ink px-4 py-3">
-              <legend className="mb-1 font-mono text-[10px] tracking-[.06em] text-text-3 uppercase">
-                SERVIÇO
-              </legend>
-              <div className="flex flex-wrap gap-2">
-                {SERVICES.map((s, i) => (
-                  <label
-                    key={s.value}
-                    className="flex min-h-11 items-center gap-2 border-[1.5px] border-ink px-3.5 text-[15px] has-[:checked]:bg-amber has-[:checked]:font-semibold"
-                  >
-                    <input
-                      type="radio"
-                      name="servico"
-                      value={s.value}
-                      defaultChecked={i === 0}
-                      className="m-0 accent-ink"
-                    />
-                    {s.label}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            <ServiceFieldset />
             <Field label="DESCRIÇÃO DO PROBLEMA" full>
               <textarea
+                name="descricao"
+                required
                 rows={3}
                 placeholder="Ex.: o disjuntor do chuveiro desarma toda noite"
                 className={`${INPUT_CLS} resize-y`}
+                onInvalid={handleDescricaoInvalid}
+                onInput={clearCustomValidity}
               />
             </Field>
-            <label className="col-span-2 flex flex-col justify-center gap-1.5 border-r border-ink px-4 py-3">
+            <div className="col-span-2 flex flex-col justify-center gap-1.5 border-r border-ink px-4 py-3">
               <span className="font-mono text-[10px] tracking-[.06em] text-text-3 uppercase">
-                ANEXO (OPCIONAL)
+                FOTOS DO QUADRO
               </span>
-              <input type="file" className="text-[13px]" />
-            </label>
+              <span className="text-[13px] text-text-2">
+                Envie na conversa do WhatsApp, logo depois desta mensagem.
+              </span>
+            </div>
             <button
               type="submit"
               className="col-span-2 flex min-h-[72px] items-center justify-between border-0 bg-amber px-5 font-sans text-[17px] font-bold text-ink cursor-pointer"
             >
-              Enviar pedido <span aria-hidden="true">→</span>
+              Enviar pelo WhatsApp <span aria-hidden="true">→</span>
             </button>
           </form>
         )}
@@ -172,7 +250,7 @@ export function Folha10Orcamento() {
         </h2>
 
         {submitted ? (
-          <Confirmation />
+          <Confirmation link={lastLink} onVoltar={handleVoltar} />
         ) : (
           <form
             aria-label="Pedido de orçamento"
@@ -183,41 +261,53 @@ export function Folha10Orcamento() {
               [NOME] ENG. ELÉTRICA · PEDIDO Nº ____
             </div>
             <Field label="SOLICITANTE" full>
-              <input type="text" placeholder="Seu nome" className={INPUT_CLS} />
+              <input
+                type="text"
+                name="nome"
+                required
+                placeholder="Seu nome"
+                className={INPUT_CLS}
+                onInvalid={handleNomeInvalid}
+                onInput={clearCustomValidity}
+              />
             </Field>
-            <Field label="WHATSAPP" full>
-              <input type="tel" placeholder="(11) 9 0000-0000" className={INPUT_CLS} />
-            </Field>
-            <Field label="SERVIÇO" full>
-              <select className={INPUT_CLS}>
-                <option>E-01 Instalação</option>
-                <option>E-02 Projeto</option>
-                <option>E-03 Inspeção</option>
-                <option>E-04 Manutenção</option>
-              </select>
-            </Field>
+            <ServiceFieldset />
             <Field label="DESCRIÇÃO" full>
               <textarea
+                name="descricao"
+                required
                 rows={3}
                 placeholder="O que está acontecendo?"
                 className={`${INPUT_CLS} resize-y`}
+                onInvalid={handleDescricaoInvalid}
+                onInput={clearCustomValidity}
               />
             </Field>
+            <div className="flex flex-col justify-center gap-1.5 border-b border-ink px-4 py-3">
+              <span className="font-mono text-[10px] tracking-[.06em] text-text-3 uppercase">
+                FOTOS DO QUADRO
+              </span>
+              <span className="text-[13px] text-text-2">
+                Envie na conversa do WhatsApp, logo depois desta mensagem.
+              </span>
+            </div>
             <button
               type="submit"
               className="flex min-h-[60px] items-center justify-between border-0 bg-amber px-4 font-sans text-[17px] font-bold text-ink cursor-pointer"
             >
-              Enviar pedido <span aria-hidden="true">→</span>
+              Enviar pelo WhatsApp <span aria-hidden="true">→</span>
             </button>
           </form>
         )}
 
         <div className="flex flex-col gap-3 font-mono text-[14px]">
           <a
-            href="https://wa.me/55XXXXXXXXXXX"
+            href={waLink("Olá! Gostaria de pedir um orçamento.")}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex min-h-11 items-center gap-3 border-[1.5px] border-on-ink/40 px-3.5 text-on-ink no-underline"
           >
-            <span className="text-amber">WHATSAPP</span>(11) 90000-0000
+            <span className="text-amber">WHATSAPP</span>{whatsappExibicao()}
           </a>
           <a
             href="mailto:contato@nomeengenharia.com.br"
