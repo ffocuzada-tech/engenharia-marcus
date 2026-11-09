@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { Button } from "@/components/ui/Button";
 import { Callout } from "@/components/ui/Callout";
 import { Dimension } from "@/components/ui/Dimension";
@@ -37,12 +42,65 @@ function SpecCol({ k, v, last = false }: { k: string; v: React.ReactNode; last?:
 }
 
 function Checklist({ items, mobileInline }: { items: string[]; mobileInline: string }) {
+  const ulRef = useRef<HTMLUListElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 768px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          const { isDesktop, reduceMotion } = context.conditions as {
+            isDesktop: boolean;
+            reduceMotion: boolean;
+          };
+
+          if (!isDesktop || reduceMotion) return;
+
+          const checks = gsap.utils.toArray<SVGPathElement>(".checklist-check", ulRef.current);
+          gsap.set(checks, { strokeDashoffset: 1 });
+
+          const st = ScrollTrigger.create({
+            trigger: ulRef.current,
+            start: "top 85%",
+            once: true,
+            onEnter: () =>
+              gsap.to(checks, { strokeDashoffset: 0, duration: 0.25, stagger: 0.1, ease: "power1.out" }),
+          });
+
+          return () => st.kill();
+        }
+      );
+
+      return () => mm.revert();
+    },
+    { scope: ulRef }
+  );
+
   return (
     <>
       <p className="text-[15px] leading-relaxed md:hidden">{mobileInline}</p>
-      <ul className="hidden flex-col gap-2 text-[15px] md:flex">
+      <ul ref={ulRef} className="hidden flex-col gap-2 text-[15px] md:flex">
         {items.map((it) => (
-          <li key={it} className="before:content-['☐_']">
+          <li key={it} className="flex items-center gap-2.5">
+            <svg className="h-4 w-4 shrink-0" viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="1" y="1" width="14" height="14" fill="none" stroke="#0F1E33" strokeWidth="1.4" />
+              <path
+                className="checklist-check"
+                d="M3.5 8.5 L6.5 11.5 L12.5 4.5"
+                fill="none"
+                stroke="#8A5A00"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                pathLength={1}
+                strokeDasharray={1}
+              />
+            </svg>
             {it}
           </li>
         ))}
