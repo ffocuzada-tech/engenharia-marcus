@@ -1,0 +1,445 @@
+/*
+ * CSS global (não .module.css): mesmo motivo de Navegacao.css — o loader
+ * Tailwind do Turbopack não aplica escopo de CSS Modules neste projeto.
+ * Classes prefixadas com "sol-".
+ */
+
+.sol-grade {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 1180px) {
+  .sol-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .sol-grade {
+    gap: 10px;
+  }
+}
+
+.sol-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+  color: #fff;
+  background: var(--color-noite);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s;
+}
+
+.sol-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-2);
+}
+
+@media (max-width: 1180px) {
+  .sol-card {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 640px) {
+  .sol-card {
+    aspect-ratio: 3 / 4;
+    border-radius: 18px;
+  }
+}
+
+.sol-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(7, 19, 36, 0) 30%, rgba(7, 19, 36, 0.55) 62%, rgba(7, 19, 36, 0.92) 100%);
+}
+
+.sol-midia {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background: var(--color-noite);
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.sol-card:hover .sol-midia {
+  transform: scale(1.06);
+}
+
+.sol-midia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sol-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+}
+
+@media (max-width: 640px) {
+  .sol-info {
+    padding: 12px;
+    gap: 4px;
+  }
+}
+
+.sol-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-claro-2);
+}
+
+.sol-info h3 {
+  font-size: 1.12rem;
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .sol-info h3 {
+    font-size: 0.98rem;
+  }
+  .sol-tag,
+  .sol-prob {
+    display: none;
+  }
+}
+
+.sol-prob {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #c7d2e0;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.sol-prob > span {
+  overflow: hidden;
+}
+
+.sol-card:hover .sol-prob,
+.sol-card:focus-visible .sol-prob {
+  grid-template-rows: 1fr;
+}
+
+@media (max-width: 1180px) {
+  .sol-prob {
+    grid-template-rows: 1fr;
+  }
+}
+
+.sol-mais {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(7, 19, 36, 0.5);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.25s, color 0.25s, transform 0.35s;
+}
+
+.sol-card:hover .sol-mais {
+  background: var(--color-ambar);
+  color: var(--color-noite);
+  transform: rotate(90deg);
+}
+
+.sol-icone {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--color-ambar);
+  background: rgba(7, 19, 36, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+@media (max-width: 640px) {
+  .sol-mais,
+  .sol-icone {
+    width: 34px;
+    height: 34px;
+    top: 10px;
+  }
+  .sol-mais {
+    right: 10px;
+  }
+  .sol-icone {
+    left: 10px;
+  }
+}
+
+.sol-voando {
+  visibility: hidden;
+}
+
+/* ---------- diálogo ---------- */
+.sol-dlg {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  overflow: hidden;
+  color: var(--color-texto);
+}
+
+.sol-dlg::backdrop {
+  background: rgba(7, 19, 36, 0.62);
+  backdrop-filter: blur(5px);
+}
+
+.sol-dlg.sol-dlg-fechando::backdrop {
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.sol-painel {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(1100px, calc(100% - 48px));
+  height: min(700px, calc(100% - 48px));
+  display: grid;
+  grid-template-columns: 44% minmax(0, 1fr);
+  background: #fff;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 959px) {
+  .sol-painel {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 36svh minmax(0, 1fr);
+  }
+}
+
+.sol-foto {
+  position: relative;
+  border-radius: 26px 0 0 26px;
+  overflow: hidden;
+}
+
+@media (max-width: 959px) {
+  .sol-foto {
+    border-radius: 0;
+  }
+}
+
+.sol-foto .sol-midia {
+  position: absolute;
+  inset: 0;
+  transition: none;
+}
+
+.selo-ilustra {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 7px 11px;
+  border-radius: 9px;
+  background: rgba(7, 19, 36, 0.6);
+  color: #dce5f0;
+  font-size: 0.74rem;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+}
+
+.sol-conteudo {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 44px 46px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+@media (max-width: 959px) {
+  .sol-conteudo {
+    padding: 28px var(--gr) calc(28px + env(safe-area-inset-bottom, 0px)) var(--gl);
+  }
+}
+
+.sol-conteudo h2 {
+  font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.35rem);
+}
+
+.sol-pares {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .sol-pares {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.sol-par {
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sol-par h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.sol-par p {
+  font-size: 0.93rem;
+  color: var(--color-texto-2);
+}
+
+.sol-par.sol-problema {
+  background: #fff4e1;
+}
+
+.sol-par.sol-problema h3 {
+  color: var(--color-ambar-escuro);
+}
+
+.sol-par.sol-solucao {
+  background: #e9f1fd;
+}
+
+.sol-par.sol-solucao h3 {
+  color: var(--color-azul);
+}
+
+.sol-sub {
+  font-size: 1.05rem;
+  color: var(--color-noite);
+}
+
+.sol-passos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  counter-reset: p;
+}
+
+.sol-passos li {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--color-gelo);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.sol-passos li::before {
+  counter-increment: p;
+  content: counter(p);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-noite);
+  color: var(--color-ambar);
+  font: 700 0.9rem/1 var(--font-mono);
+}
+
+.sol-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.sol-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--color-noite);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.3s;
+}
+
+.sol-fechar:hover {
+  transform: rotate(90deg);
+}
+
+@media (max-width: 959px) {
+  .sol-fechar {
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: calc(var(--gr) - 4px);
+  }
+}
+
+.sol-voo {
+  position: fixed;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sol-voo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sol-conteudo > * {
+  transition: opacity 0.45s, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(0.18s + var(--i, 0) * 0.045s);
+}
+
+.sol-dlg:not(.sol-dlg-pronto) .sol-conteudo > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition-delay: 0s;
+}
