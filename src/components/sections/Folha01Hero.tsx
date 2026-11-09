@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap";
 import { Button } from "@/components/ui/Button";
 import { Dimension } from "@/components/ui/Dimension";
 import { Photo } from "@/components/ui/Photo";
@@ -5,8 +10,62 @@ import { SheetBar } from "@/components/ui/SheetBar";
 import { TitleBlock, TitleBlockCell } from "@/components/ui/TitleBlock";
 
 export function Folha01Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const desktopStampRef = useRef<HTMLDivElement>(null);
+  const mobileStampRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 768px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          const { isDesktop, reduceMotion } = context.conditions as {
+            isDesktop: boolean;
+            reduceMotion: boolean;
+          };
+
+          if (reduceMotion) return;
+
+          if (isDesktop) {
+            gsap.set(".dimension-line-h", { scaleX: 0, transformOrigin: "left center" });
+            gsap.set(".dimension-line-v", { scaleY: 0, transformOrigin: "center top" });
+            gsap.set(desktopStampRef.current, {
+              scale: 1.04,
+              boxShadow: "4px 4px 0 rgba(15,30,51,.12)",
+            });
+
+            const tl = gsap.timeline();
+            tl.to(".dimension-line-h", { scaleX: 1, duration: 0.6, ease: "drawEase" })
+              .to(".dimension-line-v", { scaleY: 1, duration: 0.6, ease: "drawEase" }, "<")
+              .to(desktopStampRef.current, {
+                scale: 1,
+                boxShadow: "8px 8px 0 rgba(15,30,51,.12)",
+                duration: 0.42,
+                ease: "stampEase",
+              });
+
+            return () => tl.kill();
+          }
+
+          gsap.set(mobileStampRef.current, { y: 40, opacity: 0 });
+          const tl = gsap.timeline();
+          tl.to(mobileStampRef.current, { y: 0, opacity: 1, duration: 0.42, ease: "stampEase" });
+          return () => tl.kill();
+        }
+      );
+
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="hero">
+    <section id="hero" ref={sectionRef}>
       <SheetBar numero="01" titulo="APRESENTAÇÃO" nota="ESC. 1:1 · REV. 2026" />
 
       <div className="wrap grid items-center gap-16 py-16 md:py-26 lg:grid-cols-2">
@@ -56,7 +115,7 @@ export function Folha01Hero() {
             label={"[FOTO REAL]\nEngenheiro em obra, diante de um quadro"}
             className="h-[500px]"
           />
-          <TitleBlock className="absolute right-0 -bottom-8 w-[330px] lg:-right-6">
+          <TitleBlock ref={desktopStampRef} className="absolute right-0 -bottom-8 w-[330px] lg:-right-6">
             <TitleBlockCell wide borderBottom>
               <span className="text-text-3">RESPONSÁVEL TÉCNICO</span>
               <span className="font-sans text-base font-bold text-ink">
@@ -85,7 +144,10 @@ export function Folha01Hero() {
         {/* Figura — celular: sem cotas, carimbo menor sobreposto na foto */}
         <figure className="mt-2 md:hidden">
           <Photo label="[FOTO REAL] Engenheiro em obra" className="h-[260px]" />
-          <TitleBlock className="mr-3 ml-7 -mt-10 shadow-[6px_6px_0_rgba(15,30,51,.12)]">
+          <TitleBlock
+            ref={mobileStampRef}
+            className="mr-3 ml-7 -mt-10 shadow-[6px_6px_0_rgba(15,30,51,.12)]"
+          >
             <TitleBlockCell wide borderBottom>
               <span className="text-text-3">RESPONSÁVEL TÉCNICO</span>
               <span className="font-sans text-[15px] font-bold text-ink">
