@@ -85,24 +85,51 @@ function panelPath() {
   return `M${p1.x},${p1.y} L${p2.x},${p2.y} L${p3.x},${p3.y} L${p4.x},${p4.y} Z`;
 }
 
+// Eletrodutos correm por cima das paredes (WALLS), a 2,4m de altura, só
+// mudando de direção nos encontros de paredes; a descida/subida vertical
+// acontece só no início (saída do quadro) e no ponto final de cada carga.
+const CONDUIT_H = 2.4;
+const PANEL_RISE: Point3 = [PANEL_POS[0], PANEL_POS[1], CONDUIT_H];
+
 // Circuitos ilustrativos, coerentes com a NBR 5410 (bitola/corrente por uso).
-const CIRCUITS: { code: string; spec: string; via: Point3; to: Point3 }[] = [
-  { code: "C1", spec: "C1 · 1,5 mm² · 10 A · iluminação", via: [2.5, 3, 1.35], to: [2.5, 3, 2.6] },
-  { code: "C2", spec: "C2 · 2,5 mm² · 20 A · tomadas", via: [6, 1, 1.35], to: [6, 1, 0.3] },
+const CIRCUITS: { code: string; spec: string; route: Point3[] }[] = [
+  {
+    code: "C1",
+    spec: "C1 · 1,5 mm² · 10 A · iluminação",
+    // quadro -> parede v=10 -> parede u=0 -> parede v=0 -> sobe ao teto
+    route: [PANEL_POS, PANEL_RISE, [0, 10, CONDUIT_H], [0, 0, CONDUIT_H], [2, 0, CONDUIT_H], [2, 0, WALL_H]],
+  },
+  {
+    code: "C2",
+    spec: "C2 · 2,5 mm² · 20 A · tomadas",
+    // quadro -> parede v=10 -> parede u=4 (espinha) -> parede v=0 -> desce à tomada
+    route: [PANEL_POS, PANEL_RISE, [4, 10, CONDUIT_H], [4, 0, CONDUIT_H], [6, 0, CONDUIT_H], [6, 0, 0.3]],
+  },
   {
     code: "C3",
     spec: "C3 · 2,5 mm² · 20 A · tomadas da cozinha",
-    via: [1.5, 8, 1.35],
-    to: [1.5, 8, 0.3],
+    // quadro -> mesma parede v=10 -> desce à tomada
+    route: [PANEL_POS, PANEL_RISE, [1, 10, CONDUIT_H], [1, 10, 0.3]],
   },
-  { code: "C4", spec: "C4 · 6,0 mm² · 32 A · chuveiro", via: [6, 8.5, 1.35], to: [6, 8.5, 1.9] },
+  {
+    code: "C4",
+    spec: "C4 · 6,0 mm² · 32 A · chuveiro",
+    // quadro -> mesma parede v=10 -> desce ao chuveiro
+    route: [PANEL_POS, PANEL_RISE, [6, 10, CONDUIT_H], [6, 10, 2.2]],
+  },
 ];
 
 function circuitPath(c: (typeof CIRCUITS)[number]) {
-  const p0 = proj(...PANEL_POS);
-  const p1 = proj(...c.via);
-  const p2 = proj(...c.to);
-  return `M${p0.x},${p0.y} L${p1.x},${p1.y} L${p2.x},${p2.y}`;
+  return c.route
+    .map((pt, i) => {
+      const p = proj(...pt);
+      return `${i === 0 ? "M" : "L"}${p.x},${p.y}`;
+    })
+    .join(" ");
+}
+
+function circuitTarget(c: (typeof CIRCUITS)[number]): Point3 {
+  return c.route[c.route.length - 1];
 }
 
 const ROOMS: { label: string; at: Point3 }[] = [
@@ -124,7 +151,7 @@ const ALL_POINTS = [
   proj(PANEL_U[1], PANEL_V, PANEL_H[0]),
   proj(PANEL_U[0], PANEL_V, PANEL_H[1]),
   proj(PANEL_U[1], PANEL_V, PANEL_H[1]),
-  ...CIRCUITS.flatMap((c) => [proj(...PANEL_POS), proj(...c.via), proj(...c.to)]),
+  ...CIRCUITS.flatMap((c) => c.route.map((pt) => proj(...pt))),
 ];
 
 const PAD = 34;
@@ -323,7 +350,7 @@ export function Folha05Engenheiro() {
                 ))}
 
                 {CIRCUITS.map((c) => {
-                  const p = proj(...c.to);
+                  const p = proj(...circuitTarget(c));
                   return (
                     <circle
                       key={c.code}
@@ -355,7 +382,7 @@ export function Folha05Engenheiro() {
               })}
 
               {CIRCUITS.map((c) => {
-                const { left, top } = pct(c.to);
+                const { left, top } = pct(circuitTarget(c));
                 return (
                   <span
                     key={c.code}
