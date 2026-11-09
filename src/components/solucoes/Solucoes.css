@@ -99,7 +99,10 @@
   }
 }
 
+/* Etiqueta e problema só existem em dispositivos com mouse (hover real):
+   em touch, o card mostra só ícone, título e "+". */
 .sol-tag {
+  display: none;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -108,6 +111,7 @@
 }
 
 .sol-info h3 {
+  overflow-wrap: break-word;
   font-size: 1.12rem;
   color: #fff;
 }
@@ -119,10 +123,10 @@
 }
 
 .sol-prob {
+  display: none;
   font-size: 0.86rem;
   line-height: 1.45;
   color: #c7d2e0;
-  display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -131,23 +135,24 @@
   overflow: hidden;
 }
 
-.sol-card:hover .sol-prob,
-.sol-card:focus-visible .sol-prob {
-  grid-template-rows: 1fr;
-}
+@media (hover: hover) and (pointer: fine) {
+  .sol-tag {
+    display: block;
+  }
 
-@media (max-width: 1180px) {
   .sol-prob {
+    display: grid;
+  }
+
+  .sol-card:hover .sol-prob,
+  .sol-card:focus-visible .sol-prob {
     grid-template-rows: 1fr;
   }
 }
 
-/* Depois de .sol-prob e do ajuste de 1180px para vencer a cascata: no celular
-   não há hover para revelar o problema, então tag e problema ficam ocultos. */
-@media (max-width: 640px) {
-  .sol-tag,
+@media (hover: hover) and (pointer: fine) and (max-width: 1180px) {
   .sol-prob {
-    display: none;
+    grid-template-rows: 1fr;
   }
 }
 

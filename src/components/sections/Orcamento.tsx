@@ -186,40 +186,42 @@ export function Orcamento() {
   return (
     <section id="orcamento" data-secao="orcamento" aria-labelledby="cta-titulo" className="cta-section py-[clamp(76px,6rem+3vw,136px)]">
       <div className="wrap cta-grade">
-        <Revela className="cta-area-cabecalho flex flex-col gap-[22px]">
-          <Etiqueta escuro>Orçamento</Etiqueta>
-          <h2 id="cta-titulo" className="font-title text-h2 font-extrabold text-claro">
-            Conte o que você precisa. A resposta vem com os próximos passos.
-          </h2>
-          <p className="max-w-[520px] text-[1.1rem] text-claro-2">
-            Descreva o serviço e envie fotos do quadro ou do local. Para orçamentos simples, já respondemos com
-            valor. Para obras e projetos, agendamos a visita técnica.
-          </p>
-        </Revela>
+        <div className="cta-coluna-esquerda">
+          <Revela className="cta-area-cabecalho flex flex-col gap-[22px]">
+            <Etiqueta escuro>Orçamento</Etiqueta>
+            <h2 id="cta-titulo" className="font-title text-h2 font-extrabold text-claro">
+              Conte o que você precisa. A resposta vem com os próximos passos.
+            </h2>
+            <p className="max-w-[520px] text-[1.1rem] text-claro-2">
+              Descreva o serviço e envie fotos do quadro ou do local. Para orçamentos simples, já respondemos com
+              valor. Para obras e projetos, agendamos a visita técnica.
+            </p>
+          </Revela>
+
+          {contatos.length > 0 && (
+            <Revela className="cta-area-contatos flex flex-col gap-3 font-mono text-[0.95rem]">
+              {contatos.map((c) =>
+                c.href ? (
+                  <a key={c.label} href={c.href} target={c.label === "WhatsApp" ? "_blank" : undefined} rel={c.label === "WhatsApp" ? "noopener noreferrer" : undefined} className="flex gap-3.5 text-claro no-underline hover:text-white">
+                    <span className="w-[90px] shrink-0 text-ambar-2">{c.label.toUpperCase()}</span>
+                    {c.valor}
+                  </a>
+                ) : (
+                  <span key={c.label} className="flex gap-3.5 text-claro">
+                    <span className="w-[90px] shrink-0 text-ambar-2">{c.label.toUpperCase()}</span>
+                    {c.valor}
+                  </span>
+                )
+              )}
+            </Revela>
+          )}
+        </div>
 
         <div className="cta-area-formulario">
           <FormularioOrcamento />
         </div>
 
-        {contatos.length > 0 && (
-          <Revela className="cta-area-contatos flex flex-col gap-3 font-mono text-[0.95rem]">
-            {contatos.map((c) =>
-              c.href ? (
-                <a key={c.label} href={c.href} target={c.label === "WhatsApp" ? "_blank" : undefined} rel={c.label === "WhatsApp" ? "noopener noreferrer" : undefined} className="flex gap-3.5 text-claro no-underline hover:text-white">
-                  <span className="w-[90px] shrink-0 text-ambar-2">{c.label.toUpperCase()}</span>
-                  {c.valor}
-                </a>
-              ) : (
-                <span key={c.label} className="flex gap-3.5 text-claro">
-                  <span className="w-[90px] shrink-0 text-ambar-2">{c.label.toUpperCase()}</span>
-                  {c.valor}
-                </span>
-              )
-            )}
-          </Revela>
-        )}
-
-        <ol className="cta-area-passos grid grid-cols-1 gap-3.5 sm:grid-cols-2" aria-label="Do contato à entrega">
+        <ol className="cta-area-passos" aria-label="Do contato à entrega">
           {passos.map((p, i) => (
             <Revela key={p.numero} as="li" atraso={i * 0.08} className="passo">
               <span className="passo-n">{p.numero}</span>
