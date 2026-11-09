@@ -38,7 +38,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main className="bg-grid-paper flex flex-1 flex-col">
+      <main id="conteudo" className="bg-grid-paper flex flex-1 flex-col">
         <Folha01Hero />
         <Folha02Servicos />
         <Folha03Alerta />

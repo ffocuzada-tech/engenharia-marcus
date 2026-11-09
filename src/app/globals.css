@@ -156,6 +156,12 @@ body {
   animation: stamp-bump 420ms var(--ease-stamp);
 }
 
+/* Foco visível (teclado): âmbar sobre qualquer fundo, claro ou escuro. */
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

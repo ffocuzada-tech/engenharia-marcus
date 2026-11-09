@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 const NAV_LINKS = [
@@ -13,7 +14,7 @@ const NAV_LINKS = [
 
 function Logo() {
   return (
-    <a href="#" className="flex items-center gap-3 no-underline">
+    <Link href="/" aria-label="Página inicial" className="flex items-center gap-3 no-underline">
       <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" className="shrink-0">
         <rect x="1" y="1" width="34" height="34" fill="#0F1E33" />
         <path d="M1 35 L35 1 L35 35 Z" fill="#F2B417" />
@@ -25,7 +26,7 @@ function Logo() {
           Engenharia Elétrica
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
