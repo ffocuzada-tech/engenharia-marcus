@@ -19,19 +19,21 @@ Lista completa em `design-system/DESIGN-SYSTEM.md`, seção 2.5.
 
 ## Design system
 - A fonte das regras visuais é `design-system/DESIGN-SYSTEM.md`. Leia a parte da direção ativa antes de criar ou alterar qualquer tela.
-- Direção ativa: **D1 · Prancha técnica**. Ignorar D3 (Unifilar) neste projeto.
-- Os tokens da D1 já foram portados para `src/app/globals.css` via `@theme` do Tailwind 4 (cores, tipografia). Qualquer token novo deve nascer em `design-system/d1/tokens.css` primeiro e só depois ser replicado em `globals.css`.
-- Classes utilitárias disponíveis: `bg-paper`, `text-ink`, `bg-amber`, `text-amber-text`, `bg-paper-warm`, `bg-night`, `text-text-2`, `text-text-3`, `font-mono`, `text-label`, `text-h1`...`text-display-xl`, `bg-grid-paper` (malha milimetrada).
-- **Âmbar é sinal, não decoração**: `bg-amber` é sempre preenchimento (botão primário, marcos). Nunca usar âmbar como cor de texto sobre papel — para isso existe `text-amber-text` (#8A5A00, contraste 5,2:1). `bg-amber` + texto usa `text-ink`.
-- **Cantos sempre retos.** `--radius-*` já está zerado em `globals.css`; a única exceção são símbolos circulares (chamada de detalhe, marcadores), que usam `rounded-full` manualmente.
-- Sombras são sempre deslocadas e sólidas (nunca desfocadas): botão primário `4px 4px 0 var(--color-ink)`; carimbo/notas `8px 8px 0 rgba(15,30,51,.12)` (`var(--shadow-sheet)`); formulário-carimbo `12px 12px 0 var(--color-amber)` (`var(--shadow-form)`).
-- Antes de criar um componente novo, procure um equivalente já descrito em `design-system/DESIGN-SYSTEM.md` (capítulo D1.7) ou em `design-system/d1/components.css`.
+- Direção ativa: **D2 · institucional com DNA de engenharia**. Ignorar D1 (Prancha técnica) e D3 (Unifilar) neste projeto.
+- Os tokens da D2 já foram portados para `src/app/globals.css` via `@theme` do Tailwind 4 (cores, tipografia, sombras). Qualquer token novo deve nascer em `design-system/d2/tokens.css` primeiro e só depois ser replicado em `globals.css`.
+- Classes utilitárias disponíveis: `bg-noite`, `bg-noite-2`, `bg-azul`, `text-eletrico`, `bg-gelo`, `bg-gelo-2`, `bg-ambar`, `text-ambar-2`, `text-texto`, `text-texto-2`, `text-texto-3`, `text-claro`, `text-claro-2`, `font-sans` (Figtree, texto), `font-title` (Archivo, títulos), `font-mono` (JetBrains Mono, rótulos e cotas), `text-h1`, `text-h2`, `text-h3`, `text-body-lg`, `text-label`, `shadow-1`, `shadow-2`.
+- **Âmbar é sinal, não decoração**: preenchimento de botão primário, pontos de destaque e marcos. Nunca usar âmbar como cor de texto sobre fundo claro — âmbar como texto só sobre fundo escuro (seções `noite`), onde o contraste é suficiente.
+- **Cantos arredondados e sombras suaves** (nunca sólidas/deslocadas — isso era D1). Sombra padrão de cartões: `shadow-1`; sombra de elementos flutuantes (menus, modais): `shadow-2`.
+- **Nada de linhas divisórias entre itens**: sem `border-top`/`border-bottom` separando itens de lista, sem `divide-y`. Separação por fundo (branco, gelo, azul-noite), espaço e cards.
+- Uma ação principal por tela: "Solicitar orçamento", em âmbar.
+- Copy em "nós" (primeira pessoa do plural).
+- Antes de criar um componente novo, procure um equivalente já descrito em `design-system/DESIGN-SYSTEM.md` (capítulo D2) ou em `src/components/ui`.
 - Anotações `[MOMENTO: …]` do protótipo são instruções de animação: implemente a animação e remova a anotação no código final.
 
 ## Stack
 - Next.js (App Router) + TypeScript + Tailwind CSS 4 + ESLint, pasta `src/`, alias `@/*`.
-- Fontes: IBM Plex Sans (texto) e IBM Plex Mono (rótulos, códigos, cotas, carimbo) via `next/font/google`.
-- Animação: GSAP + `@gsap/react` + ScrollTrigger.
+- Fontes: Archivo (títulos, eixo `wdth`), Figtree (texto) e JetBrains Mono (rótulos, códigos, cotas das pranchas) via `next/font/google`.
+- Animação: GSAP + `@gsap/react` (`useGSAP`) + ScrollTrigger.
 
 ## Movimento
 - Toda animação é ligada à rolagem (ScrollTrigger) ou a uma interação explícita (hover, clique, digitação) — nunca decorativa sem gatilho.
@@ -42,7 +44,7 @@ O cliente é engenheiro eletricista. Terminologia, normas (NBR 5410), siglas (AR
 
 ## Desempenho
 - Meta: LCP < 2,5 s no celular, peso inicial da página < 1 MB.
-- No máximo 2 famílias de fonte, com `display=swap` (já garantido por `next/font/google`).
+- No máximo 3 famílias de fonte (Archivo, Figtree, JetBrains Mono), com `display=swap` (já garantido por `next/font/google`).
 - Imagens em WebP/AVIF, `loading="lazy"` abaixo da primeira tela, `width`/`height` definidos.
 - WebGL/3D só no computador e só carregado quando a seção se aproxima da tela.
 

@@ -1,18 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, Figtree, JetBrains_Mono } from "next/font/google";
 import { descricaoPublica, nomePublico, site } from "@/lib/site";
+import { IconeSprite } from "@/components/ui/Icone";
 import "./globals.css";
 
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  axes: ["wdth"],
+  display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
 });
 
 const nome = nomePublico();
@@ -44,16 +54,20 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0F1E33",
+  themeColor: "#0A1A2E",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}>
+    <html
+      lang="pt-BR"
+      className={`${archivo.variable} ${figtree.variable} ${jetbrainsMono.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
+        <IconeSprite />
         <a
           href="#conteudo"
-          className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:border-[1.5px] focus-visible:border-ink focus-visible:bg-paper focus-visible:px-4 focus-visible:py-2 font-mono text-label text-ink"
+          className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-[10px] focus-visible:bg-noite focus-visible:px-4 focus-visible:py-3 font-sans font-semibold text-white"
         >
           Pular para o conteúdo
         </a>
