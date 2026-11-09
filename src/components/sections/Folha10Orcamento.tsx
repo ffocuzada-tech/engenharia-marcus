@@ -283,6 +283,14 @@ export function Folha10Orcamento() {
                 onInput={clearCustomValidity}
               />
             </Field>
+            <div className="flex flex-col justify-center gap-1.5 border-b border-ink px-4 py-3">
+              <span className="font-mono text-[10px] tracking-[.06em] text-text-3 uppercase">
+                FOTOS DO QUADRO
+              </span>
+              <span className="text-[13px] text-text-2">
+                Envie na conversa do WhatsApp, logo depois desta mensagem.
+              </span>
+            </div>
             <button
               type="submit"
               className="flex min-h-[60px] items-center justify-between border-0 bg-amber px-4 font-sans text-[17px] font-bold text-ink cursor-pointer"
