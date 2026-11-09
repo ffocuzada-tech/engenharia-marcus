@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
-import { site } from "@/lib/site";
+import { descricaoPublica, nomePublico, site } from "@/lib/site";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -15,13 +15,16 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+const nome = nomePublico();
+const descricao = descricaoPublica();
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: site.nome,
-    template: `%s · ${site.nome}`,
+    default: nome,
+    template: `%s · ${nome}`,
   },
-  description: site.descricao,
+  description: descricao,
   alternates: {
     canonical: "/",
   },
@@ -29,14 +32,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     url: "/",
-    siteName: site.nome,
-    title: site.nome,
-    description: site.descricao,
+    siteName: nome,
+    title: nome,
+    description: descricao,
   },
   twitter: {
     card: "summary_large_image",
-    title: site.nome,
-    description: site.descricao,
+    title: nome,
+    description: descricao,
   },
 };
 

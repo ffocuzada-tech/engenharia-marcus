@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { site } from "@/lib/site";
+import { nomePublico, site } from "@/lib/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -90,7 +90,7 @@ export default async function Image() {
             }}
           >
             <span style={{ fontFamily: "Plex Sans", fontWeight: 700, fontSize: 24 }}>
-              {site.nome}
+              {nomePublico()}
             </span>
             <span
               style={{

@@ -12,3 +12,12 @@ export const site = {
 export function ehMarcador(valor: string): boolean {
   return valor.includes("[") || valor.includes("XX");
 }
+
+export function nomePublico(): string {
+  return ehMarcador(site.nome) ? "Engenharia Elétrica" : site.nome;
+}
+
+export function descricaoPublica(): string {
+  if (!ehMarcador(site.cidade)) return site.descricao;
+  return "Engenharia elétrica: instalações, projetos, inspeções e manutenção, com ART e responsável técnico, conforme a NBR 5410.";
+}
