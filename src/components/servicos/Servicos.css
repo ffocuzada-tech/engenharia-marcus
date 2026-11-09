@@ -1,0 +1,136 @@
+/*
+ * CSS global (não .module.css), mesmo motivo de Navegacao.css.
+ * Classes prefixadas com "serv-".
+ */
+
+.serv-grade {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 1180px) {
+  .serv-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .serv-grade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.serv-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s;
+}
+
+.serv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-2);
+}
+
+.serv-ilu {
+  position: relative;
+  height: 176px;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-gelo);
+  background-image: linear-gradient(rgba(31, 95, 209, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 95, 209, 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: center;
+}
+
+.serv-ilu svg {
+  width: 78%;
+  max-width: 250px;
+  height: auto;
+  overflow: visible;
+}
+
+.serv-ilu svg * {
+  fill: none;
+  stroke: var(--color-eletrico);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.serv-ilu svg .a {
+  stroke: var(--color-traco-ambar);
+}
+
+.serv-ilu svg .f {
+  fill: var(--color-ambar);
+  stroke: none;
+}
+
+.serv-ilu svg .fb {
+  fill: var(--color-eletrico);
+  stroke: none;
+}
+
+.serv-ilu svg .calor {
+  fill: url(#serv-calor);
+  stroke: none;
+}
+
+.serv-ilu svg text {
+  fill: #b87400;
+  stroke: none;
+  font: 700 11px var(--font-mono);
+}
+
+.serv-ilu .mov {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.serv-card:hover .serv-ilu .mov {
+  transform: rotate(-18deg);
+}
+
+.serv-card:hover .serv-ilu .pulsa {
+  animation: serv-pulsa 1.2s ease-in-out infinite;
+}
+
+@keyframes serv-pulsa {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.serv-corpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 24px 26px;
+}
+
+.link-mais {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--color-eletrico);
+}
+
+.link-mais svg {
+  transition: transform 0.25s;
+}
+
+.link-mais:hover svg {
+  transform: translateX(4px);
+}
