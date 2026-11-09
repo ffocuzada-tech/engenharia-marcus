@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { SheetBar } from "@/components/ui/SheetBar";
 import { waLink, whatsappExibicao } from "@/lib/contato";
 
 const INPUT_CLS =
@@ -144,8 +143,7 @@ export function Folha10Orcamento() {
   }
 
   return (
-    <section id="orcamento" className="bg-grid-night text-on-ink">
-      <SheetBar numero="10" titulo="PEDIDO DE ORÇAMENTO" nota="PREENCHA O CARIMBO" dark />
+    <section id="orcamento" className="bg-noite text-claro">
 
       {/* Computador */}
       <div className="wrap hidden items-start gap-16 py-24 md:grid md:grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))] md:py-28">
