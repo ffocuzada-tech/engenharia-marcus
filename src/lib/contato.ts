@@ -21,6 +21,11 @@ export function waLink(texto: string): string {
   return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
 }
 
+export function telefoneE164(): string | null {
+  const numero = numeroLimpo();
+  return numero ? `+${numero}` : null;
+}
+
 export function whatsappExibicao(): string {
   const digitos = numeroLimpo();
   if (!digitos) return EXIBICAO_MARCADOR;

@@ -1,4 +1,6 @@
 import { Header } from "@/components/sections/Header";
+import { telefoneE164 } from "@/lib/contato";
+import { ehMarcador, site } from "@/lib/site";
 import { SheetProvider } from "@/components/providers/SheetProvider";
 import { SheetStamp } from "@/components/ui/SheetStamp";
 import { Folha01Hero } from "@/components/sections/Folha01Hero";
@@ -13,11 +15,30 @@ import { Folha09NotasFaq } from "@/components/sections/Folha09NotasFaq";
 import { Folha10Orcamento } from "@/components/sections/Folha10Orcamento";
 import { Folha11Rodape } from "@/components/sections/Folha11Rodape";
 
+function campoOuOmitido(valor: string): string | undefined {
+  return ehMarcador(valor) ? undefined : valor;
+}
+
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Electrician",
+    name: campoOuOmitido(site.nome),
+    description: campoOuOmitido(site.descricao),
+    url: site.url,
+    areaServed: campoOuOmitido(site.cidade),
+    telephone: telefoneE164() ?? undefined,
+    knowsAbout: ["NBR 5410", "ART", "instalações elétricas"],
+  };
+
   return (
     <SheetProvider>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
-      <main className="bg-grid-paper flex flex-1 flex-col">
+      <main id="conteudo" className="bg-grid-paper flex flex-1 flex-col">
         <Folha01Hero />
         <Folha02Servicos />
         <Folha03Alerta />
