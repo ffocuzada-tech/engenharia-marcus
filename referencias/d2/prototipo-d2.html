@@ -1,0 +1,1561 @@
+<title>Engenharia Elétrica D2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* D2 · institucional com DNA de engenharia. Claro e limpo; o azul-noite marca as seções de peso,
+   o âmbar só aparece em ação e energia. Separação por fundo e espaço, nunca por linha. */
+:root {
+  --noite: #0A1A2E;
+  --noite-2: #112640;
+  --noite-3: #071324;
+  --azul: #14407A;
+  --eletrico: #1F5FD1;
+  --eletrico-claro: #7FAEFF;
+  --ambar: #FFB21E;
+  --ambar-2: #FFC654;
+  --ambar-escuro: #8A5600;
+  --tinta-ambar: #1E1400;
+  --branco: #FFFFFF;
+  --gelo: #F3F6FA;
+  --gelo-2: #E6EDF6;
+  --texto: #0D1B2C;
+  --texto-2: #46566B;
+  --texto-3: #5F6E82;
+  --claro: #EEF3F9;
+  --claro-2: #AEBBCC;
+  --papel: #FCFDFF;
+  --traco: #2457A6;
+  --traco-ambar: #DB8F06;
+
+  --sombra-1: 0 1px 2px rgba(10, 26, 46, .05), 0 6px 18px -8px rgba(10, 26, 46, .16);
+  --sombra-2: 0 2px 6px rgba(10, 26, 46, .06), 0 24px 48px -18px rgba(10, 26, 46, .32);
+
+  --f-tit: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-txt: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --f-num: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --gl: max(16px, env(safe-area-inset-left, 0px));
+  --gr: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+
+html { background: var(--branco); scroll-behavior: smooth; scrollbar-gutter: stable; }
+html.trava { overflow: hidden; }
+body {
+  background: var(--branco); color: var(--texto);
+  font-family: var(--f-txt); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; overflow-wrap: break-word;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 70; background: var(--gelo);
+}
+* { box-sizing: border-box; }
+h1, h2, h3, p, ol, ul { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg.ic { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+:focus-visible { outline: 3px solid var(--eletrico); outline-offset: 3px; border-radius: 6px; }
+.escuro :focus-visible { outline-color: var(--ambar); }
+
+.pular {
+  position: fixed; z-index: 90; left: var(--gl); top: calc(env(safe-area-inset-top, 0px) + 10px);
+  background: var(--noite); color: #fff; padding: 12px 16px; border-radius: 10px; font-weight: 600;
+  transform: translateY(-160%); transition: transform .2s;
+}
+.pular:focus { transform: none; }
+
+.miolo { width: 100%; max-width: 1352px; margin-inline: auto; padding-left: var(--gl); padding-right: var(--gr); }
+
+/* ---------- tipografia ---------- */
+h1, h2, .tit {
+  font-family: var(--f-tit); font-weight: 760; font-stretch: 104%;
+  letter-spacing: -.024em; text-wrap: balance; color: var(--noite);
+}
+h1 { font-size: clamp(2.3rem, 1.25rem + 3vw, 3.85rem); line-height: 1.04; }
+h2 { font-size: clamp(1.95rem, 1.25rem + 2.3vw, 3.15rem); line-height: 1.07; }
+h3 { font-family: var(--f-tit); font-weight: 700; font-stretch: 102%; letter-spacing: -.012em; line-height: 1.2; }
+.escuro h1, .escuro h2, .escuro h3 { color: var(--claro); }
+.etiqueta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 700 .8rem/1 var(--f-txt); letter-spacing: .12em; text-transform: uppercase; color: var(--eletrico);
+}
+.etiqueta::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ambar); box-shadow: 0 0 0 4px rgba(255, 178, 30, .22); }
+.escuro .etiqueta { color: var(--eletrico-claro); }
+.cab { display: flex; flex-direction: column; gap: 16px; max-width: 780px; }
+.cab p { font-size: clamp(1.02rem, .97rem + .25vw, 1.15rem); color: var(--texto-2); max-width: 640px; text-wrap: pretty; }
+.escuro .cab p { color: var(--claro-2); }
+.cab--centro { align-items: center; text-align: center; margin-inline: auto; }
+.cab--centro p { margin-inline: auto; }
+
+/* ---------- botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 22px; border-radius: 12px;
+  font: 650 1rem/1.2 var(--f-txt); text-align: center;
+  transition: background-color .2s, color .2s, box-shadow .25s, transform .25s;
+}
+.btn svg.ic { width: 20px; height: 20px; }
+.btn-ambar { background: var(--ambar); color: var(--tinta-ambar); box-shadow: 0 10px 24px -12px rgba(219, 143, 6, .9); }
+.btn-ambar:hover { background: var(--ambar-2); transform: translateY(-1px); }
+.btn-claro { background: var(--branco); color: var(--noite); box-shadow: var(--sombra-1); }
+.btn-claro:hover { box-shadow: var(--sombra-2); transform: translateY(-1px); }
+.btn-vidro { background: rgba(255, 255, 255, .08); color: var(--claro); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
+.btn-vidro:hover { background: rgba(255, 255, 255, .14); }
+.btn .seta { transition: transform .25s; }
+.btn:hover .seta { transform: translateX(3px); }
+
+/* ---------- navegação ---------- */
+.nav {
+  position: fixed; z-index: 50; left: 0; right: 0;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  padding-left: var(--gl); padding-right: var(--gr);
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+  pointer-events: none;
+}
+.nav.esconde { transform: translateY(calc(-100% - 28px)); }
+.nav-barra {
+  pointer-events: auto; position: relative;
+  max-width: 1320px; margin-inline: auto; height: 68px;
+  display: flex; align-items: center; gap: 12px; padding: 0 10px 0 16px;
+  border-radius: 18px; background: rgba(255, 255, 255, 0);
+  transition: background-color .3s, box-shadow .3s;
+}
+.nav.rolou .nav-barra, .nav.mega-aberto .nav-barra {
+  background: rgba(255, 255, 255, .86);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5);
+  box-shadow: 0 14px 34px -16px rgba(10, 26, 46, .34), 0 1px 3px rgba(10, 26, 46, .06);
+}
+.marca { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; flex: none; }
+.marca-sinal { width: 38px; height: 38px; flex: none; }
+.marca-txt { display: flex; flex-direction: column; line-height: 1.1; }
+.marca-txt strong { font: 760 1.02rem/1.1 var(--f-tit); font-stretch: 108%; letter-spacing: -.01em; color: var(--noite); white-space: nowrap; }
+.marca-txt span { font-size: .74rem; color: var(--texto-3); letter-spacing: .02em; white-space: nowrap; }
+
+.nav-links { position: relative; display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.nav-ind {
+  position: absolute; top: 50%; height: 40px; translate: 0 -50%; border-radius: 10px;
+  background: var(--gelo-2); opacity: 0; transition: left .35s cubic-bezier(.2, .7, .2, 1), width .35s cubic-bezier(.2, .7, .2, 1), opacity .25s;
+}
+.nav-link {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 44px; padding: 0 14px; border-radius: 10px;
+  font-weight: 600; font-size: .95rem; color: var(--texto-2); transition: color .2s;
+}
+.nav-link:hover, .nav-link[aria-current="true"], .nav-link[aria-expanded="true"] { color: var(--noite); }
+.nav-link .ic { width: 16px; height: 16px; transition: transform .25s; }
+.nav-link[aria-expanded="true"] .ic { transform: rotate(180deg); }
+.nav-acoes { display: flex; align-items: center; gap: 8px; margin-left: 8px; }
+.btn-redondo {
+  width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--gelo-2); color: var(--azul); transition: background-color .2s, color .2s;
+}
+.btn-redondo:hover { background: var(--azul); color: #fff; }
+.nav-acoes .btn { min-height: 46px; padding: 0 18px; font-size: .95rem; }
+.nav-menu { display: none; }
+
+.mega {
+  position: absolute; top: calc(100% + 10px); left: 50%; translate: -50% 0;
+  width: min(940px, calc(100vw - 32px)); padding: 12px; border-radius: 22px;
+  background: var(--branco); box-shadow: var(--sombra-2);
+  display: grid; grid-template-columns: 1fr 1fr 290px; gap: 4px;
+  opacity: 0; visibility: hidden; transform: translateY(-8px);
+  transition: opacity .25s, transform .3s cubic-bezier(.2, .7, .2, 1), visibility 0s .3s;
+}
+.mega.aberto { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.mega-item { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 3px 14px; padding: 16px; border-radius: 16px; transition: background-color .2s; }
+.mega-item:hover, .mega-item:focus-visible { background: var(--gelo); }
+.mega-item .tile { grid-row: span 2; }
+.mega-item strong { font: 700 1rem/1.25 var(--f-tit); color: var(--noite); }
+.mega-item span { font-size: .88rem; line-height: 1.45; color: var(--texto-2); }
+.tile {
+  width: 48px; height: 48px; border-radius: 13px; display: grid; place-items: center;
+  background: var(--gelo-2); color: var(--eletrico); transition: background-color .25s, color .25s;
+}
+.mega-item:hover .tile { background: var(--azul); color: #fff; }
+.mega-emerg {
+  grid-column: 3; grid-row: 1 / span 2; border-radius: 16px; padding: 22px;
+  background: var(--noite); color: var(--claro); display: flex; flex-direction: column; gap: 12px;
+}
+.mega-emerg .tile { background: rgba(255, 178, 30, .14); color: var(--ambar); }
+.mega-emerg strong { font: 700 1.1rem/1.2 var(--f-tit); }
+.mega-emerg p { font-size: .9rem; line-height: 1.5; color: var(--claro-2); }
+.mega-emerg .btn { margin-top: auto; min-height: 46px; }
+
+.menu-movel {
+  position: fixed; inset: 0; z-index: 80; background: var(--branco);
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) var(--gr) calc(env(safe-area-inset-bottom, 0px) + 20px) var(--gl);
+  display: flex; flex-direction: column; gap: 22px; overflow-y: auto;
+  clip-path: circle(0 at calc(100% - 44px) 46px); visibility: hidden;
+  transition: clip-path .55s cubic-bezier(.7, 0, .2, 1), visibility 0s .55s;
+}
+.menu-movel.aberto { clip-path: circle(150% at calc(100% - 44px) 46px); visibility: visible; transition-delay: 0s; }
+.mm-topo { display: flex; align-items: center; justify-content: space-between; min-height: 68px; padding-left: 4px; }
+.mm-links { display: flex; flex-direction: column; gap: 4px; }
+.mm-links a {
+  display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 0 6px;
+  font: 740 1.7rem/1.1 var(--f-tit); letter-spacing: -.02em; color: var(--noite);
+}
+.mm-links a .ic { color: var(--eletrico); }
+.mm-serv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.mm-serv a { display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 16px; background: var(--gelo); font-weight: 650; font-size: .95rem; line-height: 1.25; }
+.mm-serv .tile { width: 40px; height: 40px; border-radius: 11px; background: var(--branco); }
+.mm-acoes { margin-top: auto; display: grid; gap: 10px; }
+.menu-movel .mm-anim { opacity: 0; transform: translateY(14px); transition: opacity .4s, transform .5s cubic-bezier(.2, .7, .2, 1); }
+.menu-movel.aberto .mm-anim { opacity: 1; transform: none; transition-delay: calc(.18s + var(--i, 0) * .05s); }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative; isolation: isolate;
+  padding-block: calc(env(safe-area-inset-top, 0px) + 132px) 96px;
+  background:
+    radial-gradient(58% 70% at 74% 46%, #DCE7F6 0%, rgba(220, 231, 246, 0) 72%),
+    linear-gradient(180deg, var(--gelo) 0%, #F8FAFC 100%);
+}
+.hero-mesa { position: absolute; inset: 0; z-index: 0; overflow: hidden; overflow: clip; pointer-events: none; }
+.pilha-wrap {
+  position: absolute; left: 49%; top: 50%; translate: 0 -47%;
+  width: clamp(480px, 50vw, 780px); aspect-ratio: 1.414; max-width: 100%;
+  perspective: 2400px; pointer-events: auto; cursor: pointer; touch-action: pan-y;
+}
+.pilha { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx, 52deg)) rotateZ(var(--rz, -30deg)); }
+.sombra-pilha {
+  position: absolute; inset: 6% -1% -3% 3%; border-radius: 10px;
+  background: rgba(10, 26, 46, .42); filter: blur(30px); transform: translateZ(-8px);
+}
+.folha { position: absolute; inset: 0; transform-style: preserve-3d; transform-origin: 0 50%; will-change: transform; }
+.face { position: absolute; inset: 0; border-radius: 4px; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.frente {
+  background-color: var(--papel);
+  background-image:
+    linear-gradient(rgba(36, 87, 166, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 87, 166, .06) 1px, transparent 1px);
+  background-size: 3.5% 4.95%;
+  box-shadow: inset 0 0 0 1px rgba(36, 87, 166, .12);
+}
+.frente svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.verso { transform: rotateY(180deg); background: #E9EEF6; box-shadow: inset 0 0 0 1px rgba(36, 87, 166, .12); }
+.brilho { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 26, 46, 0) 10%, rgba(10, 26, 46, .32) 100%); opacity: 0; pointer-events: none; }
+.varredura { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 26, 46, .22) 0%, rgba(10, 26, 46, 0) 38%); opacity: 0; pointer-events: none; }
+
+.prancha line, .prancha rect, .prancha path, .prancha circle, .prancha polygon, .prancha polyline {
+  fill: none; stroke: var(--traco); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.5;
+}
+.prancha .m1 { stroke-width: 1.4; }
+.prancha .m3 { stroke-width: 4; }
+.prancha .pa { stroke-width: 13; stroke: #1B3E73; stroke-linecap: square; }
+.prancha .am { stroke: var(--traco-ambar); stroke-width: 3.2; }
+.prancha .tr { stroke-dasharray: 12 9; }
+.prancha text { fill: var(--traco); stroke: none; font-family: var(--f-num); font-size: 19px; font-weight: 500; }
+.prancha .tb { font-weight: 700; font-size: 21px; }
+.prancha .ts { font-size: 16px; }
+.prancha .tg { font-family: var(--f-tit); font-size: 34px; font-weight: 760; fill: #163B70; }
+.prancha .tA { fill: #B87400; }
+.prancha .mid { text-anchor: middle; }
+.prancha .fim { text-anchor: end; }
+
+.hero.anima .folha-1 .d { stroke-dasharray: 1; stroke-dashoffset: 1; animation: tracar 1.25s cubic-bezier(.55, 0, .25, 1) forwards; animation-delay: var(--d, 0s); }
+.hero.anima .folha-1 .gb { opacity: 0; animation: surge .6s ease forwards; animation-delay: var(--d, 1s); }
+@keyframes tracar { to { stroke-dashoffset: 0; } }
+@keyframes surge { to { opacity: 1; } }
+
+.legenda-folha {
+  position: absolute; right: var(--gr); bottom: 28px; z-index: 2; pointer-events: none;
+  display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; border-radius: 14px;
+  background: rgba(255, 255, 255, .86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: var(--sombra-1); font-size: .86rem; line-height: 1.3; max-width: calc(100% - 32px);
+  transition: opacity .3s;
+}
+.legenda-folha .lf-num { font: 700 .78rem/1 var(--f-num); color: var(--azul); background: var(--gelo-2); padding: 8px 9px; border-radius: 9px; font-variant-numeric: tabular-nums; }
+.legenda-folha strong { display: block; color: var(--noite); font-weight: 700; }
+.legenda-folha span.lf-det { color: var(--texto-3); }
+.legenda-folha.troca { opacity: 0; }
+
+.fundo-folhas {
+  position: absolute; inset: 0; perspective: 2400px; perspective-origin: 68% 45%; opacity: .55;
+  -webkit-mask-image: radial-gradient(70% 80% at 72% 48%, #000 35%, transparent 82%);
+  mask-image: radial-gradient(70% 80% at 72% 48%, #000 35%, transparent 82%);
+}
+.mesa-fundo { position: absolute; left: 66%; top: 48%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(52deg) rotateZ(-30deg); }
+.esteira {
+  position: absolute; left: -1500px; top: -1050px; transform-style: preserve-3d;
+  display: grid; grid-template-columns: repeat(10, 560px); grid-auto-rows: 396px; column-gap: 70px; row-gap: 760px;
+  animation: esteira 140s linear infinite;
+}
+.f-fundo {
+  position: relative; border-radius: 4px; background-color: var(--papel);
+  background-image: linear-gradient(rgba(36, 87, 166, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(36, 87, 166, .05) 1px, transparent 1px);
+  background-size: 3.5% 4.95%; box-shadow: 0 30px 60px -34px rgba(10, 26, 46, .45), inset 0 0 0 1px rgba(36, 87, 166, .1);
+}
+.f-fundo svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .75; }
+@keyframes esteira { to { transform: translateX(-3150px); } }
+.veu-hero {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(90deg, #F4F7FA 0%, #F4F7FA 33%, rgba(244, 247, 250, .84) 45%, rgba(244, 247, 250, 0) 60%);
+}
+.hero-grade { position: relative; z-index: 1; display: flex; align-items: center; min-height: 600px; }
+.hero-texto { max-width: 650px; display: flex; flex-direction: column; gap: 26px; }
+.selo-topo {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 10px;
+  padding: 7px 14px 7px 8px; border-radius: 999px; background: var(--branco); box-shadow: var(--sombra-1);
+  font-size: .86rem; font-weight: 600; color: var(--texto-2);
+}
+.selo-topo b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--noite); color: var(--ambar); }
+.selo-topo b svg { width: 15px; height: 15px; }
+.destaque {
+  background: linear-gradient(var(--ambar), var(--ambar)) no-repeat 0 90% / 100% .2em;
+}
+.hero-sub { font-size: clamp(1.05rem, 1rem + .3vw, 1.22rem); color: var(--texto-2); max-width: 560px; text-wrap: pretty; }
+.hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+.selos { display: flex; flex-wrap: wrap; gap: 12px 26px; }
+.selo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: .94rem; color: var(--texto); }
+.selo i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--branco); color: var(--eletrico); box-shadow: var(--sombra-1); font-style: normal; }
+.selo i svg { width: 18px; height: 18px; }
+.dica-swipe { display: none; }
+
+.hero.anima .hero-texto > * { animation: sobe .85s cubic-bezier(.2, .7, .2, 1) both; }
+.hero.anima .hero-texto > :nth-child(1) { animation-delay: .15s; }
+.hero.anima .hero-texto > :nth-child(2) { animation-delay: .28s; }
+.hero.anima .hero-texto > :nth-child(3) { animation-delay: .44s; }
+.hero.anima .hero-texto > :nth-child(4) { animation-delay: .58s; }
+.hero.anima .hero-texto > :nth-child(5) { animation-delay: .72s; }
+.hero.anima .destaque { animation: sublinha .9s cubic-bezier(.6, 0, .2, 1) 1.05s both; }
+@keyframes sobe { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes sublinha { from { background-size: 0% .2em; } to { background-size: 100% .2em; } }
+
+/* ---------- seções ---------- */
+.secao { padding-block: clamp(76px, 6rem + 3vw, 136px); position: relative; }
+.secao.gelo { background: var(--gelo); }
+.secao.escuro { background: var(--noite); color: var(--claro); }
+.grade-gap { margin-top: clamp(40px, 2rem + 2vw, 64px); }
+
+.revela.pre { opacity: 0; transform: translateY(26px); }
+.revela { transition: opacity .7s ease, transform .8s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--atraso, 0s); }
+
+/* serviços */
+.serv-grade { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.serv-card {
+  display: flex; flex-direction: column; border-radius: 22px; overflow: hidden;
+  background: var(--branco); box-shadow: var(--sombra-1);
+  transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s;
+}
+.serv-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-2); }
+.serv-ilu {
+  position: relative; height: 176px; display: grid; place-items: center; background-color: var(--gelo);
+  background-image: linear-gradient(rgba(31, 95, 209, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(31, 95, 209, .07) 1px, transparent 1px);
+  background-size: 18px 18px; background-position: center;
+}
+.serv-ilu svg { width: 78%; max-width: 250px; height: auto; overflow: visible; }
+.serv-ilu svg * { fill: none; stroke: var(--eletrico); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.serv-ilu svg .a { stroke: var(--traco-ambar); }
+.serv-ilu svg .f { fill: var(--ambar); stroke: none; }
+.serv-ilu svg .fb { fill: var(--eletrico); stroke: none; }
+.serv-ilu svg .calor { fill: url(#calor); stroke: none; }
+.serv-ilu svg text { fill: #B87400; stroke: none; font: 700 11px var(--f-num); }
+.serv-ilu .mov { transition: transform .6s cubic-bezier(.2, .7, .2, 1); transform-box: fill-box; transform-origin: center; }
+.serv-card:hover .serv-ilu .mov { transform: rotate(-18deg); }
+.serv-card:hover .serv-ilu .pulsa { animation: pulsa 1.2s ease-in-out infinite; }
+@keyframes pulsa { 50% { opacity: .35; } }
+.serv-corpo { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 24px 24px 26px; }
+.serv-corpo h3 { font-size: 1.3rem; color: var(--noite); }
+.serv-corpo p { color: var(--texto-2); font-size: .97rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px; background: var(--gelo); color: var(--azul); font-size: .8rem; font-weight: 650; line-height: 1.2; }
+.chip svg.ic { width: 14px; height: 14px; stroke-width: 2.4; }
+.link-mais {
+  margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; font-weight: 700; color: var(--eletrico);
+}
+.link-mais .ic { width: 18px; height: 18px; transition: transform .25s; }
+.link-mais:hover .ic { transform: translateX(4px); }
+
+/* diferenciais */
+.escuro.dif { overflow: hidden; overflow: clip; }
+.escuro.dif::before {
+  content: ""; position: absolute; width: 900px; height: 900px; right: -300px; top: -420px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(31, 95, 209, .28), rgba(31, 95, 209, 0)); pointer-events: none;
+}
+.dif-topo { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px 64px; align-items: end; }
+.dif-grade { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.dif-card {
+  position: relative; isolation: isolate; overflow: hidden; border-radius: 22px; padding: 30px 26px 26px;
+  display: flex; flex-direction: column; gap: 14px; background: var(--noite-2);
+  box-shadow: inset 0 0 0 1px rgba(127, 174, 255, .1);
+  transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s;
+}
+.dif-card::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .45; transition: opacity .4s;
+  background-image: linear-gradient(rgba(127, 174, 255, .2) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 174, 255, .2) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, 85%) var(--my, 0%), #000, transparent 72%);
+  mask-image: radial-gradient(240px circle at var(--mx, 85%) var(--my, 0%), #000, transparent 72%);
+}
+.dif-card:hover { transform: translateY(-5px); box-shadow: inset 0 0 0 1px rgba(127, 174, 255, .28), 0 24px 48px -20px rgba(0, 0, 0, .6); }
+.dif-card:hover::before { opacity: 1; }
+.dif-icone {
+  width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center;
+  background: rgba(127, 174, 255, .12); color: var(--eletrico-claro); transition: background-color .3s, color .3s;
+}
+.dif-icone svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.dif-card:hover .dif-icone { background: var(--ambar); color: var(--noite); }
+.dif-icone .d2 { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.dif-card.pre .dif-icone .d2 { stroke-dashoffset: 1; }
+.dif-card .dif-icone .d2 { transition: stroke-dashoffset 1.4s cubic-bezier(.55, 0, .25, 1) .25s; }
+.dif-card h3 { font-size: 1.32rem; margin-top: 8px; }
+.dif-card p { color: var(--claro-2); font-size: .97rem; }
+.dif-spec {
+  margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 10px; background: rgba(255, 178, 30, .1); color: var(--ambar-2);
+  font: 600 .78rem/1.2 var(--f-num); letter-spacing: .01em;
+}
+.dif-spec svg.ic { width: 15px; height: 15px; stroke-width: 2.2; }
+
+/* soluções */
+.sol-topo { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.sol-grade { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.sol-card {
+  position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 3 / 4; border-radius: 22px;
+  display: flex; flex-direction: column; justify-content: flex-end; text-align: left; color: #fff;
+  background: var(--noite); box-shadow: var(--sombra-1);
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s;
+}
+.sol-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-2); }
+.sol-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(7, 19, 36, 0) 30%, rgba(7, 19, 36, .55) 62%, rgba(7, 19, 36, .92) 100%);
+}
+.sol-card .midia { position: absolute; inset: 0; z-index: -2; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.sol-card:hover .midia { transform: scale(1.06); }
+.midia { overflow: hidden; background: var(--noite); }
+.midia img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.midia.ph {
+  background:
+    linear-gradient(rgba(127, 174, 255, .1) 1px, transparent 1px) 0 0 / 20px 20px,
+    linear-gradient(90deg, rgba(127, 174, 255, .1) 1px, transparent 1px) 0 0 / 20px 20px,
+    radial-gradient(110% 80% at 78% 12%, #1E4E95 0%, #0E2747 55%, #0A1A2E 100%);
+  display: grid; place-items: start center;
+}
+.midia.ph svg { width: 38%; max-width: 110px; height: auto; margin-top: 22%; fill: none; stroke: #8DB6FF; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; opacity: .65; }
+.sol-info { display: flex; flex-direction: column; gap: 6px; padding: 18px; }
+.sol-tag { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--claro-2); }
+.sol-info h3 { font-size: 1.12rem; color: #fff; }
+.sol-prob { font-size: .86rem; line-height: 1.45; color: #C7D2E0; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.2, .7, .2, 1); }
+.sol-prob > span { overflow: hidden; }
+.sol-card:hover .sol-prob, .sol-card:focus-visible .sol-prob { grid-template-rows: 1fr; }
+.sol-mais {
+  position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff;
+  background: rgba(7, 19, 36, .5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: background-color .25s, color .25s, transform .35s;
+}
+.sol-card:hover .sol-mais { background: var(--ambar); color: var(--noite); transform: rotate(90deg); }
+.sol-icone {
+  position: absolute; top: 14px; left: 14px; width: 40px; height: 40px; border-radius: 12px;
+  display: grid; place-items: center; color: var(--ambar);
+  background: rgba(7, 19, 36, .5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.sol-icone svg.ic { width: 20px; height: 20px; }
+.voando { visibility: hidden; }
+
+/* diálogo da solução */
+.sol-dlg {
+  padding: 0; border: 0; margin: 0; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+  background: transparent; overflow: hidden; color: var(--texto);
+}
+.sol-dlg::backdrop { background: rgba(7, 19, 36, .62); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
+.sol-dlg.fechando::backdrop { opacity: 0; transition: opacity .35s; }
+.sol-painel {
+  position: absolute; inset: 0; margin: auto;
+  width: min(1100px, calc(100% - 48px)); height: min(700px, calc(100% - 48px));
+  display: grid; grid-template-columns: 44% minmax(0, 1fr);
+  background: var(--branco); border-radius: 26px; overflow: hidden; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .6);
+}
+.sol-foto { position: relative; border-radius: 26px 0 0 26px; overflow: hidden; }
+.sol-foto .midia { position: absolute; inset: 0; }
+.selo-ilustra {
+  position: absolute; left: 16px; bottom: 16px; padding: 7px 11px; border-radius: 9px;
+  background: rgba(7, 19, 36, .6); color: #DCE5F0; font-size: .74rem; font-weight: 600;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.sol-conteudo { overflow-y: auto; overscroll-behavior: contain; padding: 44px 46px 40px; display: flex; flex-direction: column; gap: 22px; }
+.sol-conteudo h2 { font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.35rem); }
+.sol-pares { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sol-par { border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.sol-par h3 { display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+.sol-par p { font-size: .93rem; color: var(--texto-2); }
+.sol-par.problema { background: #FFF4E1; }
+.sol-par.problema h3 { color: var(--ambar-escuro); }
+.sol-par.solucao { background: #E9F1FD; }
+.sol-par.solucao h3 { color: var(--azul); }
+.sol-sub { font-size: 1.05rem; color: var(--noite); }
+.sol-passos { display: flex; flex-direction: column; gap: 8px; counter-reset: p; }
+.sol-passos li {
+  display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: center;
+  padding: 12px 14px; border-radius: 14px; background: var(--gelo); font-size: .95rem; line-height: 1.4;
+}
+.sol-passos li::before {
+  counter-increment: p; content: counter(p);
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--noite); color: var(--ambar); font: 700 .9rem/1 var(--f-num);
+}
+.sol-acoes { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+.sol-fechar {
+  position: absolute; top: 14px; right: 14px; z-index: 3; width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--branco); color: var(--noite); box-shadow: var(--sombra-1);
+  transition: transform .3s;
+}
+.sol-fechar:hover { transform: rotate(90deg); }
+.voo { position: fixed; z-index: 5; overflow: hidden; pointer-events: none; }
+.voo .midia { position: absolute; inset: 0; }
+.sol-conteudo > * { transition: opacity .45s, transform .5s cubic-bezier(.2, .7, .2, 1); transition-delay: calc(.18s + var(--i, 0) * .045s); }
+.sol-dlg:not(.pronto) .sol-conteudo > * { opacity: 0; transform: translateY(14px); transition-delay: 0s; }
+
+/* dúvidas */
+.faq-lista { max-width: 880px; margin-inline: auto; display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: var(--branco); border-radius: 18px; box-shadow: var(--sombra-1); transition: box-shadow .3s; }
+.faq-item.aberto { box-shadow: var(--sombra-2); }
+.faq-item h3 { font: inherit; }
+.faq-q {
+  width: 100%; min-height: 68px; display: flex; align-items: center; gap: 16px; padding: 16px 22px; text-align: left;
+  font: 650 1.04rem/1.35 var(--f-txt); color: var(--noite); border-radius: 18px;
+}
+.faq-ico {
+  flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--ambar); color: var(--noite); transition: transform .35s cubic-bezier(.2, .7, .2, 1), background-color .3s, color .3s;
+}
+.faq-ico svg.ic { width: 17px; height: 17px; stroke-width: 2.4; }
+.faq-item.aberto .faq-ico { transform: rotate(90deg); background: var(--azul); color: #fff; }
+.faq-r { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.2, .7, .2, 1); }
+.faq-r > div { overflow: hidden; visibility: hidden; transition: visibility 0s .4s; }
+.faq-item.aberto .faq-r { grid-template-rows: 1fr; }
+.faq-item.aberto .faq-r > div { visibility: visible; transition-delay: 0s; }
+.faq-r p { padding: 0 24px 22px 70px; color: var(--texto-2); }
+
+/* orçamento */
+.cta-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px 72px; align-items: center; }
+.cta-texto { display: flex; flex-direction: column; gap: 22px; }
+.cta-texto p { color: var(--claro-2); font-size: 1.1rem; max-width: 520px; }
+.passos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.passo { border-radius: 20px; padding: 24px; background: var(--noite-2); display: flex; flex-direction: column; gap: 10px; box-shadow: inset 0 0 0 1px rgba(127, 174, 255, .1); }
+.passo-n { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--ambar); color: var(--noite); font: 700 .95rem/1 var(--f-num); }
+.passo h3 { font-size: 1.12rem; }
+.passo p { font-size: .93rem; color: var(--claro-2); }
+.cta.escuro { background: radial-gradient(70% 90% at 100% 0%, #13305A 0%, var(--noite) 60%); }
+
+/* rodapé */
+.rodape { background: var(--noite-3); color: var(--claro-2); padding-block: 64px calc(28px + env(safe-area-inset-bottom, 0px)); font-size: .93rem; }
+.rod-grade { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 36px 48px; }
+.rodape .marca-txt strong { color: var(--claro); }
+.rodape .marca-txt span { color: var(--claro-2); }
+.rod-col { display: flex; flex-direction: column; gap: 10px; }
+.rod-col h3 { font: 700 .8rem/1 var(--f-txt); letter-spacing: .12em; text-transform: uppercase; color: var(--claro); margin-bottom: 4px; }
+.rod-col a:hover { color: #fff; }
+.rod-base { margin-top: 48px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font-size: .84rem; color: #8D9BB0; }
+
+/* índice flutuante */
+.indice {
+  position: fixed; z-index: 45; right: var(--gr); bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  opacity: 0; visibility: hidden; transform: translateY(12px);
+  transition: opacity .35s, transform .35s cubic-bezier(.2, .7, .2, 1), visibility 0s .35s;
+}
+.indice.mostra { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.indice-btn {
+  position: relative; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--noite); color: #fff; box-shadow: 0 14px 30px -12px rgba(7, 19, 36, .7);
+}
+.indice-btn svg.anel { position: absolute; inset: 0; width: 58px; height: 58px; transform: rotate(-90deg); }
+.indice-btn svg.anel circle { fill: none; stroke-width: 3; }
+.indice-btn svg.anel .trilho { stroke: rgba(255, 255, 255, .14); }
+.indice-btn svg.anel .prog { stroke: var(--ambar); stroke-linecap: round; stroke-dasharray: 160.2; stroke-dashoffset: 160.2; }
+.indice-lista {
+  position: absolute; right: 0; bottom: 70px; width: 262px; padding: 8px; border-radius: 20px;
+  background: var(--branco); box-shadow: var(--sombra-2);
+  opacity: 0; visibility: hidden; transform: translateY(10px) scale(.98); transform-origin: bottom right;
+  transition: opacity .25s, transform .3s cubic-bezier(.2, .7, .2, 1), visibility 0s .3s;
+}
+.indice.aberto .indice-lista { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.indice-lista p { padding: 10px 12px 6px; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--texto-3); }
+.indice-lista a { display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 0 12px; border-radius: 12px; font-weight: 600; font-size: .95rem; color: var(--texto-2); }
+.indice-lista a span { font: 600 .74rem/1 var(--f-num); color: var(--texto-3); width: 18px; }
+.indice-lista a:hover { background: var(--gelo); color: var(--noite); }
+.indice-lista a[aria-current="true"] { background: var(--gelo-2); color: var(--azul); }
+.indice-lista a[aria-current="true"] span { color: var(--ambar-escuro); }
+
+/* ---------- responsivo ---------- */
+@media (max-width: 1180px) {
+  .serv-grade, .dif-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sol-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sol-card { aspect-ratio: 4 / 3; }
+  .sol-prob { grid-template-rows: 1fr; }
+}
+@media (max-width: 1040px) {
+  .nav-links, .nav-acoes .btn, .nav-acoes .btn-redondo { display: none; }
+  .nav-menu { display: grid; margin-left: auto; width: 48px; height: 48px; border-radius: 13px; place-items: center; background: var(--noite); color: #fff; }
+  .mega { display: none; }
+}
+@media (max-width: 959px) {
+  .hero { padding-top: calc(env(safe-area-inset-top, 0px) + 92px); padding-bottom: 64px; }
+  .hero-mesa { position: relative; inset: auto; height: clamp(290px, 84vw, 440px); margin-bottom: 4px; }
+  .pilha-wrap { left: 55%; top: 48%; translate: -50% -50%; width: min(84vw, 480px); }
+  .veu-hero, .fundo-folhas { display: none; }
+  .legenda-folha { right: auto; left: 50%; translate: -50% 0; bottom: 6px; padding: 8px 12px 8px 8px; font-size: .8rem; white-space: nowrap; }
+  .hero-grade { min-height: 0; }
+  .hero-texto { gap: 22px; }
+  .dif-topo, .cta-grade { grid-template-columns: minmax(0, 1fr); }
+  .rod-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rod-grade .rod-marca { grid-column: 1 / -1; }
+  .sol-painel { inset: 0; width: 100%; height: 100%; border-radius: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: 36svh minmax(0, 1fr); }
+  .sol-foto { border-radius: 0; }
+  .sol-conteudo { padding: 28px var(--gr) calc(28px + env(safe-area-inset-bottom, 0px)) var(--gl); }
+  .sol-fechar { top: calc(env(safe-area-inset-top, 0px) + 12px); right: calc(var(--gr) - 4px); }
+}
+@media (max-width: 640px) {
+  .serv-grade, .dif-grade, .passos { grid-template-columns: minmax(0, 1fr); }
+  .sol-grade { gap: 10px; }
+  .sol-card { aspect-ratio: 3 / 4; border-radius: 18px; }
+  .sol-info { padding: 12px; gap: 4px; }
+  .sol-info h3 { font-size: .98rem; }
+  .sol-tag, .sol-prob { display: none; }
+  .sol-mais, .sol-icone { width: 34px; height: 34px; top: 10px; }
+  .sol-mais { right: 10px; }
+  .sol-icone { left: 10px; }
+  .sol-pares { grid-template-columns: minmax(0, 1fr); }
+  .faq-q { padding: 14px 16px; gap: 14px; font-size: 1rem; }
+  .faq-r p { padding: 0 18px 20px 18px; }
+  .hero-acoes .btn { flex: 1 1 100%; }
+  .selos { flex-direction: column; gap: 10px; }
+  .marca-txt span { display: none; }
+  .rod-grade { grid-template-columns: minmax(0, 1fr); }
+  .dica-swipe { display: block; position: absolute; top: 6px; left: 50%; translate: -50% 0; font-size: .74rem; font-weight: 600; color: var(--texto-3); white-space: nowrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+  .revela.pre { opacity: 1; transform: none; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-raio" viewBox="0 0 24 24"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12l1-8z"/></symbol>
+  <symbol id="i-casa" viewBox="0 0 24 24"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 9.5V20h13V9.5"/><path d="m12.6 11.5-2.1 3.2h3l-2.1 3.2"/></symbol>
+  <symbol id="i-quadro" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2"/><path d="M7.5 8h9M7.5 16h9"/><path d="M9 10.5v3M12 10.5v3M15 10.5v3"/></symbol>
+  <symbol id="i-planta" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 12h7v8M10 4v4.5M14 12h7M14 12v3"/></symbol>
+  <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.6-4.6"/><path d="m11.4 7.4-2.2 3.3h2.6l-2.2 3.3"/></symbol>
+  <symbol id="i-chave" viewBox="0 0 24 24"><path d="M14.8 4.2a4.6 4.6 0 0 0-5.5 6.2l-5.6 5.6a1.8 1.8 0 0 0 2.6 2.6l5.6-5.6a4.6 4.6 0 0 0 6.2-5.5l-2.8 2.8-2.4-.6-.6-2.4z"/></symbol>
+  <symbol id="i-terra" viewBox="0 0 24 24"><path d="M12 3v9M5 12h14M7.8 15.5h8.4M10.4 19h3.2"/></symbol>
+  <symbol id="i-spda" viewBox="0 0 24 24"><path d="M12 2.5v4"/><path d="M5 21V10.5l7-4 7 4V21z"/><path d="m12.8 11-2.3 3.4h3l-2.3 3.4"/></symbol>
+  <symbol id="i-padrao" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="9.5" r="3.2"/><path d="m12 9.5 1.7-1.7M9 16h6"/></symbol>
+  <symbol id="i-carro" viewBox="0 0 24 24"><path d="M4.5 16v-4.5l2-5h11l2 5V16z"/><path d="M4.5 16v2.5M19.5 16v2.5M4.5 11.5h15"/><path d="m12.7 7.8-1.6 2.4h2l-1.6 2.4" /></symbol>
+  <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3 19 6v5.2c0 4.4-3 8.2-7 9.8-4-1.6-7-5.4-7-9.8V6z"/><path d="m9 12 2.2 2.2L15.3 10"/></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3.5 2.8 19.5h18.4z"/><path d="M12 10v4.2M12 17v.1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-baixo" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-fechar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+  <symbol id="i-whats" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.4L4 20z"/><path d="M9.3 8.4c.2 2.4 2.1 4.6 4.6 5.6l1.3-1.3 1.8.8c-.2 1-1 1.7-2 1.6-3.3-.3-6.1-3.1-6.4-6.4-.1-1 .6-1.8 1.6-2l.8 1.8z"/></symbol>
+  <symbol id="i-indice" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.6" cy="6.5" r="1"/><circle cx="4.6" cy="12" r="1"/><circle cx="4.6" cy="17.5" r="1"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/></symbol>
+</svg>
+
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="nav" id="nav">
+  <div class="nav-barra">
+    <a class="marca" href="#inicio" aria-label="Engenharia Elétrica, voltar ao início">
+      <svg class="marca-sinal" viewBox="0 0 38 38" aria-hidden="true">
+        <rect width="38" height="38" rx="11" fill="#0A1A2E"/>
+        <rect x="11" y="7.5" width="16" height="23" rx="3" fill="none" stroke="#7FAEFF" stroke-width="1.8"/>
+        <path d="M20.3 11.5 15.8 19.2h3.6l-1.7 7.3 4.6-7.8h-3.6z" fill="#FFB21E"/>
+      </svg>
+      <span class="marca-txt"><strong>Engenharia Elétrica</strong><span>Projetos · Instalações · Laudos</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Principal">
+      <span class="nav-ind" id="navInd" aria-hidden="true"></span>
+      <button class="nav-link" id="btnServ" type="button" aria-expanded="false" aria-controls="mega" data-alvo="servicos">Serviços <svg class="ic"><use href="#i-baixo"/></svg></button>
+      <a class="nav-link" href="#diferenciais" data-alvo="diferenciais">Diferenciais</a>
+      <a class="nav-link" href="#solucoes" data-alvo="solucoes">Soluções</a>
+      <a class="nav-link" href="#duvidas" data-alvo="duvidas">Dúvidas</a>
+    </nav>
+    <div class="nav-acoes">
+      <a class="btn-redondo" href="https://wa.me/?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20sobre%20um%20servi%C3%A7o%20el%C3%A9trico." target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg class="ic"><use href="#i-whats"/></svg></a>
+      <a class="btn btn-ambar" href="#orcamento">Solicitar orçamento</a>
+    </div>
+    <button class="nav-menu" id="btnMenu" type="button" aria-expanded="false" aria-controls="menuMovel" aria-label="Abrir menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+
+    <div class="mega" id="mega" role="region" aria-label="Serviços">
+      <a class="mega-item" href="#servicos" data-sol="0"><span class="tile"><svg class="ic"><use href="#i-casa"/></svg></span><strong>Instalação elétrica</strong><span>Obra nova, reforma e ampliação, executadas a partir de projeto.</span></a>
+      <a class="mega-item" href="#servicos" data-sol="2"><span class="tile"><svg class="ic"><use href="#i-planta"/></svg></span><strong>Projeto elétrico</strong><span>Cálculo, plantas e aprovação na concessionária.</span></a>
+      <a class="mega-item" href="#servicos" data-sol="3"><span class="tile"><svg class="ic"><use href="#i-lupa"/></svg></span><strong>Inspeção e laudo</strong><span>Medições e termografia para compra, venda, seguro e vistoria.</span></a>
+      <a class="mega-item" href="#servicos" data-sol="4"><span class="tile"><svg class="ic"><use href="#i-chave"/></svg></span><strong>Manutenção</strong><span>Planos preventivos e atendimento corretivo com histórico.</span></a>
+      <div class="mega-emerg">
+        <span class="tile"><svg class="ic"><use href="#i-alerta"/></svg></span>
+        <strong>Emergência elétrica?</strong>
+        <p>Fumaça, faísca ou cheiro de queimado: desligue o disjuntor geral, afaste-se do quadro e fale com a gente.</p>
+        <a class="btn btn-ambar" href="https://wa.me/?text=Ol%C3%A1!%20Estou%20com%20uma%20emerg%C3%AAncia%20el%C3%A9trica." target="_blank" rel="noopener"><svg class="ic"><use href="#i-whats"/></svg>Chamar agora</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="menu-movel" id="menuMovel" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="mm-topo">
+    <span class="marca"><svg class="marca-sinal" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="11" fill="#0A1A2E"/><rect x="11" y="7.5" width="16" height="23" rx="3" fill="none" stroke="#7FAEFF" stroke-width="1.8"/><path d="M20.3 11.5 15.8 19.2h3.6l-1.7 7.3 4.6-7.8h-3.6z" fill="#FFB21E"/></svg><span class="marca-txt"><strong>Engenharia Elétrica</strong></span></span>
+    <button class="nav-menu" id="btnFecharMenu" type="button" aria-label="Fechar menu" style="display:grid"><svg class="ic"><use href="#i-fechar"/></svg></button>
+  </div>
+  <nav class="mm-links" aria-label="Menu do celular">
+    <a class="mm-anim" style="--i:0" href="#servicos">Serviços <svg class="ic"><use href="#i-seta"/></svg></a>
+    <a class="mm-anim" style="--i:1" href="#diferenciais">Diferenciais <svg class="ic"><use href="#i-seta"/></svg></a>
+    <a class="mm-anim" style="--i:2" href="#solucoes">Soluções <svg class="ic"><use href="#i-seta"/></svg></a>
+    <a class="mm-anim" style="--i:3" href="#duvidas">Dúvidas <svg class="ic"><use href="#i-seta"/></svg></a>
+  </nav>
+  <div class="mm-serv">
+    <a class="mm-anim" style="--i:4" href="#servicos" data-sol="0"><span class="tile"><svg class="ic"><use href="#i-casa"/></svg></span>Instalação elétrica</a>
+    <a class="mm-anim" style="--i:5" href="#servicos" data-sol="2"><span class="tile"><svg class="ic"><use href="#i-planta"/></svg></span>Projeto elétrico</a>
+    <a class="mm-anim" style="--i:6" href="#servicos" data-sol="3"><span class="tile"><svg class="ic"><use href="#i-lupa"/></svg></span>Inspeção e laudo</a>
+    <a class="mm-anim" style="--i:7" href="#servicos" data-sol="4"><span class="tile"><svg class="ic"><use href="#i-chave"/></svg></span>Manutenção</a>
+  </div>
+  <div class="mm-acoes">
+    <a class="btn btn-ambar mm-anim" style="--i:8" href="#orcamento">Solicitar orçamento</a>
+    <a class="btn btn-claro mm-anim" style="--i:9" href="https://wa.me/?text=Ol%C3%A1!%20Vim%20pelo%20site." target="_blank" rel="noopener"><svg class="ic"><use href="#i-whats"/></svg>Falar no WhatsApp</a>
+  </div>
+</div>
+
+<main id="conteudo">
+
+  <section class="hero" id="inicio" data-secao="inicio" aria-labelledby="hero-titulo">
+    <div class="hero-mesa">
+      <div class="fundo-folhas" aria-hidden="true"><div class="mesa-fundo"><div class="esteira" id="esteira"></div></div></div>
+      <p class="dica-swipe" aria-hidden="true">Deslize para folhear</p>
+      <div class="pilha-wrap" id="pilhaWrap" role="img" aria-label="Pranchas de um projeto elétrico: planta, diagrama unifilar, quadro de cargas, detalhe do quadro e memorial de cálculo">
+        <div class="pilha" id="pilha"><div class="sombra-pilha"></div></div>
+      </div>
+      <p class="legenda-folha" id="legenda" aria-hidden="true">
+        <span class="lf-num" id="lfNum">01/05</span>
+        <span><strong id="lfNome">Planta baixa elétrica</strong><span class="lf-det" id="lfDet">Residência · 140 m²</span></span>
+      </p>
+    </div>
+    <div class="veu-hero" aria-hidden="true"></div>
+    <div class="miolo hero-grade">
+      <div class="hero-texto">
+        <p class="selo-topo"><b><svg class="ic"><use href="#i-raio"/></svg></b>Engenharia elétrica · CREA ativo</p>
+        <h1 id="hero-titulo">Projetos e instalações elétricas com a <span class="destaque">segurança</span> de um engenheiro.</h1>
+        <p class="hero-sub">Projetos, instalações, laudos e manutenção para residências, comércios e empresas. Cálculo técnico, ART registrada e conformidade com a NBR 5410 em cada serviço.</p>
+        <div class="hero-acoes">
+          <a class="btn btn-ambar" href="#orcamento"><svg class="ic"><use href="#i-whats"/></svg>Solicitar orçamento</a>
+          <a class="btn btn-claro" href="#servicos">Conhecer serviços <svg class="ic seta"><use href="#i-seta"/></svg></a>
+        </div>
+        <ul class="selos" aria-label="Garantias">
+          <li class="selo"><i><svg class="ic"><use href="#i-doc"/></svg></i>ART em todo serviço</li>
+          <li class="selo"><i><svg class="ic"><use href="#i-escudo"/></svg></i>Conforme NBR 5410</li>
+          <li class="selo"><i><svg class="ic"><use href="#i-relogio"/></svg></i>Resposta em até 24 h</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="servicos" data-secao="servicos" aria-labelledby="serv-titulo">
+    <div class="miolo">
+      <header class="cab revela">
+        <p class="etiqueta">Serviços</p>
+        <h2 id="serv-titulo">Soluções elétricas completas, do projeto à manutenção.</h2>
+        <p>Um único time técnico responde pelo cálculo, pela execução e pela documentação. Você tem um interlocutor do primeiro contato até a entrega.</p>
+      </header>
+      <div class="serv-grade grade-gap">
+        <article class="serv-card revela" style="--atraso:0s">
+          <div class="serv-ilu" aria-hidden="true">
+            <svg viewBox="0 0 240 140">
+              <rect x="88" y="12" width="64" height="88" rx="6"/>
+              <path d="M98 30h44M98 82h44"/>
+              <rect x="100" y="42" width="8" height="24" rx="2"/><rect x="116" y="42" width="8" height="24" rx="2"/><rect x="132" y="42" width="8" height="24" rx="2"/>
+              <path class="a" d="M120 100v18H40v-14"/><rect x="30" y="86" width="20" height="18" rx="3"/>
+              <path class="a" d="M152 40h52v16"/><circle cx="204" cy="68" r="11"/><path class="a pulsa" d="M204 86v6M190 82l-4 4M218 82l4 4"/>
+              <path class="f" d="m123 16-6 10h5l-2 8 7-11h-5z"/>
+            </svg>
+          </div>
+          <div class="serv-corpo">
+            <h3>Instalação elétrica</h3>
+            <p>Obras novas, reformas e ampliações executadas a partir de projeto, da entrada de energia à última tomada.</p>
+            <ul class="chips"><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Quadro identificado</li><li class="chip"><svg class="ic"><use href="#i-check"/></svg>ART de execução</li></ul>
+            <button class="link-mais" type="button" data-sol="0">Ver como funciona <svg class="ic"><use href="#i-seta"/></svg></button>
+          </div>
+        </article>
+        <article class="serv-card revela" style="--atraso:.08s">
+          <div class="serv-ilu" aria-hidden="true">
+            <svg viewBox="0 0 240 140">
+              <path d="M30 24h180M30 20v8M210 20v8"/><text x="112" y="16">8,70</text>
+              <rect x="30" y="36" width="180" height="94" rx="2"/>
+              <path d="M30 80h60M110 80h100M120 36v26M120 80v50"/>
+              <path d="M90 80a20 20 0 0 1 20-20"/>
+              <circle cx="75" cy="58" r="6"/><circle cx="165" cy="58" r="6"/><circle cx="75" cy="106" r="6"/><circle cx="165" cy="106" r="6"/>
+              <path class="a pulsa" d="M44 124C70 120 70 70 75 64M44 124c50 0 110-20 121-12M44 124c40-6 110-40 121-60" stroke-dasharray="5 5"/>
+              <rect class="fb" x="38" y="118" width="12" height="9" rx="1.5"/>
+            </svg>
+          </div>
+          <div class="serv-corpo">
+            <h3>Projeto elétrico</h3>
+            <p>Dimensionamento de circuitos, proteções e cargas, com documentação pronta para aprovação na concessionária.</p>
+            <ul class="chips"><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Pranchas PDF e DWG</li><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Memorial de cálculo</li></ul>
+            <button class="link-mais" type="button" data-sol="2">Ver como funciona <svg class="ic"><use href="#i-seta"/></svg></button>
+          </div>
+        </article>
+        <article class="serv-card revela" style="--atraso:.16s">
+          <div class="serv-ilu" aria-hidden="true">
+            <svg viewBox="0 0 240 140">
+              <defs><radialGradient id="calor"><stop offset="0" stop-color="#FFB21E" stop-opacity=".95"/><stop offset=".55" stop-color="#FF7A1A" stop-opacity=".45"/><stop offset="1" stop-color="#FF7A1A" stop-opacity="0"/></radialGradient></defs>
+              <rect x="34" y="16" width="72" height="104" rx="6"/>
+              <rect x="46" y="38" width="9" height="26" rx="2"/><rect x="62" y="38" width="9" height="26" rx="2"/><rect x="78" y="38" width="9" height="26" rx="2"/>
+              <rect x="46" y="76" width="9" height="26" rx="2"/><rect x="62" y="76" width="9" height="26" rx="2"/><rect x="78" y="76" width="9" height="26" rx="2"/>
+              <circle class="calor pulsa" cx="66" cy="89" r="22"/>
+              <g class="mov"><circle cx="160" cy="70" r="32"/><path d="m183 93 22 22"/><path class="a" d="M148 70h8l4-10 6 20 4-10h8"/></g>
+              <text x="140" y="126">68,4 °C</text>
+            </svg>
+          </div>
+          <div class="serv-corpo">
+            <h3>Inspeção e laudo</h3>
+            <p>Avaliação da instalação com medições e termografia, para compra, venda, seguro ou vistoria do imóvel.</p>
+            <ul class="chips"><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Laudo assinado</li><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Fotos térmicas</li></ul>
+            <button class="link-mais" type="button" data-sol="3">Ver como funciona <svg class="ic"><use href="#i-seta"/></svg></button>
+          </div>
+        </article>
+        <article class="serv-card revela" style="--atraso:.24s">
+          <div class="serv-ilu" aria-hidden="true">
+            <svg viewBox="0 0 240 140">
+              <rect x="30" y="22" width="104" height="100" rx="8"/><path d="M30 44h104M54 14v16M110 14v16"/>
+              <path d="M44 62h12M66 62h12M88 62h12M110 62h12M44 82h12M66 82h12M88 82h12M110 82h12M44 102h12M66 102h12"/>
+              <path class="a" d="m86 98 6 6 10-12M42 58l6 6 10-12"/>
+              <g class="mov"><path d="M196 34a18 18 0 0 0-21 24l-24 24a6.5 6.5 0 0 0 9 9l24-24a18 18 0 0 0 24-21l-11 11-9-2-2-9z"/></g>
+            </svg>
+          </div>
+          <div class="serv-corpo">
+            <h3>Manutenção</h3>
+            <p>Planos preventivos com visitas programadas e atendimento corretivo quando surge uma falha.</p>
+            <ul class="chips"><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Relatório por visita</li><li class="chip"><svg class="ic"><use href="#i-check"/></svg>Histórico do quadro</li></ul>
+            <button class="link-mais" type="button" data-sol="4">Ver como funciona <svg class="ic"><use href="#i-seta"/></svg></button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao escuro dif" id="diferenciais" data-secao="diferenciais" aria-labelledby="dif-titulo">
+    <div class="miolo" style="position:relative">
+      <div class="dif-topo revela">
+        <div class="cab">
+          <p class="etiqueta">Diferenciais</p>
+          <h2 id="dif-titulo">Engenharia de verdade em cada etapa da sua obra.</h2>
+        </div>
+        <p style="color:var(--claro-2);font-size:1.08rem;max-width:520px">Nossa forma de trabalhar reduz riscos, evita retrabalho e entrega uma instalação preparada para qualquer vistoria.</p>
+      </div>
+      <div class="dif-grade grade-gap">
+        <article class="dif-card revela" style="--atraso:0s">
+          <span class="dif-icone" aria-hidden="true"><svg viewBox="0 0 30 30"><circle class="d2" pathLength="1" cx="11" cy="10" r="4.2"/><path class="d2" pathLength="1" d="M3.5 24a7.5 7.5 0 0 1 15 0"/><circle class="d2" pathLength="1" cx="21.5" cy="11.5" r="3.2"/><path class="d2" pathLength="1" d="M19.6 17.6A6 6 0 0 1 27 23"/></svg></span>
+          <h3>Equipe qualificada</h3>
+          <p>Engenheiro eletricista responsável por cada projeto e profissionais treinados em NR-10 na execução.</p>
+          <span class="dif-spec"><svg class="ic"><use href="#i-check"/></svg>CREA ativo · NR-10</span>
+        </article>
+        <article class="dif-card revela" style="--atraso:.08s">
+          <span class="dif-icone" aria-hidden="true"><svg viewBox="0 0 30 30"><rect class="d2" pathLength="1" x="6" y="5" width="18" height="21" rx="2.5"/><path class="d2" pathLength="1" d="M11 5V3.5h8V5"/><path class="d2" pathLength="1" d="m10 13 2 2 4-4M10 20l2 2 4-4M18.5 14h2M18.5 21h2"/></svg></span>
+          <h3>Planejamento detalhado</h3>
+          <p>Antes da obra, cada circuito é calculado e documentado: carga, cabo, proteção e materiais. Nada fica para decidir no improviso.</p>
+          <span class="dif-spec"><svg class="ic"><use href="#i-check"/></svg>Memorial de cálculo</span>
+        </article>
+        <article class="dif-card revela" style="--atraso:.16s">
+          <span class="dif-icone" aria-hidden="true"><svg viewBox="0 0 30 30"><path class="d2" pathLength="1" d="M5 6h20v13H12l-7 5.5z"/><path class="d2" pathLength="1" d="M10 11h10M10 15h6"/></svg></span>
+          <h3>Atendimento personalizado</h3>
+          <p>Você fala direto com o engenheiro do seu projeto, do primeiro contato à entrega da documentação.</p>
+          <span class="dif-spec"><svg class="ic"><use href="#i-check"/></svg>Contato direto</span>
+        </article>
+        <article class="dif-card revela" style="--atraso:.24s">
+          <span class="dif-icone" aria-hidden="true"><svg viewBox="0 0 30 30"><circle class="d2" pathLength="1" cx="14" cy="15" r="10"/><path class="d2" pathLength="1" d="M14 9.5V15l3.5 2.5"/><path class="d2" pathLength="1" d="m20.5 24 2.5 2.5 5-5"/></svg></span>
+          <h3>Pontualidade e qualidade</h3>
+          <p>Prazo combinado por escrito e materiais certificados. A entrega só acontece depois dos testes de cada circuito.</p>
+          <span class="dif-spec"><svg class="ic"><use href="#i-check"/></svg>Testado antes da entrega</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao gelo" id="solucoes" data-secao="solucoes" aria-labelledby="sol-titulo-sec">
+    <div class="miolo">
+      <div class="sol-topo revela">
+        <header class="cab">
+          <p class="etiqueta">Soluções</p>
+          <h2 id="sol-titulo-sec">Uma solução para cada etapa do seu projeto.</h2>
+          <p>Toque em uma solução para ver o problema que ela resolve e como executamos, passo a passo.</p>
+        </header>
+      </div>
+      <div class="sol-grade grade-gap" id="solGrade"></div>
+    </div>
+  </section>
+
+  <section class="secao" id="duvidas" data-secao="duvidas" aria-labelledby="faq-titulo">
+    <div class="miolo">
+      <header class="cab cab--centro revela">
+        <p class="etiqueta">Perguntas frequentes</p>
+        <h2 id="faq-titulo">Tire suas dúvidas sobre nossos serviços.</h2>
+      </header>
+      <div class="faq-lista grade-gap" id="faqLista"></div>
+    </div>
+  </section>
+
+  <section class="secao escuro cta" id="orcamento" data-secao="orcamento" aria-labelledby="cta-titulo">
+    <div class="miolo cta-grade">
+      <div class="cta-texto revela">
+        <p class="etiqueta">Orçamento</p>
+        <h2 id="cta-titulo">Conte o que você precisa. A resposta vem com os próximos passos.</h2>
+        <p>Descreva o serviço e envie fotos do quadro ou do local. Para orçamentos simples, já respondemos com valor. Para obras e projetos, agendamos a visita técnica.</p>
+        <div class="hero-acoes">
+          <a class="btn btn-ambar" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener"><svg class="ic"><use href="#i-whats"/></svg>Solicitar pelo WhatsApp</a>
+          <a class="btn btn-vidro" href="#duvidas">Ver dúvidas frequentes</a>
+        </div>
+      </div>
+      <ol class="passos" aria-label="Do contato à entrega">
+        <li class="passo revela" style="--atraso:0s"><span class="passo-n">1</span><h3>Contato</h3><p>Você descreve o serviço e envia fotos pelo WhatsApp.</p></li>
+        <li class="passo revela" style="--atraso:.08s"><span class="passo-n">2</span><h3>Visita técnica</h3><p>Medições e levantamento no local, quando o serviço pede.</p></li>
+        <li class="passo revela" style="--atraso:.16s"><span class="passo-n">3</span><h3>Proposta</h3><p>Escopo, prazo e valor por escrito, antes de qualquer serviço.</p></li>
+        <li class="passo revela" style="--atraso:.24s"><span class="passo-n">4</span><h3>Execução e entrega</h3><p>Serviço testado circuito a circuito e entregue com ART.</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="miolo">
+    <div class="rod-grade">
+      <div class="rod-col rod-marca">
+        <span class="marca"><svg class="marca-sinal" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="11" fill="#112640"/><rect x="11" y="7.5" width="16" height="23" rx="3" fill="none" stroke="#7FAEFF" stroke-width="1.8"/><path d="M20.3 11.5 15.8 19.2h3.6l-1.7 7.3 4.6-7.8h-3.6z" fill="#FFB21E"/></svg><span class="marca-txt"><strong>Engenharia Elétrica</strong><span>Projetos · Instalações · Laudos</span></span></span>
+        <p style="max-width:340px">Projetos, instalações, laudos e manutenção elétrica para residências, comércios e empresas.</p>
+      </div>
+      <div class="rod-col"><h3>Serviços</h3><a href="#servicos">Instalação elétrica</a><a href="#servicos">Projeto elétrico</a><a href="#servicos">Inspeção e laudo</a><a href="#servicos">Manutenção</a></div>
+      <div class="rod-col"><h3>Empresa</h3><a href="#diferenciais">Diferenciais</a><a href="#solucoes">Soluções</a><a href="#duvidas">Dúvidas</a><a href="#orcamento">Orçamento</a></div>
+      <div class="rod-col"><h3>Contato</h3><span>WhatsApp (00) 00000-0000</span><span>contato@empresa.com.br</span><span>Seg. a sex., 8h às 18h</span></div>
+    </div>
+    <div class="rod-base">
+      <span>© 2026 Engenharia Elétrica · Responsável técnico com registro no CREA</span>
+      <span>Protótipo D2 · fotos ilustrativas, contatos e números provisórios</span>
+    </div>
+  </div>
+</footer>
+
+<div class="indice" id="indice">
+  <div class="indice-lista" id="indiceLista" role="navigation" aria-label="Seções da página">
+    <p>Nesta página</p>
+    <a href="#inicio" data-alvo="inicio"><span>01</span>Início</a>
+    <a href="#servicos" data-alvo="servicos"><span>02</span>Serviços</a>
+    <a href="#diferenciais" data-alvo="diferenciais"><span>03</span>Diferenciais</a>
+    <a href="#solucoes" data-alvo="solucoes"><span>04</span>Soluções</a>
+    <a href="#duvidas" data-alvo="duvidas"><span>05</span>Dúvidas</a>
+    <a href="#orcamento" data-alvo="orcamento"><span>06</span>Orçamento</a>
+  </div>
+  <button class="indice-btn" id="indiceBtn" type="button" aria-expanded="false" aria-controls="indiceLista" aria-label="Seções da página">
+    <svg class="anel" viewBox="0 0 58 58" aria-hidden="true"><circle class="trilho" cx="29" cy="29" r="25.5"/><circle class="prog" id="anelProg" cx="29" cy="29" r="25.5"/></svg>
+    <svg class="ic"><use href="#i-indice"/></svg>
+  </button>
+</div>
+
+<dialog class="sol-dlg" id="solDlg" aria-labelledby="solTitulo">
+  <div class="sol-painel" id="solPainel">
+    <div class="sol-foto" id="solFoto"><div class="midia" id="solMidia"></div><span class="selo-ilustra">Imagem ilustrativa</span></div>
+    <div class="sol-conteudo" id="solConteudo">
+      <p class="etiqueta" id="solTag" style="--i:0"></p>
+      <h2 id="solTitulo" style="--i:1"></h2>
+      <div class="sol-pares" style="--i:2">
+        <div class="sol-par problema"><h3><svg class="ic"><use href="#i-alerta"/></svg>O problema</h3><p id="solProb"></p></div>
+        <div class="sol-par solucao"><h3><svg class="ic"><use href="#i-check"/></svg>A solução</h3><p id="solSolu"></p></div>
+      </div>
+      <h3 class="sol-sub" style="--i:3">Como executamos</h3>
+      <ol class="sol-passos" id="solPassos" style="--i:4"></ol>
+      <h3 class="sol-sub" style="--i:5">Você recebe</h3>
+      <ul class="chips" id="solRecebe" style="--i:6"></ul>
+      <div class="sol-acoes" style="--i:7">
+        <a class="btn btn-ambar" id="solWhats" href="#" target="_blank" rel="noopener"><svg class="ic"><use href="#i-whats"/></svg>Solicitar orçamento</a>
+        <button class="btn btn-claro" type="button" data-fechar>Ver outras soluções</button>
+      </div>
+    </div>
+    <button class="sol-fechar" type="button" data-fechar aria-label="Fechar"><svg class="ic"><use href="#i-fechar"/></svg></button>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var raiz = document.documentElement;
+  var reduz = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var temGsap = typeof window.gsap !== "undefined";
+  var wa = function (t) { return "https://wa.me/?text=" + encodeURIComponent(t); };
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ================= dados ================= */
+  var SOL = [
+    { ico: "i-casa", foto: "fotos/sol-01-instalacao.jpg", pos: "30% 40%", tag: "Obra nova e reforma", tit: "Instalação elétrica completa",
+      prob: "Instalação feita sem projeto: circuitos sobrecarregados, disjuntores que desarmam e fiação que esquenta. O problema costuma aparecer quando a obra já terminou.",
+      solu: "Executamos a instalação a partir de um projeto calculado, com materiais certificados e cada circuito identificado no quadro.",
+      passos: ["Levantamento das cargas e do uso de cada ambiente", "Projeto e lista de materiais", "Passagem de eletrodutos e cabos", "Montagem do quadro e ligação dos pontos", "Testes de isolamento, aterramento e DR"],
+      recebe: ["ART de execução", "Quadro identificado", "Diagrama do quadro"] },
+    { ico: "i-quadro", foto: "fotos/sol-02-quadro.jpg", pos: "50% 50%", tag: "Troca e adequação", tit: "Quadro de distribuição",
+      prob: "Quadro antigo, com fusíveis ou disjuntores sem identificação, sem DR e sem DPS. É o ponto da instalação com maior risco de aquecimento.",
+      solu: "Substituímos ou adequamos o quadro conforme a NBR 5410, com barramento, proteção diferencial e proteção contra surtos.",
+      passos: ["Inspeção e medição do quadro atual", "Dimensionamento dos disjuntores por circuito", "Montagem com barramento, DR e DPS", "Identificação de cada circuito", "Teste de funcionamento"],
+      recebe: ["Quadro novo ou adequado", "Etiquetas por circuito", "ART"] },
+    { ico: "i-planta", foto: "fotos/sol-03-projeto.jpg", pos: "55% 50%", tag: "Concessionária e prefeitura", tit: "Projeto elétrico e aprovação",
+      prob: "Sem projeto aprovado, a ligação nova ou o aumento de carga fica parado na concessionária, e a obra acaba executada no improviso.",
+      solu: "Desenvolvemos o projeto completo e cuidamos da documentação até a aprovação.",
+      passos: ["Briefing e levantamento de cargas", "Cálculo de circuitos, quedas de tensão e proteções", "Plantas, diagrama unifilar e quadro de cargas", "Memorial descritivo e ART", "Protocolo e acompanhamento da aprovação"],
+      recebe: ["Pranchas em PDF e DWG", "Memorial de cálculo", "ART de projeto"] },
+    { ico: "i-lupa", foto: "fotos/sol-04-laudo.jpg", pos: "40% 50%", tag: "Compra, venda e seguro", tit: "Laudo e inspeção",
+      prob: "Você vai comprar, vender ou segurar um imóvel e não sabe em que estado está a elétrica. Seguradoras e vistorias pedem comprovação.",
+      solu: "Inspecionamos a instalação com medições e termografia e emitimos laudo técnico assinado, com as não conformidades por prioridade.",
+      passos: ["Inspeção visual do quadro e dos pontos", "Medição de isolamento e aterramento", "Termografia para localizar pontos quentes", "Classificação das não conformidades", "Laudo assinado com recomendações"],
+      recebe: ["Laudo técnico", "Fotos térmicas", "ART"] },
+    { ico: "i-chave", foto: "fotos/sol-05-manutencao.jpg", pos: "72% 50%", tag: "Empresas e condomínios", tit: "Manutenção preventiva",
+      prob: "Falhas elétricas param a operação e queimam equipamentos. Quase sempre dão sinais antes: aquecimento, ruído e desarmes.",
+      solu: "Visitas programadas para reaperto, medições e testes, com histórico de cada quadro.",
+      passos: ["Diagnóstico inicial e plano de visitas", "Reaperto de conexões e limpeza", "Medições e teste de DR e DPS", "Termografia periódica", "Relatório com prioridades"],
+      recebe: ["Relatório por visita", "Histórico do quadro", "Agenda fixa"] },
+    { ico: "i-terra", foto: "fotos/sol-06-surtos.jpg", pos: "25% 60%", tag: "DPS e malha de terra", tit: "Aterramento e proteção contra surtos",
+      prob: "Choques em torneiras e eletrodomésticos, aparelhos queimados depois de tempestades e tomadas com o pino de terra sem ligação.",
+      solu: "Projetamos e executamos o sistema de aterramento e instalamos DPS adequados à instalação.",
+      passos: ["Medição da resistência de aterramento", "Projeto da malha e das hastes", "Execução e interligação ao quadro", "Instalação dos DPS", "Medição final"],
+      recebe: ["Relatório de medição", "DPS instalados", "ART"] },
+    { ico: "i-spda", foto: "fotos/sol-07-spda.jpg", pos: "60% 70%", tag: "Edificações e galpões", tit: "SPDA (para-raios)",
+      prob: "Prédios, galpões e condomínios precisam de proteção contra descargas atmosféricas, e o Corpo de Bombeiros cobra o laudo em dia.",
+      solu: "Projeto, instalação e inspeção periódica de SPDA conforme a NBR 5419.",
+      passos: ["Análise de risco conforme a NBR 5419", "Projeto de captação, descidas e aterramento", "Instalação", "Medição de continuidade e de aterramento", "Laudo para o AVCB"],
+      recebe: ["Projeto de SPDA", "Laudo de inspeção", "ART"] },
+    { ico: "i-padrao", foto: "fotos/sol-08-padrao.jpg", pos: "50% 50%", tag: "Ligação nova", tit: "Padrão de entrada e aumento de carga",
+      prob: "Ar-condicionado novo, forno elétrico ou ampliação: a carga cresce, o padrão de entrada não acompanha e o disjuntor geral começa a desarmar.",
+      solu: "Calculamos a nova demanda, fazemos o pedido na concessionária e executamos o padrão dentro das normas dela.",
+      passos: ["Cálculo da nova demanda", "Pedido de aumento de carga na concessionária", "Execução do padrão de entrada", "Vistoria da concessionária", "Ligação e testes"],
+      recebe: ["Padrão aprovado", "Projeto de entrada", "ART"] },
+    { ico: "i-carro", foto: "fotos/sol-09-carregador.jpg", pos: "62% 50%", tag: "Residencial e comercial", tit: "Carregador de carro elétrico",
+      prob: "Ligar o carregador em uma tomada comum sobrecarrega o circuito e pode danificar a instalação e o veículo.",
+      solu: "Avaliamos a capacidade da instalação e montamos um circuito exclusivo para o carregador, com proteção própria.",
+      passos: ["Avaliação da carga disponível", "Escolha do ponto e da potência do carregador", "Circuito exclusivo com DR e DPS", "Instalação e configuração", "Teste de recarga"],
+      recebe: ["Circuito exclusivo", "Teste de recarga", "ART"] },
+    { ico: "i-escudo", foto: "fotos/sol-10-nr10.jpg", pos: "40% 30%", tag: "Segurança para empresas", tit: "Adequação à NR-10",
+      prob: "Empresas com carga instalada acima de 75 kW precisam manter o Prontuário das Instalações Elétricas, e a fiscalização cobra.",
+      solu: "Diagnosticamos as instalações e montamos a documentação exigida pela NR-10.",
+      passos: ["Levantamento das instalações", "Diagnóstico de conformidade", "Plano de adequação por prioridade", "Diagramas e documentação", "Prontuário das Instalações Elétricas"],
+      recebe: ["Relatório de conformidade", "Prontuário (PIE)", "ART"] }
+  ];
+
+  var FAQ = [
+    ["Como solicito um orçamento?", "Pelo WhatsApp ou pelo botão de orçamento desta página. Descreva o que precisa e, se puder, envie fotos do quadro e do local. Com isso indicamos o próximo passo: uma visita técnica ou um orçamento direto."],
+    ["A visita técnica é cobrada?", "A análise inicial por fotos é gratuita. Quando a visita técnica é necessária, informamos o valor antes, e ele é abatido do serviço se você fechar o orçamento."],
+    ["Qual a diferença entre contratar um engenheiro e um eletricista?", "O eletricista executa. O engenheiro calcula, projeta e assume a responsabilidade técnica pelo serviço com a ART. Na prática, você tem um responsável legal e uma instalação dimensionada para o que vai ligar nela."],
+    ["O que é a ART e por que ela importa?", "A Anotação de Responsabilidade Técnica é registrada no CREA e identifica o profissional responsável pelo serviço. Ela é pedida em aprovações, vistorias e pelo seguro, e garante que alguém responde pelo que foi feito."],
+    ["Vocês atendem obras de qualquer porte?", "Atendemos desde a reforma de um apartamento até lojas, escritórios, condomínios e pequenas indústrias. A equipe e o cronograma são dimensionados no orçamento de cada obra."],
+    ["Em quanto tempo recebo o orçamento?", "Respondemos o primeiro contato em até 24 horas úteis. Serviços simples são orçados na hora. Projetos e obras maiores, depois da visita técnica, em até 3 dias úteis."],
+    ["Fazem atendimento de emergência?", "Sim. Em caso de fumaça, faísca ou cheiro de queimado, desligue o disjuntor geral, afaste-se do quadro e chame pelo WhatsApp."],
+    ["Quais regiões vocês atendem?", "Atendemos a capital e a região metropolitana. Para outras cidades, consulte pelo WhatsApp."]
+  ];
+
+  function midiaHTML(i) {
+    var s = SOL[i];
+    if (s.foto) return '<div class="midia"><img src="' + s.foto + '" alt="" loading="lazy" decoding="async" style="object-position:' + s.pos + '"></div>';
+    return '<div class="midia ph"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#' + s.ico + '"/></svg></div>';
+  }
+
+  /* ================= soluções: cards ================= */
+  var grade = $("#solGrade");
+  grade.innerHTML = SOL.map(function (s, i) {
+    return '<button class="sol-card revela" type="button" data-sol="' + i + '" style="--atraso:' + (i % 5) * 0.06 + 's" aria-haspopup="dialog">' +
+      midiaHTML(i) +
+      '<span class="sol-icone" aria-hidden="true"><svg class="ic"><use href="#' + s.ico + '"/></svg></span>' +
+      '<span class="sol-mais" aria-hidden="true"><svg class="ic"><use href="#i-mais"/></svg></span>' +
+      '<span class="sol-info"><span class="sol-tag">' + s.tag + '</span><h3>' + s.tit + '</h3>' +
+      '<span class="sol-prob"><span>' + s.prob + '</span></span></span></button>';
+  }).join("");
+
+  /* ================= soluções: diálogo com a foto que cresce ================= */
+  var dlg = $("#solDlg"), painel = $("#solPainel"), fotoAlvo = $("#solFoto");
+  var origem = null, aberto = -1, animando = false;
+
+  function preencher(i) {
+    var s = SOL[i];
+    $("#solTag").textContent = s.tag;
+    $("#solTitulo").textContent = s.tit;
+    $("#solProb").textContent = s.prob;
+    $("#solSolu").textContent = s.solu;
+    $("#solPassos").innerHTML = s.passos.map(function (p) { return "<li>" + p + "</li>"; }).join("");
+    $("#solRecebe").innerHTML = s.recebe.map(function (r) { return '<li class="chip"><svg class="ic"><use href="#i-check"/></svg>' + r + "</li>"; }).join("");
+    $("#solWhats").href = wa("Olá! Vim pelo site e gostaria de um orçamento de " + s.tit.toLowerCase() + ".");
+    $("#solMidia").outerHTML = midiaHTML(i).replace('class="midia', 'id="solMidia" class="midia');
+    $("#solConteudo").scrollTop = 0;
+  }
+  function retangulo(el) { var r = el.getBoundingClientRect(); return { l: r.left, t: r.top, w: r.width, h: r.height }; }
+  function quadro(r, raio) { return { left: r.l + "px", top: r.t + "px", width: r.w + "px", height: r.h + "px", borderRadius: raio }; }
+
+  function abrirSol(i, el) {
+    if (animando) return;
+    animando = true; aberto = i; origem = el;
+    preencher(i);
+    dlg.classList.remove("pronto", "fechando");
+    dlg.showModal();
+    raiz.classList.add("trava");
+    var midiaOrigem = el.querySelector(".midia") || el.querySelector(".serv-ilu") || el;
+    var r0 = retangulo(midiaOrigem), r1 = retangulo(fotoAlvo);
+    var raioAlvo = getComputedStyle(fotoAlvo).borderRadius;
+    var voo = document.createElement("div");
+    voo.className = "voo"; voo.innerHTML = midiaHTML(i);
+    Object.assign(voo.style, quadro(r0, "20px"));
+    dlg.appendChild(voo);
+    fotoAlvo.style.visibility = "hidden";
+    if (el.classList.contains("sol-card")) el.classList.add("voando");
+    var d = reduz ? 0 : 620;
+    painel.animate([{ opacity: 0, transform: "translateY(18px) scale(.985)" }, { opacity: 1, transform: "none" }], { duration: reduz ? 0 : 420, delay: reduz ? 0 : 140, easing: "cubic-bezier(.2,.7,.2,1)", fill: "both" });
+    var a = voo.animate([quadro(r0, "20px"), quadro(r1, raioAlvo)], { duration: d, easing: "cubic-bezier(.65,0,.2,1)", fill: "forwards" });
+    var fim = function () {
+      fotoAlvo.style.visibility = ""; voo.remove();
+      dlg.classList.add("pronto"); animando = false;
+      $(".sol-fechar", dlg).focus({ preventScroll: true });
+    };
+    if (d === 0) fim(); else a.onfinish = fim;
+  }
+
+  function fecharSol() {
+    if (animando || aberto < 0) return;
+    animando = true;
+    var el = origem, midiaOrigem = el && (el.querySelector(".midia") || el.querySelector(".serv-ilu") || el);
+    var r1 = retangulo(fotoAlvo);
+    var visivel = midiaOrigem && midiaOrigem.getBoundingClientRect().bottom > 0 && midiaOrigem.getBoundingClientRect().top < innerHeight;
+    var r0 = visivel ? retangulo(midiaOrigem) : null;
+    var d = reduz || !r0 ? 0 : 520;
+    dlg.classList.remove("pronto");
+    dlg.classList.add("fechando");
+    var voo = document.createElement("div");
+    voo.className = "voo"; voo.innerHTML = midiaHTML(aberto);
+    Object.assign(voo.style, quadro(r1, getComputedStyle(fotoAlvo).borderRadius));
+    if (d) { dlg.appendChild(voo); fotoAlvo.style.visibility = "hidden"; }
+    painel.animate([{ opacity: 1 }, { opacity: 0 }], { duration: reduz ? 0 : 260, easing: "ease-out", fill: "both" });
+    var terminar = function () {
+      voo.remove(); fotoAlvo.style.visibility = "";
+      dlg.close(); dlg.classList.remove("fechando");
+      raiz.classList.remove("trava");
+      if (el) { el.classList.remove("voando"); el.focus({ preventScroll: true }); }
+      aberto = -1; animando = false;
+    };
+    if (!d) { terminar(); return; }
+    var a = voo.animate([quadro(r1, getComputedStyle(fotoAlvo).borderRadius), quadro(r0, "20px")], { duration: d, easing: "cubic-bezier(.65,0,.2,1)", fill: "forwards" });
+    a.onfinish = terminar;
+  }
+
+  dlg.addEventListener("cancel", function (e) { e.preventDefault(); fecharSol(); });
+  dlg.addEventListener("click", function (e) {
+    if (e.target === dlg || e.target.closest("[data-fechar]")) fecharSol();
+  });
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sol]");
+    if (!b || dlg.contains(b)) return;
+    e.preventDefault();
+    var i = +b.dataset.sol;
+    fecharMega(); fecharMenu(true);
+    var alvo = b.classList.contains("sol-card") ? b : (b.closest(".serv-card") || b.closest(".mega-item") || b);
+    if (alvo.closest(".mega") || alvo.closest(".menu-movel")) {
+      var card = $('.sol-card[data-sol="' + i + '"]');
+      card.scrollIntoView({ block: "center", behavior: reduz ? "auto" : "smooth" });
+      setTimeout(function () { abrirSol(i, card); }, reduz ? 0 : 650);
+      return;
+    }
+    abrirSol(i, alvo);
+  });
+
+  /* ================= FAQ ================= */
+  $("#faqLista").innerHTML = FAQ.map(function (f, i) {
+    return '<div class="faq-item revela" style="--atraso:' + Math.min(i, 5) * 0.04 + 's"><h3><button class="faq-q" type="button" id="fq' + i + '" aria-expanded="false" aria-controls="fr' + i + '">' +
+      '<span class="faq-ico" aria-hidden="true"><svg class="ic"><use href="#i-chev"/></svg></span><span>' + f[0] + '</span></button></h3>' +
+      '<div class="faq-r" id="fr' + i + '" role="region" aria-labelledby="fq' + i + '"><div><p>' + f[1] + "</p></div></div></div>";
+  }).join("");
+  $("#faqLista").addEventListener("click", function (e) {
+    var b = e.target.closest(".faq-q"); if (!b) return;
+    var item = b.closest(".faq-item"), abrir = !item.classList.contains("aberto");
+    $$(".faq-item.aberto").forEach(function (x) { x.classList.remove("aberto"); $(".faq-q", x).setAttribute("aria-expanded", "false"); });
+    if (abrir) { item.classList.add("aberto"); b.setAttribute("aria-expanded", "true"); }
+  });
+
+  /* ================= navegação ================= */
+  var nav = $("#nav"), btnServ = $("#btnServ"), mega = $("#mega"), navInd = $("#navInd");
+  var menu = $("#menuMovel"), btnMenu = $("#btnMenu");
+  var ultimoY = scrollY, timerMega = 0;
+
+  function abrirMega() { clearTimeout(timerMega); mega.classList.add("aberto"); nav.classList.add("mega-aberto"); btnServ.setAttribute("aria-expanded", "true"); }
+  function fecharMega() { clearTimeout(timerMega); mega.classList.remove("aberto"); nav.classList.remove("mega-aberto"); btnServ.setAttribute("aria-expanded", "false"); }
+  btnServ.addEventListener("click", function () { mega.classList.contains("aberto") ? fecharMega() : abrirMega(); });
+  [btnServ, mega].forEach(function (el) {
+    el.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { clearTimeout(timerMega); timerMega = setTimeout(abrirMega, 90); } });
+    el.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { clearTimeout(timerMega); timerMega = setTimeout(fecharMega, 220); } });
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest("#mega") && !e.target.closest("#btnServ")) fecharMega(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (mega.classList.contains("aberto")) { fecharMega(); btnServ.focus(); }
+    if (menu.classList.contains("aberto")) fecharMenu();
+    if (indice.classList.contains("aberto")) fecharIndice(true);
+  });
+
+  function abrirMenu() {
+    menu.classList.add("aberto"); btnMenu.setAttribute("aria-expanded", "true"); raiz.classList.add("trava");
+    setTimeout(function () { $("#btnFecharMenu").focus(); }, 60);
+  }
+  function fecharMenu(semFoco) {
+    if (!menu.classList.contains("aberto")) return;
+    menu.classList.remove("aberto"); btnMenu.setAttribute("aria-expanded", "false"); raiz.classList.remove("trava");
+    if (!semFoco) btnMenu.focus();
+  }
+  btnMenu.addEventListener("click", abrirMenu);
+  $("#btnFecharMenu").addEventListener("click", function () { fecharMenu(); });
+  $$(".mm-links a, .mm-acoes a[href^='#']").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault(); fecharMenu(true);
+      var alvo = $(a.getAttribute("href"));
+      setTimeout(function () { alvo.scrollIntoView({ behavior: reduz ? "auto" : "smooth" }); }, 30);
+    });
+  });
+
+  function moverInd(link) {
+    if (!link || getComputedStyle(navInd.parentNode).display === "none") { navInd.style.opacity = 0; return; }
+    navInd.style.left = link.offsetLeft + "px"; navInd.style.width = link.offsetWidth + "px"; navInd.style.opacity = 1;
+  }
+
+  /* ================= índice flutuante ================= */
+  var indice = $("#indice"), indiceBtn = $("#indiceBtn"), anel = $("#anelProg");
+  var C = 2 * Math.PI * 25.5;
+  anel.style.strokeDasharray = C; anel.style.strokeDashoffset = C;
+  function fecharIndice(foco) { indice.classList.remove("aberto"); indiceBtn.setAttribute("aria-expanded", "false"); if (foco) indiceBtn.focus(); }
+  indiceBtn.addEventListener("click", function () {
+    var a = !indice.classList.contains("aberto");
+    indice.classList.toggle("aberto", a); indiceBtn.setAttribute("aria-expanded", String(a));
+  });
+  $$("#indiceLista a").forEach(function (a) { a.addEventListener("click", function () { fecharIndice(false); }); });
+  document.addEventListener("click", function (e) { if (!e.target.closest("#indice")) fecharIndice(false); });
+
+  /* ================= rolagem ================= */
+  var hero = $("#inicio");
+  function aoRolar() {
+    var y = scrollY;
+    nav.classList.toggle("rolou", y > 16);
+    var bloqueado = mega.classList.contains("aberto") || menu.classList.contains("aberto");
+    if (!bloqueado) {
+      if (y > ultimoY + 6 && y > 260) nav.classList.add("esconde");
+      else if (y < ultimoY - 6 || y < 260) nav.classList.remove("esconde");
+    }
+    ultimoY = y;
+    var max = document.documentElement.scrollHeight - innerHeight;
+    anel.style.strokeDashoffset = C * (1 - Math.min(1, Math.max(0, y / max)));
+    indice.classList.toggle("mostra", y > hero.offsetHeight * 0.55);
+  }
+  addEventListener("scroll", aoRolar, { passive: true });
+  aoRolar();
+
+  var secoes = $$("[data-secao]");
+  var io = new IntersectionObserver(function (ents) {
+    ents.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var id = en.target.dataset.secao;
+      $$("#indiceLista a").forEach(function (a) { a.setAttribute("aria-current", String(a.dataset.alvo === id)); });
+      var link = null;
+      $$(".nav-link").forEach(function (l) { var on = l.dataset.alvo === id; if (on) link = l; if (l.tagName === "A") l.setAttribute("aria-current", String(on)); });
+      moverInd(link);
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  secoes.forEach(function (s) { io.observe(s); });
+  addEventListener("resize", function () { var l = $('.nav-link[aria-current="true"]'); moverInd(l); });
+
+  /* revelar ao rolar: só o que começa abaixo da dobra */
+  if (!reduz && "IntersectionObserver" in window) {
+    var rv = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove("pre"); rv.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    $$(".revela").forEach(function (el) {
+      if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add("pre"); rv.observe(el); }
+    });
+  }
+
+  /* brilho da grade que segue o cursor nos diferenciais */
+  $$(".dif-card").forEach(function (c) {
+    c.addEventListener("pointermove", function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      c.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+
+  /* ================= pranchas da hero ================= */
+  function moldura() { return '<rect x="26" y="26" width="1362" height="948" class="m3 d" pathLength="1" style="--d:0s"/>'; }
+  function carimbo(tipo, titulo, esc, folha, anima) {
+    var x = 1010, y = 812, d = anima ? ' class="m3 d" pathLength="1" style="--d:.5s"' : ' class="m3"';
+    return '<g><rect x="' + x + '" y="' + y + '" width="352" height="136"' + d + '/>' +
+      '<g class="gb" style="--d:1.2s"><line x1="' + x + '" y1="' + (y + 46) + '" x2="' + (x + 352) + '" y2="' + (y + 46) + '" class="m1"/>' +
+      '<line x1="' + x + '" y1="' + (y + 96) + '" x2="' + (x + 352) + '" y2="' + (y + 96) + '" class="m1"/>' +
+      '<line x1="' + (x + 230) + '" y1="' + (y + 96) + '" x2="' + (x + 230) + '" y2="' + (y + 136) + '" class="m1"/>' +
+      '<text x="' + (x + 16) + '" y="' + (y + 31) + '" class="tb">' + tipo + '</text>' +
+      '<text x="' + (x + 16) + '" y="' + (y + 78) + '">' + titulo + '</text>' +
+      '<text x="' + (x + 16) + '" y="' + (y + 123) + '" class="ts">' + esc + '</text>' +
+      '<text x="' + (x + 246) + '" y="' + (y + 123) + '" class="ts">' + folha + '</text></g></g>';
+  }
+  function L(x1, y1, x2, y2, c, extra) { return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"' + (c ? ' class="' + c + '"' : "") + (extra || "") + "/>"; }
+  function T(x, y, t, c) { return '<text x="' + x + '" y="' + y + '"' + (c ? ' class="' + c + '"' : "") + ">" + t + "</text>"; }
+  function fmt(n) { return typeof n === "number" ? n.toLocaleString("pt-BR") : n; }
+
+  var CARGAS = [
+    ["C1", "Ilum. social", 600, 127, "4,7", "1,5", 10], ["C2", "Ilum. íntima", 400, 127, "3,1", "1,5", 10],
+    ["C3", "Tomadas sala", 1200, 127, "9,4", "2,5", 16], ["C4", "Tomadas quartos", 1000, 127, "7,9", "2,5", 16],
+    ["C5", "Tomadas cozinha", 2000, 127, "15,7", "2,5", 20], ["C6", "Área de serviço", 1500, 127, "11,8", "2,5", 20],
+    ["C7", "Chuveiro", 7500, 220, "34,1", "6", 40], ["C8", "Ar-cond. suíte", 1400, 220, "6,4", "2,5", 16],
+    ["C9", "Ar-cond. sala", 2200, 220, "10,0", "2,5", 16], ["C10", "Forno elétrico", 3000, 220, "13,6", "4", 25],
+    ["C11", "Micro-ondas", 1500, 127, "11,8", "2,5", 20], ["C12", "Reserva", "—", "—", "—", "—", "—"]
+  ];
+
+  function folhaPlanta() {
+    var s = moldura(), i;
+    s += '<rect x="90" y="110" width="870" height="770" class="pa d" pathLength="1" style="--d:.15s"/>';
+    var par = [[90, 470, 300, 470], [370, 470, 470, 470], [520, 470, 700, 470], [770, 470, 960, 470], [420, 110, 420, 470], [600, 110, 600, 470], [620, 470, 620, 700], [620, 770, 620, 880]];
+    par.forEach(function (p, k) { s += L(p[0], p[1], p[2], p[3], "pa d", ' pathLength="1" style="--d:' + (0.45 + k * 0.05).toFixed(2) + 's"'); });
+    s += '<g class="gb" style="--d:1.05s">';
+    [[300, 70], [470, 50], [700, 70]].forEach(function (p) {
+      var hx = p[0], w = p[1];
+      s += L(hx, 470, hx, 470 - w, "") + '<path d="M' + hx + " " + (470 - w) + " A" + w + " " + w + " 0 0 1 " + (hx + w) + ' 470" class="m1"/>';
+    });
+    [[180, 320], [650, 820]].forEach(function (w) { s += '<rect x="' + w[0] + '" y="103" width="' + (w[1] - w[0]) + '" height="14" class="m1" style="fill:#FCFDFF"/>' + L(w[0], 110, w[1], 110, "m1"); });
+    s += '<rect x="953" y="560" width="14" height="170" class="m1" style="fill:#FCFDFF"/>' + L(960, 560, 960, 730, "m1");
+    s += '<rect x="200" y="873" width="220" height="14" class="m1" style="fill:#FCFDFF"/>' + L(200, 880, 420, 880, "m1");
+    [[255, 290], [510, 290], [780, 290], [355, 675], [790, 675]].forEach(function (c) {
+      s += '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="17"/><path d="M' + (c[0] - 12) + " " + (c[1] - 12) + "l24 24M" + (c[0] + 12) + " " + (c[1] - 12) + 'l-24 24" class="m1"/>';
+    });
+    [[112, 300], [398, 200], [640, 330], [938, 200], [112, 640], [300, 858], [598, 560], [640, 820], [938, 790], [800, 492]].forEach(function (t) {
+      s += '<polygon points="' + (t[0] - 10) + "," + (t[1] + 8) + " " + (t[0] + 10) + "," + (t[1] + 8) + " " + t[0] + "," + (t[1] - 10) + '"/>';
+    });
+    [[330, 440], [495, 440], [735, 440], [600, 500]].forEach(function (p) { s += T(p[0], p[1], "S", "tb"); });
+    s += '<rect x="104" y="800" width="58" height="34" style="fill:#FCE7C2"/>' + T(133, 823, "QD", "ts mid");
+    s += "</g>";
+    s += '<g class="gb" style="--d:1.35s">';
+    ["M133 800 C 150 740, 300 700, 340 682", "M120 800 C 108 600, 200 380, 246 302", "M162 822 C 400 830, 600 760, 776 684", "M162 808 C 420 700, 470 420, 502 304", "M162 800 C 500 650, 700 420, 770 302"].forEach(function (d) { s += '<path d="' + d + '" class="am tr"/>'; });
+    [[230, 730, "C1"], [150, 520, "C2"], [470, 790, "C3"], [400, 560, "C4"], [600, 560, "C5"]].forEach(function (t) { s += T(t[0], t[1], t[2], "ts tA"); });
+    s += "</g>";
+    s += '<g class="gb" style="--d:1.55s">';
+    [["QUARTO 1", 255, 232, "11,8 m²"], ["BANHO", 510, 232, "6,3 m²"], ["QUARTO 2", 780, 232, "12,6 m²"], ["SALA", 355, 618, "24,5 m²"], ["COZINHA", 790, 618, "14,4 m²"]].forEach(function (r) {
+      s += T(r[1], r[2], r[0], "tb mid") + T(r[1], r[2] + 108, r[3], "ts mid");
+    });
+    s += L(90, 70, 960, 70, "m1") + L(90, 58, 90, 82, "m1") + L(960, 58, 960, 82, "m1") + T(525, 60, "8,70", "ts mid");
+    s += L(52, 110, 52, 880, "m1") + L(40, 110, 64, 110, "m1") + L(40, 880, 64, 880, "m1") + '<text x="44" y="495" class="ts mid" transform="rotate(-90 44 495)">7,70</text>';
+    s += '<rect x="1010" y="110" width="352" height="660" class="m3"/>' + T(1032, 152, "LEGENDA", "tb");
+    var leg = [["luz", "Ponto de luz no teto"], ["tom", "Tomada 2P+T · 10 A"], ["int", "Interruptor simples"], ["cir", "Circuito em eletroduto"], ["qd", "Quadro de distribuição"]];
+    leg.forEach(function (l, k) {
+      var y = 214 + k * 66, x = 1052;
+      if (l[0] === "luz") s += '<circle cx="' + x + '" cy="' + (y - 6) + '" r="13"/><path d="M' + (x - 9) + " " + (y - 15) + "l18 18M" + (x + 9) + " " + (y - 15) + 'l-18 18" class="m1"/>';
+      if (l[0] === "tom") s += '<polygon points="' + (x - 10) + "," + (y + 2) + " " + (x + 10) + "," + (y + 2) + " " + x + "," + (y - 16) + '"/>';
+      if (l[0] === "int") s += T(x - 7, y, "S", "tb");
+      if (l[0] === "cir") s += L(x - 18, y - 6, x + 18, y - 6, "am tr");
+      if (l[0] === "qd") s += '<rect x="' + (x - 16) + '" y="' + (y - 18) + '" width="32" height="20" style="fill:#FCE7C2"/>';
+      s += T(1086, y, l[1], "ts");
+    });
+    s += T(1032, 586, "NOTAS", "tb") + T(1032, 622, "1. Cotas em metros.", "ts") + T(1032, 652, "2. Seções conforme o", "ts") + T(1050, 676, "quadro de cargas.", "ts") + T(1032, 706, "3. Tomadas a 0,30 m.", "ts");
+    s += "</g>";
+    s += carimbo("PROJETO ELÉTRICO", "PLANTA BAIXA · PONTOS", "ESC. 1:50", "FOLHA 01/05", true);
+    return s;
+  }
+
+  function disj(x, y) { return '<rect x="' + x + '" y="' + (y - 12) + '" width="40" height="24"/>' + L(x + 6, y + 9, x + 34, y - 9, "m1"); }
+  function folhaUnifilar() {
+    var s = moldura();
+    s += T(80, 98, "DIAGRAMA UNIFILAR · QD-1", "tg");
+    s += L(80, 500, 110, 500) + '<circle cx="150" cy="500" r="40"/>' + T(150, 507, "kWh", "ts mid") + L(190, 500, 240, 500);
+    s += disj(240, 500) + T(260, 548, "DG 50 A", "ts mid") + L(280, 500, 340, 500);
+    s += '<rect x="340" y="474" width="96" height="52"/>' + T(388, 507, "DR", "tb mid") + T(388, 556, "63 A · 30 mA", "ts mid") + L(436, 500, 540, 500);
+    s += L(540, 150, 540, 880, "", ' style="stroke-width:9"');
+    CARGAS.forEach(function (c, k) {
+      var y = 172 + k * 54;
+      s += L(540, y, 610, y) + disj(610, y) + L(650, y, 700, y) + '<circle cx="706" cy="' + y + '" r="5"/>';
+      s += T(726, y + 7, c[0], "tb") + T(800, y + 7, c[1], "ts");
+      if (c[6] !== "—") s += T(990, y + 7, c[6] + " A · " + c[5] + " mm²", "ts" + (c[0] === "C7" ? " tA" : ""));
+    });
+    s += L(540, 860, 470, 860) + '<rect x="418" y="845" width="52" height="30"/>' + T(444, 866, "DPS", "ts mid");
+    s += L(444, 875, 444, 905) + L(422, 905, 466, 905) + L(430, 916, 458, 916) + L(438, 927, 450, 927);
+    s += T(80, 900, "N", "tb") + T(80, 940, "PE", "tb") + L(120, 893, 380, 893, "m1") + L(120, 933, 380, 933, "m1 tr");
+    s += carimbo("PROJETO ELÉTRICO", "DIAGRAMA UNIFILAR", "SEM ESCALA", "FOLHA 02/05");
+    return s;
+  }
+
+  function folhaCargas() {
+    var s = moldura();
+    s += T(80, 98, "QUADRO DE CARGAS · QD-1", "tg") + T(80, 136, "Residência unifamiliar · 127/220 V · 140 m²", "ts");
+    var cx = [80, 190, 520, 690, 840, 990, 1150, 1334], cab = ["CIRC.", "DESCRIÇÃO", "POT. (W)", "TENSÃO (V)", "CORR. (A)", "SEÇÃO (mm²)", "DISJ. (A)"];
+    var y0 = 170, h = 40;
+    s += '<rect x="80" y="' + y0 + '" width="1254" height="50" style="fill:#E6EEF9;stroke:none"/>';
+    s += '<rect x="80" y="' + (y0 + 50 + 6 * h) + '" width="1254" height="' + h + '" style="fill:#FDF0D8;stroke:none"/>';
+    cab.forEach(function (c, k) { s += T(k < 2 ? cx[k] + 14 : cx[k + 1] - 14, y0 + 32, c, "ts" + (k < 2 ? "" : " fim")); });
+    CARGAS.forEach(function (c, r) {
+      var y = y0 + 50 + r * h + 27;
+      s += T(cx[0] + 14, y, c[0], "tb") + T(cx[1] + 14, y, c[1]);
+      [fmt(c[2]), c[3], c[4], c[5], c[6]].forEach(function (v, k) { s += T(cx[k + 3] - 14, y, v, "fim" + (c[0] === "C7" ? " tA" : "")); });
+    });
+    var yT = y0 + 50 + 12 * h;
+    s += '<rect x="80" y="' + yT + '" width="1254" height="50" style="fill:#E6EEF9;stroke:none"/>' + T(94, yT + 32, "TOTAL INSTALADO", "tb") + T(cx[3] - 14, yT + 32, "22.300", "tb fim");
+    s += '<rect x="80" y="' + y0 + '" width="1254" height="' + (yT + 50 - y0) + '" class="m3"/>';
+    for (var r = 0; r <= 12; r++) s += L(80, y0 + 50 + r * h, 1334, y0 + 50 + r * h, "m1");
+    cx.slice(1, -1).forEach(function (x) { s += L(x, y0, x, yT + 50, "m1"); });
+    s += T(80, 830, "NOTAS", "tb") + T(80, 866, "Condutores de cobre, isolação PVC 70 °C.", "ts") + T(80, 894, "Método de instalação B1 · NBR 5410.", "ts") + T(80, 922, "DR 30 mA nos circuitos de áreas molhadas.", "ts");
+    s += carimbo("PROJETO ELÉTRICO", "QUADRO DE CARGAS", "—", "FOLHA 03/05");
+    return s;
+  }
+
+  function folhaQuadro() {
+    var s = moldura();
+    s += T(80, 98, "DETALHE DO QUADRO · QD-1", "tg");
+    s += '<rect x="220" y="160" width="440" height="680" rx="12" class="m3"/><rect x="250" y="190" width="380" height="620" rx="6" class="m1"/>';
+    [310, 480, 650].forEach(function (y) { s += '<rect x="268" y="' + (y - 6) + '" width="344" height="12" class="m1" style="fill:#E6EEF9"/>'; });
+    function mod(x, y, w, rot) {
+      return '<rect x="' + x + '" y="' + (y - 46) + '" width="' + w + '" height="92" rx="4"/><rect x="' + (x + w / 2 - 9) + '" y="' + (y - 16) + '" width="18" height="30" rx="2" style="fill:#1B3E73;stroke:none"/>' + (rot ? T(x + w / 2, y + 36, rot, "ts mid") : "");
+    }
+    s += mod(278, 310, 62, "DG") + mod(350, 310, 124, "DR") + mod(484, 310, 92, "DPS");
+    for (var k = 0; k < 8; k++) s += mod(282 + k * 40, 480, 32, "");
+    for (k = 0; k < 6; k++) s += mod(282 + k * 40, 650, 32, "");
+    s += '<rect x="522" y="604" width="32" height="92" rx="4" class="m1 tr"/><rect x="562" y="604" width="32" height="92" rx="4" class="m1 tr"/>';
+    s += '<rect x="280" y="752" width="150" height="22" class="m1"/>' + T(355, 769, "N", "ts mid") + '<rect x="452" y="752" width="150" height="22" class="m1"/>' + T(527, 769, "PE", "ts mid");
+    var ld = [[309, 264, 214, "DISJUNTOR GERAL · 50 A"], [412, 264, 270, "DR · 63 A · 30 mA"], [530, 264, 326, "DPS · CLASSE II · 275 V"], [598, 450, 470, "CIRCUITOS C1 A C8"], [598, 620, 640, "C9 A C12 + RESERVA"], [602, 763, 763, "BARRAMENTOS N E PE"]];
+    ld.forEach(function (l) { s += '<circle cx="' + l[0] + '" cy="' + l[1] + '" r="5" style="fill:#2457A6"/>' + '<path d="M' + l[0] + " " + l[1] + " L" + 700 + " " + l[2] + " H 730" + '" class="m1"/>' + T(742, l[2] + 7, l[3], "ts"); });
+    s += L(220, 132, 660, 132, "m1") + L(220, 120, 220, 144, "m1") + L(660, 120, 660, 144, "m1") + T(440, 122, "440", "ts mid");
+    s += L(186, 160, 186, 840, "m1") + L(174, 160, 198, 160, "m1") + L(174, 840, 198, 840, "m1") + '<text x="176" y="500" class="ts mid" transform="rotate(-90 176 500)">680</text>';
+    s += T(742, 860, "VISTA FRONTAL · COTAS EM mm", "ts");
+    s += carimbo("PROJETO ELÉTRICO", "DETALHE DO QUADRO", "ESC. 1:5", "FOLHA 04/05");
+    return s;
+  }
+
+  function barras(y, larguras) { return larguras.map(function (w, k) { return '<rect x="80" y="' + (y + k * 22) + '" width="' + w + '" height="9" rx="4.5" style="fill:#D6E2F3;stroke:none"/>'; }).join(""); }
+  function folhaMemorial() {
+    var s = moldura();
+    s += T(80, 98, "MEMORIAL DE CÁLCULO", "tg") + T(80, 136, "Circuito C7 · chuveiro elétrico · 7.500 W", "ts");
+    s += T(80, 200, "1. CORRENTE DE PROJETO", "tb") + T(80, 246, "Ib = P ÷ V = 7.500 ÷ 220 = 34,1 A", "") + barras(270, [560, 470]);
+    s += T(80, 360, "2. SEÇÃO DO CONDUTOR", "tb") + T(80, 400, "Método B1 · 2 condutores carregados", "ts") + T(80, 440, "Seção adotada: 6 mm² · Iz = 41 A ≥ 34,1 A", "") + barras(464, [600, 520]);
+    s += T(80, 552, "3. PROTEÇÃO", "tb") + T(80, 592, "Disjuntor 40 A · curva C · Ib ≤ In ≤ Iz", "") + T(80, 628, "DR 30 mA · área molhada", "ts");
+    s += T(80, 690, "4. QUEDA DE TENSÃO", "tb") + T(80, 730, "ΔV = 1,8 % ≤ 4 % (limite da NBR 5410)", "");
+    s += '<rect x="80" y="770" width="640" height="70" rx="8" class="am" style="fill:#FFF5E2"/>' + T(104, 813, "RESULTADO: CONFORME NBR 5410", "tb tA");
+    s += '<circle cx="1040" cy="330" r="112" class="am" style="stroke-width:5"/><circle cx="1040" cy="330" r="92" class="am m1"/>';
+    s += T(1040, 312, "RESPONSÁVEL", "tb tA mid") + T(1040, 342, "TÉCNICO", "tb tA mid") + T(1040, 382, "CREA 000000-0", "ts tA mid");
+    s += '<path d="M880 590 C 905 540, 940 620, 975 566 S 1030 540, 1062 584 S 1120 552, 1180 576" class="m3"/>' + L(860, 620, 1200, 620, "m1") + T(1030, 650, "Engenheiro eletricista", "ts mid");
+    s += carimbo("MEMORIAL", "DIMENSIONAMENTO C7", "—", "FOLHA 05/05");
+    return s;
+  }
+
+  var FOLHAS = [
+    { nome: "Planta baixa elétrica", det: "Residência · 140 m²", fn: folhaPlanta },
+    { nome: "Diagrama unifilar", det: "Quadro QD-1 · 12 circuitos", fn: folhaUnifilar },
+    { nome: "Quadro de cargas", det: "127/220 V · 22,3 kW instalados", fn: folhaCargas },
+    { nome: "Detalhe do quadro", det: "Vista frontal · DR e DPS", fn: folhaQuadro },
+    { nome: "Memorial de cálculo", det: "Dimensionamento conforme NBR 5410", fn: folhaMemorial }
+  ];
+
+  var esteira = $("#esteira");
+  if (esteira && innerWidth >= 960) {
+    var seq = [1, 2, 3, 4, 0, 3, 4, 0, 1, 2];
+    var cel = function (k) { return '<div class="f-fundo"><svg class="prancha" viewBox="0 0 1414 1000" aria-hidden="true" focusable="false">' + FOLHAS[k].fn() + '</svg></div>'; };
+    var l1 = seq.slice(0, 5), l2 = seq.slice(5, 10);
+    esteira.innerHTML = l1.concat(l1).map(cel).join("") + l2.concat(l2).map(cel).join("");
+  }
+  var pilha = $("#pilha"), wrap = $("#pilhaWrap"), N = FOLHAS.length;
+  var folhas = FOLHAS.map(function (f, i) {
+    var d = document.createElement("div");
+    d.className = "folha folha-" + (i + 1);
+    d.innerHTML = '<div class="face frente"><svg class="prancha" viewBox="0 0 1414 1000" aria-hidden="true" focusable="false">' + f.fn() + '</svg><span class="brilho"></span><span class="varredura"></span></div><div class="face verso"></div>';
+    d._i = i; pilha.appendChild(d); return d;
+  });
+  var ordem = folhas.slice();
+  function pos(k) { return { x: k * 5, y: k * 6, z: (N - k) * 1.8, rotation: k === 0 ? 0 : (k % 2 ? -0.9 : 0.7) }; }
+  function aplicarPilha() {
+    ordem.forEach(function (el, k) {
+      var p = pos(k);
+      if (temGsap) gsap.set(el, { x: p.x, y: p.y, z: p.z, rotation: p.rotation, rotationY: 0, transformOrigin: "0% 50%" });
+      else el.style.transform = "translate3d(" + p.x + "px," + p.y + "px," + p.z + "px) rotate(" + p.rotation + "deg)";
+    });
+  }
+  aplicarPilha();
+
+  var legenda = $("#legenda"), atual = 0;
+  function mostrarLegenda(i) {
+    legenda.classList.add("troca");
+    setTimeout(function () {
+      $("#lfNum").textContent = "0" + (i + 1) + "/0" + N;
+      $("#lfNome").textContent = FOLHAS[i].nome;
+      $("#lfDet").textContent = FOLHAS[i].det;
+      legenda.classList.remove("troca");
+    }, 260);
+  }
+
+  var virando = false;
+  function virar() {
+    if (virando || !temGsap) return;
+    virando = true;
+    var topo = ordem[0], prox = ordem[1];
+    var dur = reduz ? 0.01 : 1.15;
+    var faces = topo.querySelectorAll(".face");
+    var tl = gsap.timeline({ onComplete: function () { virando = false; } });
+    tl.to(topo, { rotationY: -178, z: "+=6", duration: dur, ease: "power2.inOut" }, 0);
+    tl.to(topo.querySelector(".brilho"), { opacity: 0.55, duration: dur * 0.5, ease: "sine.in" }, 0)
+      .to(topo.querySelector(".brilho"), { opacity: 0, duration: dur * 0.3 }, dur * 0.5);
+    tl.fromTo(prox.querySelector(".varredura"), { opacity: 0, xPercent: -10 }, { opacity: 0.6, xPercent: 25, duration: dur * 0.55, ease: "sine.out" }, dur * 0.12)
+      .to(prox.querySelector(".varredura"), { opacity: 0, xPercent: 70, duration: dur * 0.45 }, dur * 0.67);
+    tl.to(faces, { opacity: 0, duration: dur * 0.34, ease: "power1.in" }, dur * 0.6);
+    tl.call(function () { atual = prox._i; mostrarLegenda(atual); }, null, dur * 0.45);
+    ordem.slice(1).forEach(function (el, k) { var p = pos(k); tl.to(el, { x: p.x, y: p.y, z: p.z, rotation: p.rotation, duration: reduz ? 0.01 : 0.6, ease: "power2.out" }, dur * 0.72); });
+    tl.call(function () {
+      ordem.push(ordem.shift());
+      var p = pos(N - 1);
+      gsap.set(topo, { x: p.x, y: p.y, z: p.z, rotation: p.rotation, rotationY: 0 });
+      gsap.to(faces, { opacity: 1, duration: reduz ? 0.01 : 0.5, delay: 0.05 });
+    }, null, dur + 0.04);
+  }
+
+  // abertura
+  var hAnima = !reduz;
+  if (hAnima) {
+    hero.classList.add("anima");
+    setTimeout(function () { hero.classList.remove("anima"); }, 3400);
+  }
+
+  // folhear sozinho, pausar no hover, deslizar no celular, clique para virar
+  var pausado = false, heroVisivel = true, timer = 0;
+  function agendar(ms) { clearTimeout(timer); timer = setTimeout(tique, ms); }
+  function tique() { if (!pausado && heroVisivel && !document.hidden && !reduz) virar(); agendar(3900); }
+  agendar(reduz ? 999999 : 3600);
+  new IntersectionObserver(function (e) { heroVisivel = e[0].isIntersecting; }).observe(hero);
+  wrap.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") pausado = true; });
+  wrap.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") pausado = false; });
+  var x0 = null, y0 = null;
+  wrap.addEventListener("pointerdown", function (e) { x0 = e.clientX; y0 = e.clientY; });
+  wrap.addEventListener("pointerup", function (e) {
+    if (x0 === null) return;
+    var dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if ((Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy)) || (e.pointerType === "mouse" && Math.abs(dx) < 6 && Math.abs(dy) < 6)) { virar(); agendar(5200); }
+  });
+
+  // inclinação seguindo o mouse
+  var alvoRx = 0, alvoRz = 0, rx = 0, rz = 0, rodando = false;
+  var baseRx = function () { return innerWidth < 960 ? 50 : 52; }, baseRz = function () { return innerWidth < 960 ? -26 : -30; };
+  function laco() {
+    rx += (alvoRx - rx) * 0.06; rz += (alvoRz - rz) * 0.06;
+    pilha.style.setProperty("--rx", (baseRx() + rx).toFixed(2) + "deg");
+    pilha.style.setProperty("--rz", (baseRz() + rz).toFixed(2) + "deg");
+    if (Math.abs(alvoRx - rx) > 0.01 || Math.abs(alvoRz - rz) > 0.01) requestAnimationFrame(laco); else rodando = false;
+  }
+  pilha.style.setProperty("--rx", baseRx() + "deg"); pilha.style.setProperty("--rz", baseRz() + "deg");
+  addEventListener("resize", function () { pilha.style.setProperty("--rx", baseRx() + rx + "deg"); pilha.style.setProperty("--rz", baseRz() + rz + "deg"); });
+  hero.addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse" || reduz) return;
+    alvoRx = -(e.clientY / innerHeight - 0.5) * 6;
+    alvoRz = (e.clientX / innerWidth - 0.5) * 7;
+    if (!rodando) { rodando = true; requestAnimationFrame(laco); }
+  });
+})();
+</script>
