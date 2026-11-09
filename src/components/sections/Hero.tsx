@@ -287,6 +287,7 @@ export function Hero() {
               >
                 <div className="hero-face hero-frente">
                   <svg
+                    className="hero-prancha"
                     viewBox="0 0 1414 1000"
                     aria-hidden="true"
                     focusable="false"
