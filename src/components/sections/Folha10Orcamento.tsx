@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ReactNode } from "react";
 import { SheetBar } from "@/components/ui/SheetBar";
+import { waLink } from "@/lib/contato";
 
 const INPUT_CLS =
   "w-full border-0 bg-transparent p-0 font-sans text-base text-ink outline-none placeholder:text-[#6B7789]";
@@ -74,7 +75,10 @@ export function Folha10Orcamento() {
             Preencha o carimbo ao lado. Respondo em até [PRAZO], por WhatsApp ou e-mail.
           </p>
           <div className="flex flex-col gap-3.5 border-t border-on-ink/30 pt-3 font-mono text-[15px]">
-            <a href="https://wa.me/55XXXXXXXXXXX" className="flex gap-3.5 text-on-ink no-underline">
+            <a
+              href={waLink("Olá! Gostaria de pedir um orçamento.")}
+              className="flex gap-3.5 text-on-ink no-underline"
+            >
               <span className="w-[90px] text-amber">WHATSAPP</span>(11) 90000-0000
             </a>
             <a
@@ -214,7 +218,7 @@ export function Folha10Orcamento() {
 
         <div className="flex flex-col gap-3 font-mono text-[14px]">
           <a
-            href="https://wa.me/55XXXXXXXXXXX"
+            href={waLink("Olá! Gostaria de pedir um orçamento.")}
             className="flex min-h-11 items-center gap-3 border-[1.5px] border-on-ink/40 px-3.5 text-on-ink no-underline"
           >
             <span className="text-amber">WHATSAPP</span>(11) 90000-0000
